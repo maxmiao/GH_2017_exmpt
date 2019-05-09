@@ -1,0 +1,33 @@
+---
+title: "Rel_tuber Yield"
+output: html_notebook
+---
+
+
+```{r}
+library(ggplot2)
+low <- read.csv("Low_nutrient.csv", header = T)
+
+low <- as.data.frame(low)
+
+data_p = subset(low, soil == "Prairie")
+data_h = subset(low, soil == "Hancock")
+se = low$Std.Err.Mean
+
+ggplot(low)+
+  aes(x = agerank, y = Mean, color = soil)+
+  scale_x_discrete(name = "Potato Genotypes", limits = c("","Andigenum", "Chiletanum", "Modern"))+
+  scale_y_continuous(name =  "relative tuber yield")+
+  geom_line(aes(linetype=soil), size=.6)+
+  geom_point(aes(shape=soil), size=3) + 
+  geom_errorbar(aes(ymax=Mean+se, ymin=Mean-se), width=.1)
+  
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
