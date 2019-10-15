@@ -1,0 +1,341 @@
+Variety,variety2,Clade,agerank,agerank2,Nutrient,soil,rep,id,Notes:,tuber,tuber2,tuber3,root
+EBS 1797,EBS 1797,and,2,2,High,Hancock,1,43,,,0,0,10.33
+EBS 1797,EBS 1797,and,2,2,High,Sterile,4,117,,,0,0,8.06
+EBS 1797,EBS 1797,and,2,2,High,Virgin,2,92,,,0,0,10.39
+Huagalina,Huagalina,and,2,2,High,Hancock,1,222,,,0,0,12.82
+Huagalina,Huagalina,and,2,2,High,Hancock,2,273,,,0,0,15.53
+Huagalina,Huagalina,and,2,2,High,Hancock,4,307,,,0,0,60.26
+Huagalina,Huagalina,and,2,2,High,Sterile,1,181,,,0,0,17.68
+Huagalina,Huagalina,and,2,2,High,Sterile,4,355,,,0,0,9.76
+Huagalina,Huagalina,and,2,2,High,Virgin,1,19,,,0,0,13.11
+Huagalina,Huagalina,and,2,2,High,Virgin,2,134,,,0,0,9.37
+Huagalina,Huagalina,and,2,2,Low,Sterile,2,174,,,0,0,12.68
+Huagalina,Huagalina,and,2,2,Low,Virgin,2,77,,,0,0,6.5
+WAC 5,WAC 5,and,2,2,High,Hancock,3,353,,,0,0,4.41
+WAC 5,WAC 5,and,2,2,High,Sterile,3,283,,,0,0,51.85
+WAC 5,WAC 5,and,2,2,High,Sterile,4,289,,,0,0,11.56
+WAC 5,WAC 5,and,2,2,High,Sterile,2,305,,,0,0,18.26
+WAC 5,WAC 5,and,2,2,High,Virgin,3,64,,,0,0,9.4
+WAC 5,WAC 5,and,2,2,High,Virgin,1,78,,,0,0,8.61
+WAC 663,WAC 663,and,2,2,High,Hancock,1,169,,,0,0,10.97
+WAC 663,WAC 663,and,2,2,High,Hancock,3,400,,,0,0,5.71
+WAC 663,WAC 663,and,2,2,High,Sterile,4,83,,,0,0,9.4
+WAC 663,WAC 663,and,2,2,High,Sterile,2,240,,,0,0,14.87
+WAC 663,WAC 663,and,2,2,High,Virgin,4,13,,,0,0,6.37
+WAC 663,WAC 663,and,2,2,High,Virgin,1,93,,,0,0,5.22
+Wac 735,Wac 735,and,2,2,High,Hancock,3,104,,,0,0,19.85
+Wac 735,Wac 735,and,2,2,High,Hancock,1,121,,,0,0,25.52
+Wac 735,Wac 735,and,2,2,High,Hancock,4,381,,,0,0,8.94
+Wac 735,Wac 735,and,2,2,High,Sterile,1,62,,,0,0,13.95
+Wac 735,Wac 735,and,2,2,High,Sterile,4,180,,,0,0,22.72
+Wac 735,Wac 735,and,2,2,High,Sterile,2,265,,,0,0,8.28
+Wac 735,Wac 735,and,2,2,High,Virgin,1,155,,,0,0,15.56
+Wac 735,Wac 735,and,2,2,High,Virgin,2,171,,,0,0,13.25
+HAO 58-5,HAO 58,bert,1,1,High,Sterile,1,4,,,0,0,9.9
+HAO 58-8,HAO 58,bert,1,1,High,Sterile,4,392,,,0,0,24.96
+HAO 58-21,HAO 58,bert,1,1,High,Virgin,1,256,,,0,0,32.48
+HAO 58-22,HAO 58,bert,1,1,High,Virgin,2,119,,,0,0,8.6
+HAO 58-23,HAO 58,bert,1,1,High,Virgin,3,85,,,0,0,24.07
+HAO 58-24,HAO 58,bert,1,1,High,Virgin,4,388,,,0,0,19.43
+HAO 58-10,HAO 58,bert,1,1,Low,Hancock,2,284,,,0,0,25.48
+HAO 58-9,HAO 58,bert,1,1,Low,Hancock,1,18,,,0,0,9.95
+HAO 58-2,HAO 58,bert,1,1,Low,Sterile,2,72,,,0,0,11.48
+HAO 58-4,HAO 58,bert,1,1,Low,Sterile,4,8,,,0,0,15.06
+HAO 58-19,HAO 58,bert,1,1,Low,Virgin,3,97,,,0,0,11.65
+HAO 58-20,HAO 58,bert,1,1,Low,Virgin,4,14,,,0,0,7.69
+HAO 76-5,HAO 76,bert,1,1,High,Sterile,1,129,,,0,0,14.06
+HHA 6451-15,HHA 6451,bert,1,1,High,Hancock,3,376,,,0,0,22.62
+HHA 6451-5,HHA 6451,bert,1,1,High,Sterile,1,190,,,0,0,37.53
+HHA 6451-6,HHA 6451,bert,1,1,High,Sterile,2,55,Flowering,,0,0,13.27
+HHA 6451-7,HHA 6451,bert,1,1,High,Sterile,3,220,,,0,0,23.1
+HHA 6451-21,HHA 6451,bert,1,1,High,Virgin,1,184,,,0,0,26.06
+HHA 6451-23,HHA 6451,bert,1,1,High,Virgin,3,204,,,0,0,26.15
+HHA 6451-10,HHA 6451,bert,1,1,Low,Hancock,2,22,Flowering,,0,0,15.87
+HHA 6451-9,HHA 6451,bert,1,1,Low,Hancock,1,27,Flowering,,0,0,11.06
+HHA 6451-4,HHA 6451,bert,1,1,Low,Sterile,4,2,Flowering,,0,0,13.06
+HHA 6451-17,HHA 6451,bert,1,1,Low,Virgin,1,242,,,0,0,9.04
+Cor C. 135-11,Cor C 135,chil,3,3,Low,Hancock,3,23,,,0,0,2.05
+Cor C.56-13,Cor C56,chil,3,3,High,Hancock,1,11,,,0,0,2.91
+Cor C.95-13,Cor C95,chil,3,3,High,Hancock,1,244,,,0,0,16.63
+Cor C.95-14,Cor C95,chil,3,3,High,Hancock,2,266,,,0,0,44.26
+Cor C.95-16,Cor C95,chil,3,3,High,Hancock,4,150,,,0,0,28.04
+Cor C.95-5,Cor C95,chil,3,3,High,Sterile,1,59,,,0,0,33.02
+Cor C.95-6,Cor C95,chil,3,3,High,Sterile,2,271,,,0,0,20.01
+Cor C.95-7,Cor C95,chil,3,3,High,Sterile,3,333,,,0,0,13.96
+Cor C.95-8,Cor C95,chil,3,3,High,Sterile,4,251,,,0,0,58.72
+Cor C.95-21,Cor C95,chil,3,3,High,Virgin,1,177,,,0,0,22.78
+Cor C.95-22,Cor C95,chil,3,3,High,Virgin,2,160,Flowering,,0,0,26.14
+Cor C.95-23,Cor C95,chil,3,3,High,Virgin,3,60,,,0,0,20.92
+Cor C.95-24,Cor C95,chil,3,3,High,Virgin,4,329,,,0,0,9.99
+Cor C.95-12,Cor C95,chil,3,3,Low,Hancock,4,41,,,0,0,2.42
+Garnet-5,Garnet,chil,4,4,High,Sterile,1,348,,,0,0,6.27
+Garnet-8,Garnet,chil,4,4,High,Sterile,4,223,,,0,0,10.62
+P. Cacho-6,P. Cacho,chil,3,3,High,Sterile,2,26,,,0,0,9.96
+Burbank,Burbank,elite,5,5,Low,Virgin,2,380,,,0,0,1.27
+Norkodah,Norkodah,elite,6,5,High,Virgin,3,209,,,0,0,3.16
+Snowden,Snowden,elite,6,5,High,Virgin,3,387,,,0,0,9.52
+Wac 735,Wac 735,and,2,2,High,Virgin,4,276,,0.22,0.22,0.22,6.46
+HAO 76-13,HAO 76,bert,1,1,High,Hancock,1,17,,0.76,0.76,0.76,7.12
+Huagalina,Huagalina,and,2,2,Low,Virgin,4,135,,0.93,0.93,0.93,11.09
+EBS 1797,EBS 1797,and,2,2,High,Sterile,1,193,,1.21,1.21,1.21,9.14
+HHA 6451-8,HHA 6451,bert,1,1,High,Sterile,4,139,Flowering,1.55,1.55,1.55,14.04
+WAC 663,WAC 663,and,2,2,Low,Sterile,3,374,,,0,1.62,0.67
+WAC 5,WAC 5,and,2,2,High,Hancock,4,342,,1.72,1.72,1.72,2.91
+EBS 1797,EBS 1797,and,2,2,High,Virgin,4,306,,1.77,1.77,1.77,18.85
+HAO 58-18,HAO 58,bert,1,1,Low,Virgin,2,126,,1.82,1.82,1.82,15.66
+HAO 58-1,HAO 58,bert,1,1,Low,Sterile,1,239,,1.96,1.96,1.96,23.05
+HHA 6451-24,HHA 6451,bert,1,1,High,Virgin,4,368,,2.01,2.01,2.01,18.66
+HAO 58-17,HAO 58,bert,1,1,Low,Virgin,1,149,,2.48,2.48,2.48,19.09
+Wac 735,Wac 735,and,2,2,Low,Virgin,1,3,,2.71,2.71,2.71,0.48
+WAC 5,WAC 5,and,2,2,High,Virgin,4,293,,3.26,3.26,3.26,6
+Huagalina,Huagalina,and,2,2,High,Virgin,4,268,,4.12,4.12,4.12,18.33
+Cor C.56-24,Cor C56,chil,3,3,High,Virgin,4,68,,4.19,4.19,4.19,4.59
+Wac 735,Wac 735,and,2,2,Low,Hancock,4,25,,6.61,6.61,6.61,2.88
+HHA 6451-18,HHA 6451,bert,1,1,Low,Virgin,2,202,,6.75,6.75,6.75,17.11
+WAC 663,WAC 663,and,2,2,High,Hancock,4,194,,7.26,7.26,7.26,11.8
+HAO 76-18,HAO 76,bert,1,1,Low,Virgin,2,75,,8.2,8.2,8.2,1.33
+WAC 5,WAC 5,and,2,2,Low,Hancock,3,89,,8.62,8.62,8.62,8.61
+WAC 663,WAC 663,and,2,2,Low,Sterile,1,9,,8.83,8.83,8.83,0.62
+Cor C. 135-17,Cor C 135,chil,3,3,Low,Virgin,1,58,,9.76,9.76,9.76,0.85
+Wac 735,Wac 735,and,2,2,High,Virgin,3,7,,,0,10,7.02
+WAC 663,WAC 663,and,2,2,Low,Virgin,4,178,,10.44,10.44,10.44,0.34
+Snowden,Snowden,elite,6,5,High,Sterile,2,1,,10.66,10.66,10.66,3.74
+WAC 5,WAC 5,and,2,2,Low,Virgin,1,6,,10.71,10.71,10.71,1.27
+Wac 735,Wac 735,and,2,2,Low,Virgin,3,67,,11,11,11,1.7
+Cor C. 135-8,Cor C 135,chil,3,3,High,Sterile,4,241,,11.12,11.12,11.12,8.48
+EBS 1797,EBS 1797,and,2,2,Low,Virgin,3,49,,11.63,11.63,11.63,3.03
+EBS 1797,EBS 1797,and,2,2,Low,Sterile,1,44,,11.66,11.66,11.66,6.56
+Cor C. 135-4,Cor C 135,chil,3,3,Low,Sterile,4,127,,11.96,11.96,11.96,0.32
+EBS 1797,EBS 1797,and,2,2,Low,Hancock,1,53,Flowering,12.3,12.3,12.3,1.4
+Cor C. 135-15,Cor C 135,chil,3,3,High,Hancock,3,80,,13.22,13.22,13.22,2.95
+Garnet-10,Garnet,chil,4,4,Low,Hancock,2,32,,92.08,92.08,13.22,1.08
+HAO 76-3,HAO 76,bert,1,1,Low,Sterile,3,31,,13.23,13.23,13.23,6.96
+WAC 663,WAC 663,and,2,2,Low,Sterile,2,70,Yellow,15.07,15.07,15.07,1.12
+HAO 58-3,HAO 58,bert,1,1,Low,Sterile,3,164,,15.35,15.35,15.35,15.5
+WAC 5,WAC 5,and,2,2,Low,Hancock,4,50,,15.53,15.53,15.53,4.55
+Cor C. 135-12,Cor C 135,chil,3,3,Low,Hancock,4,128,,15.77,15.77,15.77,0.35
+Cor C. 135-18,Cor C 135,chil,3,3,Low,Virgin,2,146,,16.23,16.23,16.23,0.85
+HHA 6451-20,HHA 6451,bert,1,1,Low,Virgin,4,233,,16.62,16.62,16.62,15.46
+Huagalina,Huagalina,and,2,2,High,Sterile,3,396,,16.84,16.84,16.84,9.25
+Huagalina,Huagalina,and,2,2,Low,Virgin,1,156,,17.11,17.11,17.11,9.56
+EBS 1797,EBS 1797,and,2,2,High,Virgin,1,189,,17.48,17.48,17.48,13.95
+EBS 1797,EBS 1797,and,2,2,High,Hancock,3,274,,18.3,18.3,18.3,10.1
+Cor C.95-2,Cor C95,chil,3,3,Low,Sterile,2,10,,18.35,18.35,18.35,1.12
+Wac 735,Wac 735,and,2,2,Low,Sterile,4,98,,18.45,18.45,18.45,4.46
+P. Cacho-21,P. Cacho,chil,3,3,High,Virgin,1,56,,18.94,18.94,18.94,8.12
+Cor C.95-9,Cor C95,chil,3,3,Low,Hancock,1,76,,19.64,19.64,19.64,5.19
+Cor C.56-8,Cor C56,chil,3,3,High,Sterile,4,42,,20.16,20.16,20.16,7.6
+HAO 76-11,HAO 76,bert,1,1,Low,Hancock,3,45,,20.33,20.33,20.33,0.52
+WAC 663,WAC 663,and,2,2,Low,Virgin,1,295,,21.09,21.09,21.09,2.1
+WAC 663,WAC 663,and,2,2,Low,Virgin,3,176,Yellow,21.52,21.52,21.52,1.5
+WAC 5,WAC 5,and,2,2,Low,Virgin,2,324,,21.83,21.83,21.83,3.55
+P. Cacho-8,P. Cacho,chil,3,3,High,Sterile,4,100,,22.34,22.34,22.34,21.16
+WAC 5,WAC 5,and,2,2,Low,Sterile,4,161,,22.55,22.55,22.55,1.25
+HHA 6451-19,HHA 6451,bert,1,1,Low,Virgin,3,286,,23.03,23.03,23.03,5.21
+WAC 5,WAC 5,and,2,2,Low,Sterile,2,210,,23.05,23.05,23.05,9.11
+Wac 735,Wac 735,and,2,2,High,Sterile,3,334,,23.22,23.22,23.22,4.39
+Cor C. 135-5,Cor C 135,chil,3,3,High,Sterile,1,330,,23.44,23.44,23.44,3.2
+HAO 76-19,HAO 76,bert,1,1,Low,Virgin,3,24,,24.12,24.12,24.12,1.91
+WAC 663,WAC 663,and,2,2,Low,Sterile,4,99,,25.13,25.13,25.13,1.2
+HHA 6451-2,HHA 6451,bert,1,1,Low,Sterile,2,351,,,0,25.13,7.49
+Wac 735,Wac 735,and,2,2,Low,Sterile,3,48,,25.43,25.43,25.43,5.68
+EBS 1797,EBS 1797,and,2,2,Low,Virgin,1,218,,25.91,25.91,25.91,4.1
+WAC 663,WAC 663,and,2,2,Low,Hancock,1,357,,26.47,26.47,26.47,1.12
+Cor C. 135-2,Cor C 135,chil,3,3,Low,Sterile,2,318,,29.05,29.05,29.05,0.5
+HAO 76-4,HAO 76,bert,1,1,Low,Sterile,4,71,,29.06,29.06,29.06,1.82
+Cor C. 135-16,Cor C 135,chil,3,3,High,Hancock,4,182,,29.44,29.44,29.44,3.31
+Cor C.56-7,Cor C56,chil,3,3,High,Sterile,3,154,,29.54,29.54,29.54,7.78
+Cor C.56-18,Cor C56,chil,3,3,Low,Virgin,2,81,,30.2,30.2,30.2,1.92
+Garnet-22,Garnet,chil,4,4,High,Virgin,2,37,,81.77,81.77,30.26,5.41
+WAC 5,WAC 5,and,2,2,Low,Hancock,2,382,,30.44,30.44,30.44,4.97
+Cor C.56-4,Cor C56,chil,3,3,Low,Sterile,4,138,,30.5,30.5,30.5,2.6
+P. Cacho-5,P. Cacho,chil,3,3,High,Sterile,1,52,,30.65,30.65,30.65,8.66
+Wac 735,Wac 735,and,2,2,Low,Sterile,1,148,,30.88,30.88,30.88,4.95
+Huagalina,Huagalina,and,2,2,Low,Sterile,4,338,,31.48,31.48,31.48,8.26
+EBS 1797,EBS 1797,and,2,2,Low,Hancock,2,361,,31.78,31.78,31.78,2.35
+HAO 58-15,HAO 58,bert,1,1,High,Hancock,3,375,,1.62,1.62,31.78,7.84
+Cor C.95-15,Cor C95,chil,3,3,High,Hancock,3,344,,,0,32.45,17.06
+EBS 1797,EBS 1797,and,2,2,Low,Virgin,4,285,,32.9,32.9,32.9,2.77
+Cor C. 135-9,Cor C 135,chil,3,3,Low,Hancock,1,66,,34.45,34.45,34.45,2.25
+Huagalina,Huagalina,and,2,2,Low,Hancock,1,65,,35.4,35.4,35.4,4.78
+EBS 1797,EBS 1797,and,2,2,Low,Hancock,4,391,,35.87,35.87,35.87,2.72
+WAC 663,WAC 663,and,2,2,Low,Hancock,3,231,,36.15,36.15,36.15,1.8
+Cor C. 135-20,Cor C 135,chil,3,3,Low,Virgin,4,371,,36.38,36.38,36.38,0.58
+Huagalina,Huagalina,and,2,2,High,Virgin,3,398,,36.63,36.63,36.63,5.87
+EBS 1797,EBS 1797,and,2,2,Low,Sterile,3,304,,36.78,36.78,36.78,18.26
+P. Cacho-14,P. Cacho,chil,3,3,High,Hancock,2,47,,36.78,36.78,36.78,5.4
+EBS 1797,EBS 1797,and,2,2,Low,Sterile,2,337,,38.3,38.3,38.3,2.89
+EBS 1797,EBS 1797,and,2,2,Low,Sterile,4,227,Flowering,38.33,38.33,38.33,9.75
+Huagalina,Huagalina,and,2,2,Low,Virgin,3,166,,38.39,38.39,38.39,10.27
+Ranger,Ranger,elite,6,5,Low,Virgin,3,144,,39.2,39.2,39.2,0.32
+Ranger,Ranger,elite,6,5,Low,Sterile,1,152,,39.26,39.26,39.26,0.42
+Cor C. 135-3,Cor C 135,chil,3,3,Low,Sterile,3,212,,39.38,39.38,39.38,2.1
+EBS 1797,EBS 1797,and,2,2,Low,Virgin,2,290,,39.45,39.45,39.45,3.3
+EBS 1797,EBS 1797,and,2,2,High,Hancock,2,232,,40.21,40.21,40.21,23.52
+Cor C.56-21,Cor C56,chil,3,3,High,Virgin,1,328,,40.42,40.42,40.42,5.48
+HHA 6451-3,HHA 6451,bert,1,1,Low,Sterile,3,280,,40.54,40.54,40.54,11.38
+Ranger,Ranger,elite,6,5,Low,Virgin,2,235,,40.89,40.89,40.89,0.4
+Huagalina,Huagalina,and,2,2,Low,Hancock,2,109,,41.43,41.43,41.43,5.73
+Wac 735,Wac 735,and,2,2,Low,Sterile,2,262,,41.84,41.84,41.84,6.21
+EBS 1797,EBS 1797,and,2,2,Low,Hancock,3,206,,42.81,42.81,42.81,3.95
+Ranger,Ranger,elite,6,5,Low,Hancock,1,51,,44.27,44.27,44.27,0.37
+Huagalina,Huagalina,and,2,2,Low,Hancock,4,257,,44.87,44.87,44.87,17.79
+Snowden,Snowden,elite,6,5,Low,Sterile,4,183,,,0,45.32,0.57
+Cor C.95-3,Cor C95,chil,3,3,Low,Sterile,3,102,,45.34,45.34,45.34,3.54
+Garnet-3,Garnet,chil,4,4,Low,Sterile,3,69,,45.37,45.37,45.37,0.76
+Burbank,Burbank,elite,5,5,High,Virgin,3,30,,45.98,45.98,45.98,9.67
+Wac 735,Wac 735,and,2,2,High,Hancock,2,362,,46.15,46.15,46.15,1.77
+Wac 735,Wac 735,and,2,2,Low,Hancock,1,349,,,0,46.42,1.85
+EBS 1797,EBS 1797,and,2,2,High,Hancock,4,335,,46.52,46.52,46.52,6.69
+Ranger,Ranger,elite,6,5,Low,Hancock,3,90,,46.76,46.76,46.76,0.45
+Wac 735,Wac 735,and,2,2,Low,Virgin,4,312,,47.45,47.45,47.45,8.83
+Cor C.56-17,Cor C56,chil,3,3,Low,Virgin,1,130,,47.77,47.77,47.77,2.75
+Wac 735,Wac 735,and,2,2,Low,Virgin,2,172,,47.92,47.92,47.92,3.42
+Norkodah,Norkodah,elite,6,5,High,Hancock,2,39,,119,119,47.93,1.06
+WAC 663,WAC 663,and,2,2,Low,Virgin,2,260,,48.04,48.04,48.04,1.96
+Snowden,Snowden,elite,6,5,Low,Virgin,2,106,,,0,48.69,0.91
+Cor C.95-18,Cor C95,chil,3,3,Low,Virgin,2,346,,49.96,49.96,49.96,4.2
+P. Cacho-24,P. Cacho,chil,3,3,High,Virgin,4,123,,49.96,49.96,49.96,12.97
+P. Cacho-15,P. Cacho,chil,3,3,High,Hancock,3,54,,50.43,50.43,50.43,8.23
+Snowden,Snowden,elite,6,5,Low,Virgin,1,107,,,0,50.61,1.53
+Cor C.56-15,Cor C56,chil,3,3,High,Hancock,3,224,,51.25,51.25,51.25,20.56
+Norkodah,Norkodah,elite,6,5,Low,Sterile,1,79,,51.87,51.87,51.87,0.56
+Ranger,Ranger,elite,6,5,Low,Hancock,2,282,,52.94,52.94,52.94,52.01
+Cor C. 135-21,Cor C 135,chil,3,3,High,Virgin,1,203,,53.95,53.95,53.95,5.41
+HAO 58-6,HAO 58,bert,1,1,High,Sterile,2,320,,54.8,54.8,54.8,20.22
+Snowden,Snowden,elite,6,5,High,Hancock,2,384,,55.14,55.14,55.14,6.82
+Norkodah,Norkodah,elite,6,5,Low,Sterile,3,228,,55.9,55.9,55.9,0.47
+Norkodah,Norkodah,elite,6,5,Low,Sterile,2,108,,56.59,56.59,56.59,0.23
+Snowden,Snowden,elite,6,5,Low,Virgin,3,208,,,0,56.67,0.35
+Huagalina,Huagalina,and,2,2,Low,Sterile,1,397,,57.67,57.67,57.67,6.57
+HAO 76-22,HAO 76,bert,1,1,High,Virgin,2,205,,58.77,58.77,58.77,13.04
+Cor C.95-17,Cor C95,chil,3,3,Low,Virgin,1,264,,59.35,59.35,59.35,1.89
+Cor C.95-19,Cor C95,chil,3,3,Low,Virgin,3,124,,59.62,59.62,59.62,2.35
+Cor C.56-10,Cor C56,chil,3,3,Low,Hancock,2,191,,59.84,59.84,59.84,1.53
+Snowden,Snowden,elite,6,5,Low,Sterile,1,226,,,0,60.15,0.51
+WAC 5,WAC 5,and,2,2,Low,Virgin,4,215,,60.42,60.42,60.42,7.4
+Burbank,Burbank,elite,5,5,Low,Sterile,4,403,,,0,60.64,0.27
+Ranger,Ranger,elite,6,5,Low,Sterile,2,302,,,0,60.85,0.76
+Snowden,Snowden,elite,6,5,Low,Hancock,1,165,,,0,60.92,2.31
+Burbank,Burbank,elite,5,5,Low,Virgin,1,140,,60.94,60.94,60.94,1.6
+Ranger,Ranger,elite,6,5,Low,Hancock,4,96,,62.21,62.21,62.21,0.55
+Norkodah,Norkodah,elite,6,5,Low,Virgin,1,254,,62.93,62.93,62.93,
+WAC 5,WAC 5,and,2,2,Low,Virgin,3,281,,63.57,63.57,63.57,4.91
+Norkodah,Norkodah,elite,6,5,Low,Hancock,4,345,,63.84,63.84,63.84,0.35
+Snowden,Snowden,elite,6,5,Low,Sterile,3,137,,,0,64.75,1.91
+Burbank,Burbank,elite,5,5,Low,Sterile,2,261,,66.5,66.5,66.5,0.49
+HAO 76-7,HAO 76,bert,1,1,High,Sterile,3,207,,66.58,66.58,66.58,12.92
+P. Cacho-9,P. Cacho,chil,3,3,Low,Hancock,1,82,,66.62,66.62,66.62,1.25
+P. Cacho-7,P. Cacho,chil,3,3,High,Sterile,3,277,,67.45,67.45,67.45,11.12
+Snowden,Snowden,elite,6,5,Low,Hancock,2,236,,67.47,67.47,67.47,0.66
+Snowden,Snowden,elite,6,5,High,Virgin,1,73,,67.48,67.48,67.48,8.08
+HAO 76-1,HAO 76,bert,1,1,Low,Sterile,1,322,,68.72,68.72,68.72,3.43
+Cor C.56-2,Cor C56,chil,3,3,Low,Sterile,2,378,,68.78,68.78,68.78,2.96
+Ranger,Ranger,elite,6,5,Low,Virgin,4,195,,68.95,68.95,68.95,0.66
+HAO 76-9,HAO 76,bert,1,1,Low,Hancock,1,385,,69.6,69.6,69.6,3.41
+Ranger,Ranger,elite,6,5,Low,Sterile,3,133,,70.37,70.37,70.37,2.11
+Garnet-19,Garnet,chil,4,4,Low,Virgin,3,115,,70.45,70.45,70.45,1.16
+Norkodah,Norkodah,elite,6,5,Low,Hancock,2,358,,70.77,70.77,70.77,0.24
+HAO 76-8,HAO 76,bert,1,1,High,Sterile,4,192,,71.99,71.99,71.99,12.43
+Cor C. 135-7,Cor C 135,chil,3,3,High,Sterile,3,255,,71.99,71.99,71.99,2.06
+Cor C.56-19,Cor C56,chil,3,3,Low,Virgin,3,315,,72.15,72.15,72.15,4.31
+Wac 735,Wac 735,and,2,2,Low,Hancock,3,332,,72.66,72.66,72.66,5.48
+Garnet-18,Garnet,chil,4,4,Low,Virgin,2,105,,73.13,73.13,73.13,1.3
+Cor C.56-5,Cor C56,chil,3,3,High,Sterile,1,196,,74.15,74.15,74.15,7.91
+Garnet-17,Garnet,chil,4,4,Low,Virgin,1,20,,75.02,75.02,75.02,1.2
+Snowden,Snowden,elite,6,5,Low,Sterile,2,237,,76.16,76.16,76.16,1.37
+Cor C.56-23,Cor C56,chil,3,3,High,Virgin,3,278,,76.96,76.96,76.96,5.94
+Snowden,Snowden,elite,6,5,High,Sterile,3,275,,77.9,77.9,77.9,4.79
+Ranger,Ranger,elite,6,5,Low,Sterile,4,291,,80.36,80.36,80.36,0.83
+Burbank,Burbank,elite,5,5,Low,Virgin,4,272,,80.51,80.51,80.51,0.76
+Garnet-24,Garnet,chil,4,4,High,Virgin,4,163,,80.57,80.57,80.57,4.34
+Garnet-12,Garnet,chil,4,4,Low,Hancock,4,201,,81.04,81.04,81.04,0.75
+Cor C.56-11,Cor C56,chil,3,3,Low,Hancock,3,225,,81.3,81.3,81.3,2.73
+Norkodah,Norkodah,elite,6,5,Low,Virgin,3,354,,81.36,81.36,81.36,0.31
+Cor C.95-4,Cor C95,chil,3,3,Low,Sterile,4,393,,81.54,81.54,81.54,7.73
+Garnet-1,Garnet,chil,4,4,Low,Sterile,1,38,,47.93,47.93,81.77,0.48
+Norkodah,Norkodah,elite,6,5,Low,Virgin,4,170,,81.82,81.82,81.82,0.29
+Norkodah,Norkodah,elite,6,5,Low,Virgin,2,173,Yellow,82.55,82.55,82.55,0.5
+Cor C.56-16,Cor C56,chil,3,3,High,Hancock,4,143,,82.8,82.8,82.8,11.04
+Burbank,Burbank,elite,5,5,Low,Sterile,1,198,,83.16,83.16,83.16,0.72
+Ranger,Ranger,elite,6,5,High,Hancock,4,298,,83.2,83.2,83.2,0.43
+Cor C.95-1,Cor C95,chil,3,3,Low,Sterile,1,279,,83.4,83.4,83.4,2.84
+Snowden,Snowden,elite,6,5,Low,Virgin,4,94,,,0,83.82,1.86
+Cor C.56-20,Cor C56,chil,3,3,Low,Virgin,4,187,,84.02,84.02,84.02,3.81
+Burbank,Burbank,elite,5,5,Low,Hancock,4,91,,84.11,84.11,84.11,0.86
+Burbank,Burbank,elite,5,5,Low,Hancock,2,331,,84.91,84.91,84.91,0.71
+Snowden,Snowden,elite,6,5,High,Sterile,4,395,,85.04,85.04,85.04,5.68
+Garnet-9,Garnet,chil,4,4,Low,Hancock,1,74,,85.48,85.48,85.48,0.94
+P. Cacho-20,P. Cacho,chil,3,3,Low,Virgin,4,95,,86.24,86.24,86.24,2.06
+Snowden,Snowden,elite,6,5,Low,Hancock,3,199,,86.77,86.77,86.77,1.01
+HAO 76-2,HAO 76,bert,1,1,Low,Sterile,2,383,,86.89,86.89,86.89,5
+HAO 76-14,HAO 76,bert,1,1,High,Hancock,2,341,,87.4,87.4,87.4,15.32
+P. Cacho-4,P. Cacho,chil,3,3,Low,Sterile,4,327,,88.36,88.36,88.36,1.56
+Wac 735,Wac 735,and,2,2,Low,Hancock,2,352,,,0,88.63,1.73
+HAO 76-21,HAO 76,bert,1,1,High,Virgin,1,288,,88.76,88.76,88.76,18.68
+HAO 76-12,HAO 76,bert,1,1,Low,Hancock,4,363,,89.5,89.5,89.5,2.17
+P. Cacho-3,P. Cacho,chil,3,3,Low,Sterile,3,404,,,0,89.81,1.17
+Cor C. 135-24,Cor C 135,chil,3,3,High,Virgin,4,386,,90.56,90.56,90.56,2.79
+Garnet-2,Garnet,chil,4,4,Low,Sterile,2,118,,90.73,90.73,90.73,1.22
+P. Cacho-1,P. Cacho,chil,3,3,Low,Sterile,1,325,,90.75,90.75,90.75,2.59
+Ranger,Ranger,elite,6,5,High,Hancock,2,35,,143.21,143.21,92.08,1.89
+Cor C.56-9,Cor C56,chil,3,3,Low,Hancock,1,406,,94.05,94.05,94.05,2.14
+Norkodah,Norkodah,elite,6,5,Low,Hancock,3,213,,94.5,94.5,94.5,1.23
+Burbank,Burbank,elite,5,5,Low,Virgin,3,246,,94.82,94.82,94.82,1.44
+Cor C.56-1,Cor C56,chil,3,3,Low,Sterile,1,294,,95.06,95.06,95.06,1.56
+HAO 76-17,HAO 76,bert,1,1,Low,Virgin,1,372,,95.35,95.35,95.35,4.53
+Cor C.95-10,Cor C95,chil,3,3,Low,Hancock,2,175,,96.12,96.12,96.12,2.11
+Cor C. 135-19,Cor C 135,chil,3,3,Low,Virgin,3,287,,96.69,96.69,96.69,1.45
+Burbank,Burbank,elite,5,5,Low,Sterile,3,248,,97.09,97.09,97.09,1.31
+Norkodah,Norkodah,elite,6,5,High,Sterile,2,200,,99.19,99.19,99.19,1.07
+Garnet-7,Garnet,chil,4,4,High,Sterile,3,145,,99.51,99.51,99.51,1.35
+Snowden,Snowden,elite,6,5,High,Virgin,2,366,,100.3,100.3,100.3,9.91
+P. Cacho-10,P. Cacho,chil,3,3,Low,Hancock,2,141,,100.78,100.78,100.78,0.95
+Garnet-6,Garnet,chil,4,4,High,Sterile,2,360,,100.8,100.8,100.8,3.29
+P. Cacho-11,P. Cacho,chil,3,3,Low,Hancock,3,359,,100.8,100.8,100.8,1.16
+Burbank,Burbank,elite,5,5,High,Sterile,1,347,,,0,100.95,4.11
+Cor C. 135-22,Cor C 135,chil,3,3,High,Virgin,2,402,,,0,101.84,0.73
+P. Cacho-2,P. Cacho,chil,3,3,Low,Sterile,2,369,,102.25,102.25,102.25,1.25
+Burbank,Burbank,elite,5,5,High,Hancock,3,323,,102.34,102.34,102.34,4.47
+Burbank,Burbank,elite,5,5,Low,Hancock,1,219,,103.03,103.03,103.03,0.81
+HAO 76-6,HAO 76,bert,1,1,High,Sterile,2,408,,105.27,105.27,105.27,6.7
+Norkodah,Norkodah,elite,6,5,High,Sterile,3,86,,112.25,112.25,112.25,1.28
+Burbank,Burbank,elite,5,5,High,Hancock,4,113,,113.55,113.55,113.55,5.85
+Norkodah,Norkodah,elite,6,5,High,Sterile,4,365,,115.09,115.09,115.09,0.62
+Cor C.95-20,Cor C95,chil,3,3,Low,Virgin,4,188,,116.25,116.25,116.25,6.63
+P. Cacho-16,P. Cacho,chil,3,3,High,Hancock,4,317,,116.85,116.85,116.85,4.18
+Ranger,Ranger,elite,6,5,High,Sterile,3,299,,118.12,118.12,118.12,1.55
+P. Cacho-19,P. Cacho,chil,3,3,Low,Virgin,3,339,,118.65,118.65,118.65,1.51
+Garnet-13,Garnet,chil,4,4,High,Hancock,1,157,,118.89,118.89,118.89,4.34
+HHA 6451-1,HHA 6451,bert,1,1,Low,Sterile,1,40,,,0,119,2.79
+EBS 1797,EBS 1797,and,2,2,High,Virgin,3,269,,123.55,123.55,123.55,19.14
+Snowden,Snowden,elite,6,5,High,Hancock,1,168,,123.83,123.83,123.83,8.84
+Burbank,Burbank,elite,5,5,High,Hancock,1,131,,124.32,124.32,124.32,7.37
+Garnet-20,Garnet,chil,4,4,Low,Virgin,4,336,,125.37,125.37,125.37,2
+Norkodah,Norkodah,elite,6,5,High,Virgin,2,57,,128.8,128.8,128.8,0.89
+Garnet-23,Garnet,chil,4,4,High,Virgin,3,296,,135.28,135.28,135.28,4.96
+Cor C.56-6,Cor C56,chil,3,3,High,Sterile,2,313,,136.07,136.07,136.07,10.1
+Garnet-15,Garnet,chil,4,4,High,Hancock,3,399,,,0,136.16,5.06
+Burbank,Burbank,elite,5,5,High,Sterile,3,142,,137.02,137.02,137.02,7.81
+Ranger,Ranger,elite,6,5,High,Sterile,1,63,,137.78,137.78,137.78,4.13
+Snowden,Snowden,elite,6,5,High,Sterile,1,321,,140.02,140.02,140.02,9
+Burbank,Burbank,elite,5,5,High,Virgin,1,132,,142.23,142.23,142.23,11.09
+Cor C.95-11,Cor C95,chil,3,3,Low,Hancock,3,36,Flowering,30.26,30.26,143.21,6.92
+Garnet-21,Garnet,chil,4,4,High,Virgin,1,221,,148.48,148.48,148.48,4.08
+Snowden,Snowden,elite,6,5,High,Virgin,4,186,,149.13,149.13,149.13,6.24
+Garnet-4,Garnet,chil,4,4,Low,Sterile,4,394,,150.91,150.91,150.91,1.73
+Burbank,Burbank,elite,5,5,High,Virgin,2,343,,156.24,156.24,156.24,7.6
+P. Cacho-22,P. Cacho,chil,3,3,High,Virgin,2,350,,157.52,157.52,157.52,2.49
+Burbank,Burbank,elite,5,5,High,Virgin,4,114,,161.11,161.11,161.11,4.78
+Burbank,Burbank,elite,5,5,High,Sterile,2,407,,162.18,162.18,162.18,5.72
+Garnet-14,Garnet,chil,4,4,High,Hancock,2,311,,166.3,166.3,166.3,4.95
+Norkodah,Norkodah,elite,6,5,High,Virgin,4,197,,167,167,167,0.72
+Burbank,Burbank,elite,5,5,High,Hancock,2,309,,174.46,174.46,174.46,8.62
+Snowden,Snowden,elite,6,5,High,Hancock,3,258,,177,177,177,5.31
+Ranger,Ranger,elite,6,5,High,Virgin,3,247,,180.09,180.09,180.09,1.09
+Ranger,Ranger,elite,6,5,High,Virgin,1,12,,181.68,181.68,181.68,3.14
+Burbank,Burbank,elite,5,5,High,Sterile,4,243,,191.05,191.05,191.05,7.32
+Ranger,Ranger,elite,6,5,High,Virgin,4,120,,193.56,193.56,193.56,2.12
+Ranger,Ranger,elite,6,5,High,Sterile,2,162,,198.56,198.56,198.56,3.45
+Norkodah,Norkodah,elite,6,5,High,Virgin,1,364,,202.1,202.1,202.1,0.84
+Ranger,Ranger,elite,6,5,High,Virgin,2,136,,228.93,228.93,228.93,2.17

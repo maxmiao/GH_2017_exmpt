@@ -1,0 +1,122 @@
+---
+title: "R Notebook for GH_2017"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readr)
+library(MASS)
+library(car)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+#meta_data_GH2017 <- GHexp17max
+#labels(meta_data_GH2017)
+a = lmer(reltub~Clade*Soil + (1|variety2), data=subset(meta_data_GH2017, Clade != "Bert" & Nutrient == "Low" &  Soil != "Sterile"))
+summary(a)
+
+```
+
+Notice: elite variety see in NutrientLow:SpeciesE see statistical significance difference from Andigenum 
+
+```{r}
+Hancock_data <- subset(meta_data_GH2017, subset = (Soil_type == "Hancock"))
+shootlmer = lmer(Biomass_shoots~Initial_shoot_Length + Nutrient*Species + (1|Species:Variety), data=Hancock_data)
+summary(shootlmer)
+anova(shootlmer)
+lsmeans(shootlmer)
+```
+
+Still see that Elite varieties do best in Virgin Soil conditions. 
+
+Tubermass:
+
+```{r}
+tuberlmer = lmer(Tubermass~Initial_shoot_Length + Nutrient*Soil_type*Species + (1|Species:Variety), data=meta_data_GH2017)
+summary(shootlmer)
+anova(shootlmer)
+lsmeans(shootlmer)
+```
+
+From this code, see that Elite varieties produced statistically significantly more tubers than Andigenum, and same with Chiletanum. See the Elite varieties produced more tubermass especially more in low nutrient conditions. 
+
+```{r}
+low_data <- subset(meta_data_GH2017, subset = (Nutrient== "Low"))
+tuberlmer = lmer(Tubermass~Initial_shoot_Length + Soil_type*Species + (1|Species:Variety), data=low_data)
+summary(tuberlmer)
+anova(tuberlmer)
+lsmeans(tuberlmer)
+
+```
+
+In low nutrient conditions see that Chiletanum and Elite varieties to significantly better than the Andigenum varities. 
+Some other interesting statisitics
+Soil_type:Species  Hancock C     37.81     83.8  <2e-16 ***
+Soil_type:Species  Sterile C     38.24     83.6  <2e-16 ***
+Soil_type:Species  Virgin C      50.60     96.2  <2e-16 ***
+Soil_type:Species  Hancock E     41.73     93.0  <2e-16 ***
+
+Chiletanum variety does best in Virgin soil while Elite varieties do best in Hancock soil. 
+
+##Relativising everything:
+
+```{r}
+shootlmer = lmer(Relsht_avg~Initial_shoot_Length + Nutrient*Soil_type*Species + (1|Species:Variety), data=meta_data_GH2017)
+summary(shootlmer)
+anova(shootlmer)
+lsmeans(shootlmer)
+
+plot_shoot <- ggplot(data = low_data, aes(Species, Biomass_shoots, fill = Soil_type))
+plot_shoot + stat_summary(fun.y = mean, geom= "bar", position= "dodge") + stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width=0.9), width = 0.2)
+```
+
+```{r}
+d <- summary(low_data)$lsmeans[c("lsmean", "lower.CL", "upper.CL")]
+plot_shoot <- ggplot(data = d, aes(Species, Tubermass, fill = Soil_type))
+plot_shoot + stat_summary(fun.y = mean, geom= "bar", position= "dodge") + stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width=0.9), width = 0.2)
+```
+
+See that Soil type matter alot when considering shoot Biomass. Hancock soil regardless seems to have performed the best with all 4 species of potatoes.  
+
+```{r}
+tuberlmer = lmer(Relsht_avg~Initial_shoot_Length + Nutrient*Soil_type*Species + (1|Species:Variety), data=meta_data_GH2017)
+summary(shootlmer)
+anova(shootlmer)
+lsmeans(shootlmer)
+
+
+plot_tuber <- ggplot(data = meta_data_GH2017, aes(Species, Tubermass, fill = Nutrient))
+plot_tuber + stat_summary(fun.y = mean, geom= "bar", position= "dodge") + stat_summary(fun.data = mean_cl_normal) + labs(x = "Subspecies", y="Tubermass", fill = "Nutrients")
+```
+
+Also, landraces seem to make more tubers in nutrient low conditions compared to Elite varieties which only seem to make them even more in nutrient high conditions. This maybe potato tubers initially was a survival structure from the elements. 
+
+```{r}
+low_data <- subset(meta_data_GH2017, subset = (Nutrient== "Low"))
+relshtlmer = lmer(Relsht_avg~Initial_shoot_Length + Soil_type*Species + (1|Species:Variety), data=low_data)
+summary(relshtlmer)
+anova(relshtlmer)
+lsmeans(relshtlmer)
+```
+
+
+#IDK:
+
+```{r}
+tuberlmer = lmer(Rel_tuber~Initial_shoot_Length + Nutrient*Soil_type*Species + (1|Species:Variety), data=meta_data_GH2017)
+summary(tuberlmer)
+anova(tuberlmer)
+lsmeans(tuberlmer)
+
+plot_tuber <- ggplot(data = low_data, aes(Species, Tubermass, fill = Nutrient))
+plot_tuber + stat_summary(fun.y = mean, geom= "bar", position= "dodge") + stat_summary(fun.data = mean_cl_normal) + labs(x = "Subspecies", y="Tubermass", fill = "Nutrients")
+```
+
+#look at Root:Tuber+shoot ratio to look at efficieny of the plant 
+#graph tuber allocation vs shoot
+
+
