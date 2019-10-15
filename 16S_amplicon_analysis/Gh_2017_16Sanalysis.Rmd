@@ -1,0 +1,394 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+
+```{r, echo=FALSE}
+gh_soil_16S_rdp = read.csv("GHexp17max-Rick.csv",header = T)
+
+library(vegan)
+library(ggplot2)
+labels(gh_soil_16S_rdp)
+str(gh_soil_16S_rdp)
+table1 <- gh_soil_16S_rdp[23:1502]
+
+rarecurve(gh_soil_16S_rdp[23:1502], col = "blue")
+```
+We see that alot of our samples start to plataeu around ~250 reads. And so we will now proceed to do some our quality control step. 
+
+```{r}
+ghsoilspecies_16S_edited <- subset(gh_soil_16S_rdp,total > 250 & Stem_width > 0 & Soil_type != "Sterile")
+```
+
+Now we need to normalize our counts:
+
+```{r, echo=FALSE}
+ghsoilspecies_16S_std = decostand(ghsoilspecies_16S_edited[,24:1502], method = "total")
+ghsoil16S = cbind(ghsoilspecies_16S_edited[,1:27],ghsoilspecies_16S_std)
+ghsoilmds <- metaMDS(ghsoilspecies_16S_std)
+write.csv(ghsoil16S, file = "ghsoil16S_1.csv")
+ghsoil16S <- read.csv("ghsoil16S_1.csv",header = T)
+```
+
+Stress value is 0.23 which is okay. Its not ideal. 
+Now we proceed to plot our NMDS plot: 
+
+```{r, echo=FALSE}
+summary(ghsoilmds)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Species))
+ordiellipse(ghsoilmds, ghsoil16S$Species, label = TRUE)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Nutrient))
+ordiellipse(ghsoilmds, ghsoil16S$Nutrient, label = TRUE)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Soil_type))
+ordiellipse(ghsoilmds, ghsoil16S$Soil_type, label = TRUE)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$timepoint))
+ordiellipse(ghsoilmds, ghsoil16S$timepoint, label = TRUE)
+```
+This plot is of everything! 
+
+Now let's use ggplot2 instead of base R to make our plots:
+
+```{r}
+#library(ggplot2)
+#coords <- as.data.frame(scores(ghsoilmds))
+#plot(coords$NMDS2 ~ coords$NMDS1)
+#meta_coords <- bind_cols(ghsoil16S[,1:23],coords)
+#bac_plot <- ggplot(meta_coords,aes(NMDS1, NMDS2))+
+  #geom_point(size=2.5, alpha=0.3, aes(shape = meta_coords$Species))+
+  #stat_ellipse(geom = "polygon", data=meta_coords, #aes(x=NMDS1,y=NMDS2,fill=Species,group=Species), alpha=0.30)+
+  #scale_colour_manual(values=c("A" = "red", "C" = "blue", "SB" = "green", "E" = "yellow"))
+  
+```
+Made a new data set! called meta_coords which contains both NMDS coordinates and the associated metadata. 
+
+
+```{r}
+fit_gh16S <- adonis(ghsoil16S[,24:1507] ~ Nutrient*timepoint*Soil_type*Species, data = ghsoil16S, permutations = 999)
+fit_gh16S
+```
+Species! differ! $p-value = 0.001$ We also see a difference with timepoint and Nutrient! We see a interaction effect between timepoint and Species /$p=0.084$
+(Note this value includes points at both high and low conditions)
+
+**Diversity analysis**
+
+Make table that includes shannon index column 
+```{r}
+library(tidyverse)
+diversity <- diversity(gh_soil_16S_rdp[23:1502],index="shannon")
+div_col <- as.data.frame(diversity)
+div_table <- gh_soil_16S_rdp[1:22]
+metadata <- bind_cols(div_table,div_col)
+gh_div <- bind_cols(metadata,table1)
+```
+
+```{r}
+ghsoilspecies_16S_edited <- subset(gh_div,total > 200 & Stem_width > 0 & Soil_type != "Sterile")
+ghsoilspecies_16S_std = decostand(ghsoilspecies_16S_edited[,24:1503], method = "total")
+ghsoil16S = cbind(ghsoilspecies_16S_edited[,1:23],ghsoilspecies_16S_std)
+ghsoilmds <- metaMDS(ghsoilspecies_16S_std)
+```
+
+
+Now we do some statistics with diversity: 
+
+```{r}
+library(lmerTest)
+library(lme4)
+library(MASS)
+library(car)
+library(lsmeans)
+
+ghsoil16S$timepoint = as.factor(ghsoil16S$timepoint)
+
+div_test <- lmer(diversity ~ timepoint + Nutrient + Species*Soil_type + (1|Variety), data = ghsoil16S)
+
+summary(div_test)
+anova(div_test)
+
+div_rg1 <- ref.grid(div_test)
+summary(div_rg1)
+lsmeans(div_test,"Species")
+```
+
+So based on this the species and timepoint main effect play a large role in determining diversity of the microbiome.This is promising. **we detected a high diversity of microbes with elites compared to landraces and wild**
+
+###timepoint is a strong effect so need to split it out. So we will need to recalculate lSmeans for shannon subsetting for TP1 and TP2.
+
+Looking at the LSMEANs Elite/Modern genotypes recruit a greater diversity of microbes followed by landraces and Wild genotype (S. Berthalti). 
+
+```{r}
+lsmeans(div_test,"timepoint")
+```
+Timepoint 2 has a greater diversity of microbes than timepoint 1. Now lets just try to remove nutrient and also timepoint factors:
+
+```{r}
+ghsoil16S$timepoint = as.factor(ghsoil16S$timepoint)
+
+div_test <- lmer(diversity ~ Nutrient*Species*Soil_type + (1|Variety), data = subset(ghsoil16S, timepoint =="16S"))
+
+summary(div_test)
+anova(div_test)
+
+div_rg1 <- ref.grid(div_test)
+summary(div_rg1)
+lsmeans(div_test,"Species")
+```
+According to ANOVA, we see that species is weakly causing differences in Shannon diversity. Interestinly enough, nutrients isn't effecting the microbial diversity at first timepoint. 
+
+how about just timepoint 2:
+```{r}
+div_test <- lmer(diversity ~ Nutrient*Species*Soil_type + (1|Variety), data = subset(ghsoil16S, timepoint =="16S2"))
+
+summary(div_test)
+anova(div_test)
+
+div_rg1 <- ref.grid(div_test)
+summary(div_rg1)
+lsmeans(div_test,"Species")
+```
+
+
+
+**Now how about if we did a subset for just timepoint 1:**
+
+```{r}
+ghsoilspecies_16S_TP1 <- subset(ghsoil16S, timepoint == "16S")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP1[,24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$Species, label = TRUE)
+
+```
+
+```{r}
+fit_gh16S <- adonis(ghsoilspecies_16S_TP1[23:1503] ~ Nutrient*Soil_type*Species, data = ghsoilspecies_16S_TP1, permutations = 999)
+fit_gh16S
+```
+Subsetting for timepoint 1 any subsetting see that species was the only thing that was statistically significant in determining microbial composition. We do see a interesting result in that Elites look less restrictive in microbiomes than more ancestral genotypes 
+
+## Now for timepoint #2:
+
+```{r}
+ghsoilspecies_16S_TP2 <- subset(ghsoil16S, timepoint == "16S2")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP2[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP2$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP2$Species, label = T)
+```
+
+It seems that @ timepoint 2 see communities start to diverge a bit more in contrast to timepoint 1. They are start to look less similar. 
+
+```{r}
+fit_gh16S <- adonis(ghsoilspecies_16S_TP2[24:1503] ~ Nutrient + Soil_type + Species, data = ghsoilspecies_16S_TP2, permutations = 999)
+fit_gh16S
+
+#pairwise statistic for timepoint 2 and low nutrient
+library(pairwiseAdonis)
+gh_soil_16S_low = subset(ghsoilspecies_16S_edited, Nutrient == "Low")
+distance_matrix = vegdist(gh_soil_16S_low[24:1502], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_low = merged_col <- c(gh_soil_16S_low[,0:23],distance)
+bray_low <- as.data.frame(bray_low)
+low = pairwise.adonis(bray_low[,24:102],bray_low$Species)
+low
+```
+Species effect as changed, Nutient effect kicks in! You see that everything else is statistically significantly different than Modern in timepoint 2 in low nutrient conditions. 
+
+A vs E is statisticall signifcantly different: bonferroni /$p = 0.006$
+SB vs E is statisticall signifcantly different: bonferroni /$p = 0.012$
+C vs E is statisticall signifcantly different: bonferroni /$p = 0.006$
+
+
+##Want to see nutrient at low levels at both timepoints
+```{r}
+ghsoilspecies_low <- subset(ghsoil16S, Nutrient == "Low")
+ghsoilmds = metaMDS(ghsoilspecies_low[24:1502])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_low$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_low$Species, label = TRUE)
+
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_low$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_low$Species, label = TRUE)
+
+
+fit_gh16S <- adonis(ghsoilspecies_low[24:1502] ~ timepoint * Soil_type * Species, data = ghsoilspecies_low, permutations = 999)
+fit_gh16S
+
+```
+perMANOVA: 
+See that timepoint /$p = 0.001$ , soil type /$p = 0.002$, and species /$p = 0.004$.
+Also see interaction effects too: 
+timepoint:Soil_type /$p = 0.002$
+timepoint:Species   /$p = 0.024$ 
+Soil_type:Species   /$p = 0.060$  
+
+Table:
+```{r}
+library(knitr)
+library(kableExtra)
+```
+
+
+
+Plot for microbial communities shifts between timepoint 1 and 2 
+```{r}
+plot2 <- plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$tp_species), pch = 20)
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$tp_species, draw = "polygon", col=1:8, border=1:8, alpha=63, label = F)
+
+
+```
+
+
+
+**looking at species effect at timepoint 2**
+```{r}
+
+fit_gh16S <- adonis(ghsoilspecies_16S_TP2[24:1503] ~ Soil_type + Species + Species*Soil_type, data = ghsoilspecies_16S_TP2, permutations = 999)
+fit_gh16S
+
+```
+Species effect is back. p-value = 0.01
+
+
+##Examine at timepoint 2 and low nutrient
+```{r, echo=FALSE}
+ghsoilspecies_16S_TP2 <- subset(ghsoil16S, timepoint == "16S2" & Nutrient == "Low")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP2[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP2$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP2$Species, label = TRUE)
+```
+
+
+
+```{r}
+fit_gh16S <- adonis(ghsoilspecies_16S_TP2[28:1225] ~ Species*Soil_type, data = ghsoilspecies_16S_TP2, permutations = 999)
+fit_gh16S
+```
+
+##PCoA: (Work in progress)
+```{r}
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, sample_ID != 281 & sample_ID != 284)
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[24:1502]~1)
+plot(ghsoilpco, display = "species", type= "n")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species))
+ordiellipse(ghsoilpco, ghsoilspecies_16S_PCA$Species, label = TRUE)
+```
+Looks like Elites are bit more varied in the microbes its associating with?? Idk...
+
+
+##Now, let's examine soil treatment effects:
+
+```{r}
+ghsoilspecies_16S_H <- subset(ghsoil16S, Nutrient == "Low", Timepoint = "T2")
+ghsoilmds = metaMDS(ghsoilspecies_16S_H[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_H$Soil_type))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_H$Soil_type, label = TRUE)
+```
+
+
+```{r}
+ghsoilspecies_16S_V <- subset(ghsoil16S, Nutrient == "Low" & Soil_type == "Virgin")
+#labels(ghsoil16S)
+ghsoilmds = metaMDS(ghsoilspecies_16S_V[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_V$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_V$Species, label = TRUE)
+```
+
+##We now want to examine High nutrient conditions:
+```{r}
+ghsoilspecies_16S_High<- subset(ghsoil16S, Nutrient == "High")
+ghsoilmds = metaMDS(ghsoilspecies_16S_High[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_High$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_High$Species, label = TRUE, alpha = 100)
+a = adonis(ghsoilspecies_16S_High[,23:1230]~Soil_type*Species, data=ghsoilspecies_16S_High, perm=999)
+a
+```
+We see that there's indeed @ timepoint 2 at low nutrients a genotype effect. Consistent to what we saw earlier. This contains both soil times. However at high nutrients we see no species effect (p=0.251).
+
+
+##Timepoint 1 @ low nutrient levels
+```{r}
+ghsoilspecies_16S_TP1 <- subset(ghsoil16S, timepoint == "16S" & Nutrient == "Low")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP1[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$Species, label = TRUE)
+
+```
+
+```{r}
+a = adonis(ghsoilspecies_16S_TP1[,24:1503]~Soil_type*Species, data=ghsoilspecies_16S_TP1, perm=999)
+a
+```
+
+
+**Timepoint 1 at High Nutrient Conditions**
+```{r}
+ghsoilspecies_16S_TP1 <- subset(ghsoil16S, timepoint == "16S" & Nutrient == "High")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP1[24:1503])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$Species, label = TRUE)
+a = adonis(ghsoilspecies_16S_TP1[,24:1503]~Soil_type*Species, data=ghsoilspecies_16S_TP1, perm=999)
+ghsoilspecies_16S_TP1 <- subset(ghsoil16S, timepoint == "16S" & Nutrient != "Low")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP1[28:1229])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$Species, label = TRUE)
+```
+p-value = 0.324
+
+
+#How about looking at how microbial communities change across time? (Work in progress...)
+```{r}
+library(tidyverse)
+groups <- factor(c(rep("A-T1",17),rep("C-T1",15),rep("M-T1",11),rep("SB-T1",6),rep("A-T2",10),rep("C-T2",8),rep("M-T1",16),rep("SB-T2",6)))
+```
+
+
+```{r}
+plot2 <- plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$tp_species), pch = 20)
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$tp_species, draw = "polygon", col=1:8, border=1:8, alpha=63, label = F)
+legend(x="bottomleft",legend=groups)
+```
+
+#Soil Type
+
+Looking at soil type = Prairie & Nutrient level High
+```{r}
+ghsoilspecies_16S_TP1 <- subset(ghsoil16S, Soil_type == "Virgin" & Nutrient == "High")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP1[28:1229])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$Species, label = TRUE)
+a = adonis(ghsoilspecies_16S_TP1[,24:1503]~Species, data=ghsoilspecies_16S_TP1, perm=999)
+a
+```
+
+Now let's examine hancock soil: 
+
+```{r}
+ghsoilspecies_16S_TP1 <- subset(ghsoil16S, Soil_type == "Hancock" & Nutrient == "Low")
+ghsoilmds = metaMDS(ghsoilspecies_16S_TP1[28:1225])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_TP1$Species))
+ordiellipse(ghsoilmds, ghsoilspecies_16S_TP1$Species, label = TRUE)
+a = adonis(ghsoilspecies_16S_TP1[,28:1225]~Species, data=ghsoilspecies_16S_TP1, perm=999)
+a
+```

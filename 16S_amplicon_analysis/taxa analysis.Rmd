@@ -1,0 +1,22 @@
+---
+title: "Taxa Analysis"
+output: html_notebook
+---
+
+##Examining diversity at the phyla level: 
+
+FIRST STEP is to setup the OTU in a format that is amendable for statistical analysis melt is used to take wide format data and melts it into long format data cast takes long format data and casts it into wide format 
+
+```{r}
+library(reshape)
+#gh_soil_16S_rdp = read.csv("GH_2017_16S_table.csv",header = T)
+melt_16S <- melt(gh_soil_16S_rdp[1:320], id.vars = colnames(gh_soil_16S_rdp[1:8]))
+colnames(gh_soil_16S_rdp[1:8])
+
+ghexp16Sgenuscast = dcast(melt_16S, Kingdom + Phylum + Class + Order + Family + Genus + Species ~ variable, fun.aggregate = sum)
+phygen = paste(ghexp16Sgenuscast$Kingdom, ghexp16Sgenuscast$Phylum, ghexp16Sgenuscast$Class,ghexp16Sgenuscast$Order, ghexp16Sgenuscast$Family, ghexp16Sgenuscast$Genus,ghexp16Sgenuscast$Species,ghexp16Sgenuscast$taxonomy)
+ghexp16Sgenuscast2 = cbind(phygen,ghexp16Sgenuscast[,8:319])
+ghexp16Sgenuscast3 = t(ghexp16Sgenuscast2)
+write.csv(ghexp16Sgenuscast3, file="ghexp16Sspecies_rdp.csv")
+```
+

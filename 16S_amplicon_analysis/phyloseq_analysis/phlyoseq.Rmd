@@ -1,0 +1,170 @@
+---
+title: "phyloseq analysis"
+author: "Max Miao"
+date: "July 26, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## importing into a phyloseq object
+
+```{r}
+library(phyloseq)
+library(ggplot2)
+taxon <- read.table("taxonomy.txt", sep="\t", header=T, row.names=1) 
+otus <- read.table("GH_2017_16S_table.txt", sep="\t", header=T, row.names=1)
+otus.t<-t(otus) 
+metadat <- read.table("metadata.txt", sep="\t", header=T, row.names=1)
+
+otus.perc<-otus.t
+
+## make phyloseq object
+
+otus.perc<-as.data.frame(otus.perc)
+OTU <- otu_table(otus.perc, taxa_are_rows=F)
+taxo <- tax_table(as.matrix(taxon), errorIfNULL=TRUE)
+metadat <- sample_data(metadat,errorIfNULL=TRUE)
+
+## links your files
+MY16S_OTU <- phyloseq(taxo, OTU, metadat)
+
+#want to now normalize our data into relative abudances:
+ps.relabund = transform_sample_counts(MY16S_OTU, function(x) x/sum(x))
+
+
+? merge_samples
+
+#merge based on multiple variables: Timpoint and Variety 
+
+variable1 = as.character(get_variable(ps.relabund, "timepoint"))
+variable2 = as.character(get_variable(ps.relabund, "Variety"))
+variable3 = as.character(get_variable(ps.relabund, "Nutrient"))
+sample_data(ps.relabund)$NewPastedVar <- mapply(paste0, variable1, variable2,variable3, collapse = "_")
+
+ps.relabund.merged = merge_samples(ps.relabund,group="NewPastedVar",fun=mean)
+# This added our OTU table, but took the mean of the associated sample data
+# We need to re-normalize.
+ps.relabund.merged = transform_sample_counts(ps.relabund.merged, function(x) x/sum(x))
+sample_variables(ps.relabund.merged)
+
+
+
+```
+So now we have BC distances for each variety for each timepoint!
+now export this phyloseq object into Vegan!
+
+```{r}
+# convert the sample_data() within a phyloseq object to a vegan compatible data object
+
+# Extract abundance matrix from the phyloseq object
+OTU1 = as(otu_table(ps.relabund.merged), "matrix")
+# transpose if necessary
+if(taxa_are_rows(ps.relabund.merged)){OTU1 <- t(OTU1)}
+# Coerce to data.frame
+OTUdf = as.data.frame(OTU1)
+write.csv(OTUdf, file = "merged_16S.csv")
+```
+
+
+```{r}
+merged_16S <- read.csv("merged_16S.csv", header = T)
+library(vegan)
+BC.dist <- vegdist(merged_16S[,2:1481], method = "bray")
+BC.matrix <- as.matrix(BC.dist)
+BC.df <- as.data.frame(BC.matrix)
+write.csv(BC.df, file = "Bray_df.csv")
+
+```
+
+##Hypothesis 4: Examining broad scale and fine scale taxa changes across treatments (Species and time)
+Using Phylloseq to look at fine level vs broad scale diversity @ potato "Species" level:
+```{r}
+subset_GH = subset_samples(ps.relabund, Nutrient == "Low")
+merged_GH = merge_samples(subset_GH, "Species")
+SD = merge_samples(sample_data(merged_GH), "Species")
+merged_norm = transform_sample_counts(merged_GH, function(x) x / sum(x) )
+plot_bar(merged_norm, fill="phyla")
+
+#broad scale at phyla level
+phylumGlommed = tax_glom(merged_norm, "phyla")
+plot_bar(phylumGlommed,fill ="phyla")
+
+#Finer Scale at class level 
+phylumGlommed = tax_glom(merged_norm, "class")
+plot_bar(phylumGlommed,fill ="class")
+```
+
+Well We don't have enough sequencing depth to quantify this but we can qualitatively see that more ancestral varieties have a greater diversity of microbial taxa than those more modern varieties. Also, we do see a less Actinobacteria as well. In terms of broad scale diversity the more ancestral varieties seem to have more at low nutrient levels.  
+
+```{r}
+subset_GH = subset_samples(ps.relabund, Nutrient == "Low")
+
+variable1 = as.character(get_variable(subset_GH, "timepoint"))
+variable2 = as.character(get_variable(subset_GH, "Species"))
+
+sample_data(subset_GH)$VarTP <- mapply(paste0, variable1, variable2, collapse = "_")
+
+ps.VarTP.merged = merge_samples(subset_GH,group="VarTP",fun=mean)
+
+# This added our OTU table, but took the mean of the associated sample data
+# We need to re-normalize.
+ps.relabund.merged = transform_sample_counts(ps.VarTP.merged, function(x) x/sum(x))
+sample_variables(ps.relabund.merged)
+
+merged_norm = transform_sample_counts(ps.relabund.merged, function(x) x / sum(x) )
+plot_bar(ps.relabund.merged, fill="phyla")
+
+ps.relabund.glom = tax_glom(ps.relabund.merged, "phyla")
+plot_bar(ps.relabund.glom,fill ="phyla")
+
+ps.relabund.glom = tax_glom(ps.relabund.merged, "class")
+plot_bar(ps.relabund.glom,fill ="class")
+```
+Need to reorder this but we see that Differences in phyla abundances across time...in low nutrient conditions. This is probably better reflected in the ordination plot tho. Huh....
+
+Note: Need to figure out the 60% that isn't working to a phyla level. Are they legitimate bacteria sequences? may need to blast. Greengenes just assigned w/e to sequences. Investigate those.  
+
+##Lets try this analysis NOT in phyloseq. 
+
+```{r}
+df = data.frame(otu_table(ps.relabund))
+meta.df = data.frame(sample_data(ps.relabund))
+taxa.df = data.frame(taxa_table(ps.relabund))
+```
+
+reformatting data...(in progress..idk if i still wanna do this)
+```{r}
+library(tidyverse)
+write.csv(otus, "otus.csv")
+otus <- read.csv("otus.csv")
+taxon <- read.csv("taxon.csv")
+
+taxon_otus <- merge(otus,taxon, by = "OTU_ID")
+write.csv(taxon_otus, "taxon_otus.csv")
+taxon_otus <- select(taxon_otus,taxon_otus$taxonomy,taxon_otus[,2:1478])
+
+#okay so now we'll try to merge taxonomy data either in excel or in R...
+
+taxon_otus_phylum <- read.csv("taxon_otus_phylum.csv")
+phylum.df <- unite(taxon_otus_phylum,kingdom,phylum, col = "taxonomy", sep = "")
+phylum.df <- t(phylum.df)
+phylum.df <- as.data.frame(phylum.df)
+
+#now we want to remove the first column! 
+
+metadata <- read.csv("metadata.csv", header = T)
+write.csv(phylum.df, "phylum_df.csv", header = T)
+phylum <- read.csv("phylum_df.csv")
+taxon_otus <- merge(metadata,phylum, by = "barcode_ID", all = F)
+
+#summarize data using tidyverse
+
+
+
+
+
+
+```

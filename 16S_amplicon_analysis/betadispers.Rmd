@@ -1,0 +1,59 @@
+---
+title: 'Hypothesis 3: Betadispersion'
+author: "Max Miao"
+date: "8/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+#subset for "Low" nutrient conditions
+ghsoilspecies_16S <- subset(gh_soil_16S_rdp,total > 250 & Stem_width > 0 & Soil_type != "Sterile")
+ghsoilspecies_low <- subset(gh_soil_16S_rdp,total > 250 & Stem_width > 0 & Nutrient == "Low")
+
+#Sort dataframe accordingly using tidyverse
+library(tidyverse)
+ghsoilspecies_bray = ghsoilspecies_low %>% arrange(timepoint,Species)
+write.csv(ghsoilspecies_bray,"GHexmpt_betadisper.csv")
+
+#note: 
+#first 16 rows are Andigenum, next 15 are chiletanum, next 11 are modern and last 6 are S. Berthaulti (49 rows total Timepoint 1)
+#First 10 rows are Andigenum, next 8 are chiletanum, next 16 are modern, and last 6 are S. Berthaulti. (40 rows total Timepoint 2)
+
+#Calculate Bray Curtis Distances
+library(vegan)
+bray = vegdist(ghsoilspecies_bray[,23:1502], method = "bray")
+
+#Figure out groupings for betadispersal analysis 
+groups <- factor(c(rep("A-T1",17),rep("C-T1",15),rep("M-T1",11),rep("SB-T1",6),rep("A-T2",10),rep("C-T2",8),rep("M-T1",16),rep("SB-T2",6)))
+
+#Finally do betadispersion test: 
+mod <- betadisper(bray, groups)
+
+#statistical tests:
+anova(mod)
+TukeyHSD(mod)
+```
+
+So, according to our anova, the groupings are statically significance (Species:timepoint). Great! When doing tukey's HSD:
+
+We see that all others clustered together but not modern! According to Tukey's HSD based on "beta dispersion"
+
+run seperately between the two timepoints (t1 and t2). *Thought* different members of the final community are coming in stochasitcally. they eventually go to a place and alpha increase but beta decreases. 
+
+If we were to plot this:
+```{r}
+plot(mod)
+```
+kind of a mess: but we do see that Ancestral ones are more clustered together...
+
+We'll now try to plot this down on ggplot
