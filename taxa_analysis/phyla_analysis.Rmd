@@ -1,0 +1,204 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Before continuing to do 16S and ITS analysis on different levels of phylogeny (Mostly phyla groups) we need to reorganize our taxanomic data
+
+**Note**: Top 50 unidentified OTUs (K_Bacteria) were ran again on blastn (megablast) and taxonomic assignments were based K score, highest percent idendity and # of hits to taxonomy. 
+
+
+```{r}
+library(tidyverse)
+rep_seq_rdp <- read.csv("GH_2017_16S_table2.csv", header = T)
+```
+
+As we can see the abundance table produced isn't what we want in terms of formatting. As a result we have to do some reshaping using tidyverse and reshape2. 
+
+*First we will divide taxonomy columm into 8 columns*
+```{r}
+rep_seq_rdp3 = separate(rep_seq_rdp, taxonomy, into = c("kingdom", "phylum"), sep = " ")
+
+```
+
+Note that there will be a warning sign that says "NA" in 1477 rows which is expected and is fine. We're only interested in "phyla". 
+
+
+Now we will use Rick's technique using reshape:
+```{r}
+library(reshape2)
+library(Kmisc)
+#Melt: moves the OTU values from wide format into long format (instead of row becomes a colmumn)
+ghexp16smelt1 = melt(rep_seq_rdp3[1:256], id.vars = colnames(rep_seq_rdp3[1:3]))
+
+#Cast: moves taxonomy from long format into wide format (instead of listed in a column, setup as a row)
+ghexp16Sphylumcast = dcast(ghexp16smelt1, kingdom+phylum ~ variable, fun.aggregate = sum)
+phygen = paste(ghexp16Sphylumcast$kingdom,".",ghexp16Sphylumcast$phylum)
+ghexp16Sphylumcast2 = cbind(phygen,ghexp16Sphylumcast[,3:255])
+ghexp16Sphylumcast3 = t(ghexp16Sphylumcast2)
+write.csv(ghexp16Sphylumcast3, file="ghexp16Sphylum_rdp_edited.csv")
+```
+
+with this taxa data in mind; we can now begin analyzing samples 
+
+```{r}
+library(tidyverse)
+ghexp16Sphylumcast3 <- read.csv("ghexp16Sphylum_rdp_edited.csv", header = T)
+metadata <- read.csv("meta_data.csv", header = T)
+gh_data <- merge(metadata, ghexp16Sphylumcast3, by = "barcode_ID")
+write.csv(gh_data, file="ghexp16Sphylum_merge.csv")
+
+```
+
+We now opened excel and calculated total # of sequences (need to figure this out in R)
+
+```{r}
+gh_data_edited <- read.csv("ghexp16Sphylum_merge.csv", header = T)
+gh_data_edited <- subset(gh_data_edited, total > 250, -c(Plantae))
+
+```
+
+
+```{r}
+library(vegan)
+ghsoilphylum_16S_std = decostand(gh_data_edited[26:33], method = "total")
+ghsoil16S = cbind(gh_data_edited[,1:25],ghsoilphylum_16S_std)
+ghsoil16S = select(ghsoil16S, -c(total))
+
+
+#a = adonis(ghsoil16S[25:31] ~ Species + (1|Variety), data = ghsoil16S, perm = 999)
+#summary(a)
+#anova(a)
+```
+hmmm... Idk...factors do indeed have 2 or more factors tho. This is odd. 
+
+
+#Taxa Analysis @ Phyla level: 
+
+We will now make the plot!!
+
+```{r}
+library(gplots)
+
+reordermerge <- ghsoil16S[order(ghsoil16S$timepoint,ghsoil16S$Nutrient,ghsoil16S$Species),]
+
+(OTUcol1<-ncol(metadata)+2)
+(OTUcol2<-ncol(reordermerge))
+justOTU<-reordermerge[,OTUcol1:OTUcol2]
+justOTU[1:5,1:5]
+rownames(justOTU[1:10,])
+rownames(justOTU)<-reordermerge$Row.names
+rownames(justOTU[1:10,])
+justOTU2<-as.matrix(t(justOTU))
+justOTU2[1:5,1:5]
+
+heatmap.2(justOTU2,Rowv=FALSE, Colv=FALSE, scale="column", trace="none", col=redblue, xlab="sample", ylab="phylum", margins=c(10,15))
+
+```
+subset data points; timepoint 1 and low nutrient condition.
+
+Options: single column for each clade, summarize by genotype, or individual sample. 
+
+  Average columns by genotype that make a average community. pheatmap function.
+  
+*Subset low nutrients, and timepoint 2*
+
+```{r}
+
+reordermerge <- ghsoil16S[order(ghsoil16S$timepoint,ghsoil16S$Nutrient,ghsoil16S$agerank),]
+reordermerge <- subset(reordermerge, Nutrient == "Low" & timepoint == "16S2" )
+
+(OTUcol1<-ncol(metadata)+3)
+(OTUcol2<-ncol(reordermerge))
+justOTU<-reordermerge[,OTUcol1:OTUcol2]
+justOTU[2:6,2:6]
+rownames(justOTU[1:10,])
+reordermerge$Species <- make.names(reordermerge$Species,unique = TRUE) 
+rownames(justOTU)<-reordermerge$Species
+rownames(justOTU[1:10,])
+justOTU2<-as.matrix(t(justOTU))
+justOTU2[2:6,2:6]
+
+heatmap1 <- heatmap.2(justOTU2,Rowv=F, Colv=FALSE, scale="column", trace="none", col=redblue, xlab="sample", ylab="phylum", margins=c(10,15),dendrogram = "none")
+
+heatmap1
+```
+Interesting that See less Bacteroidetes in Chiletanum but more in S. Berthaulti and Andigenum. More Proteobacteria in Chiletanum genotypes present. 
+
+
+```{r}
+reordermerge <- ghsoil16S[order(ghsoil16S$timepoint,ghsoil16S$Nutrient,ghsoil16S$agerank),]
+reordermerge <- subset(reordermerge, Nutrient == "Low" & timepoint == "16S" )
+
+(OTUcol1<-ncol(metadata)+3)
+(OTUcol2<-ncol(reordermerge))
+justOTU<-reordermerge[,OTUcol1:OTUcol2]
+justOTU[2:6,2:6]
+rownames(justOTU[1:10,])
+reordermerge$Species <- make.names(reordermerge$Species,unique = TRUE) 
+rownames(justOTU)<-reordermerge$Species
+rownames(justOTU[1:10,])
+justOTU2<-as.matrix(t(justOTU))
+justOTU2[2:6,2:6]
+
+heatmap2 <- heatmap.2(justOTU2,Rowv=F, Colv=FALSE, scale="column", trace="none", col=redblue, xlab="sample", ylab="phylum", margins=c(10,15),dendrogram = "none")
+```
+See more Proteobacteria overall in low nutrient condition and less bacteriodetes. 
+
+```{r}
+reordermerge <- ghsoil16S[order(ghsoil16S$timepoint,ghsoil16S$Nutrient,ghsoil16S$agerank),]
+reordermerge <- subset(reordermerge, Nutrient == "High" & timepoint == "16S" )
+
+(OTUcol1<-ncol(metadata)+3)
+(OTUcol2<-ncol(reordermerge))
+justOTU<-reordermerge[,OTUcol1:OTUcol2]
+justOTU[2:6,2:6]
+rownames(justOTU[1:10,])
+reordermerge$Species <- make.names(reordermerge$Species,unique = TRUE) 
+rownames(justOTU)<-reordermerge$Species
+rownames(justOTU[1:10,])
+justOTU2<-as.matrix(t(justOTU))
+justOTU2[2:6,2:6]
+
+heatmap3 <- heatmap.2(justOTU2,Rowv=FALSE, Colv=FALSE, scale="column", trace="none", col=redblue, xlab="sample", ylab="phylum", margins=c(10,15),dendrogram = "none")
+
+heatmap3
+```
+In High nutrient conditions, See overall lots of Proteobacteria and less bacteriodetes phyla present. 
+
+```{r}
+reordermerge <- ghsoil16S[order(ghsoil16S$timepoint,ghsoil16S$Nutrient,ghsoil16S$agerank),]
+reordermerge <- subset(reordermerge, Nutrient == "High" & timepoint == "16S2" )
+
+(OTUcol1<-ncol(metadata)+3)
+(OTUcol2<-ncol(reordermerge))
+justOTU<-reordermerge[,OTUcol1:OTUcol2]
+justOTU[2:6,2:6]
+rownames(justOTU[1:10,])
+reordermerge$Species <- make.names(reordermerge$Species,unique = TRUE) 
+rownames(justOTU)<-reordermerge$Species
+rownames(justOTU[1:10,])
+justOTU2<-as.matrix(t(justOTU))
+justOTU2[2:6,2:6]
+
+heatmap4 <- heatmap.2(justOTU2,Rowv=FALSE, Colv=FALSE, scale="column", trace="none", col=redblue, xlab="sample", ylab="phylum", margins=c(10,15), dendrogram = "none")
+
+heatmap4
+```
+In High nutrient conditions @ timepoint 1. See more bacateroidetes in Elites or more recent genotypes than in ancestral. Also overall see more Actinobacteria as well.
+
+*Final Figure with all 4 heat maps in one:
+
+```{r}
+par(mfrow=c(2,2))
+
+```
+
+THings to do next:
+
+1. Ordination and *adonis* phyla data 
+2. Ordination and *adonis* class data
+3. taxa analysis heatmap @ class level 
+4. taxa analysis heatmap --> tubermass gradient
+5. taxa analysis broadscale vs fine scale diversity?
+
