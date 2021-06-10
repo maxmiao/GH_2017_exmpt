@@ -1,0 +1,128 @@
+---
+title: "rel_total_biomass"
+author: "Max Miao"
+date: "June 19, 2019"
+output: html_document
+---
+
+##Calculate relative total biomass
+Relative to sterile control treatments 
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+meta_data_Gh2017 <- read.csv("rel_biomass_analysis.csv", header = T)
+library(tidyverse)
+
+#extracting rows to calculate sterile averages for each variety 
+sterile_avg = meta_data_Gh2017 %>%
+  filter(soil == "Sterile", shoot  "n/a") %>%
+  group_by(variety2,Nutrient) %>%
+  summarize(mean(total_biomass))
+
+#Now we want to calculate relativized values shoot/avg for each variety
+new_meta_data <- merge(meta_data_Gh2017,sterile_avg, by=c("variety2","Nutrient"))
+new_meta_data <- rename(new_meta_data, sterile_avg = "mean(total_biomass)")
+
+#relativize our values:
+new_meta_data <- transform(new_meta_data, rel_biomass = total_biomass/sterile_avg)
+```
+
+##fitting the model
+
+**Hypothesis: Modern potatoes and domesticatio has changed the lifestyle of the potato from its ancestral progenitors. We see that there's a difference in resource allocation as well.**
+
+```{r}
+library(readr)
+library(MASS)
+library(car)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+
+a = lmer(rel_biomass~agerank*soil*Nutrient + (1|variety2), data=subset(new_meta_data, agerank > 1))
+
+summary(a)
+```
+
+No difference in plant response in terms of total biomass which is Root + Shoot + tubers. But, by looking at the M3 poster, we did see difference in tuber vs leafy shoot response. Let's re-examine that. 
+
+##Tuber:leafy shoot ratio
+
+```{r}
+#Calculate tuber:shoot ratio
+#first need to remove samples that didn't produce tubers.
+
+new_meta_data2 = subset(meta_data_Gh2017, tubermass > 0, tubermass != "n/a")
+new_meta_data2 <- transform(new_meta_data2, shoot_tuber_ratio = shoot/tubermass)
+new_meta_data2 = subset(new_meta_data2, shoot != "n/a")
+
+```
+
+##fitting the model:
+
+```{r}
+a = lmer(shoot_tuber_ratio~agerank*soil*Nutrient + (1|variety2), data=subset(new_meta_data2))
+
+summary(a)
+anova(a)
+```
+
+We see a effect of agerank, soiltype, and nutrient regime affect the root shoot ratio. However, there's no interaction effect which is interesting. See that soil type $p = 0.0327$, for agerank $p = 0.0612$, for nutrients $p = 0.0706$. Having a p-value of 0.05 or below is generally a rule of law but it isn't everything. There's a trend that is present. 
+
+#more data calculating:
+```{r}
+library(tidyverse)
+library(plotrix)
+rel_avg = new_meta_data2 %>%
+  group_by(Clade,soil,Nutrient) %>%
+  summarise(mean = mean(shoot_tuber_ratio), sd=sd(shoot_tuber_ratio), n = n(), se = std.error(shoot_tuber_ratio))
+```
+
+
+#graphing the data with ggplot: 
+
+```{r}
+library(ggplot2)
+rel_avg <- as.data.frame(rel_avg)
+data_p = subset(rel_avg, soil == "Virgin" & Nutrient == "High")
+data_p1 = subset(rel_avg, soil == "Virgin" & Nutrient == "Low")
+data_h = subset(rel_avg, soil == "Hancock")
+
+ggplot(data_p)+
+  aes(x = Clade, y = mean)+
+  geom_col(width = .5, alpha = 1)+
+  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), width=.1)
+
+ggplot(data_p1)+
+  aes(x = Clade, y = mean)+
+  geom_col(width = .5, alpha = 1)+
+  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), width=.1)
+
+
+```
+See that generally Andigenum and Berthaulti tended to have greater shoot than tubers. Meaning they tended to live a different lifetyle than that for Chiletanum and Elite. This is conistent across both! If we were to do a fisher LSD:
+
+```{r}
+#Do fisher LSD:
+```
+
+##Want to now look at responsive-ness to nutrients.
+**Hypothesis: We see that modern varieties are more responsive to tuber yield?
+
+So far the the previous analysis we saw no difference in responsiveness in terms of total biomass, and total_shoots (Tuber + aboveground).
+
+```{r}
+data_p1 = subset(rel_avg, Nutrient == "Low")
+data_p1$Clade = as.numeric(data_p1$Clade)
+ggplot(data_p1)+
+  aes(x = Clade, y = mean, color = soil)+
+  scale_x_discrete(name = "Potato Genotypes", limits = c("Berthaulti", "Andigeum", "Chiletanum", "Garnett Chili","Modern"))+
+  scale_y_continuous(name =  "relative shoot mass")+
+  geom_line(aes(linetype=Nutrient), size=.6)+
+  geom_point(aes(shape=soil), size=3) + 
+  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), width=.1)
+```
+
+#########################################################################################
+

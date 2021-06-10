@@ -1,0 +1,341 @@
+Variety,variety2,Clade,agerank,agerank2,agerank3,Nutrient,soil,rep,sample_ID,sunlight,Notes:,tuber,tuber2,tuber3,root,dry_tuber
+HAO 58-1,HAO 58,bert,1,1,4,Low,Sterile,1,239,3,,1.96,1.96,1.96,23.05,0.58038955
+HAO 58-10,HAO 58,bert,1,1,4,Low,Hancock,2,284,4,,,0,0,25.48,0
+HAO 58-15,HAO 58,bert,1,1,4,High,Hancock,3,375,5,,1.62,1.62,31.78,7.84,9.410601995
+HAO 58-17,HAO 58,bert,1,1,4,Low,Virgin,1,149,2,,2.48,2.48,2.48,19.09,0.734370451
+HAO 58-18,HAO 58,bert,1,1,4,Low,Virgin,2,126,2,,1.82,1.82,1.82,15.66,0.538933154
+HAO 58-19,HAO 58,bert,1,1,4,Low,Virgin,3,97,2,,,0,0,11.65,0
+HAO 58-2,HAO 58,bert,1,1,4,Low,Sterile,2,72,1,,,0,0,11.48,0
+HAO 58-20,HAO 58,bert,1,1,4,Low,Virgin,4,14,1,,,0,0,7.69,0
+HAO 58-21,HAO 58,bert,1,1,4,High,Virgin,1,256,3,,,0,0,32.48,0
+HAO 58-22,HAO 58,bert,1,1,4,High,Virgin,2,119,2,,,0,0,8.6,0
+HAO 58-23,HAO 58,bert,1,1,4,High,Virgin,3,85,1,,,0,0,24.07,0
+HAO 58-24,HAO 58,bert,1,1,4,High,Virgin,4,388,5,,,0,0,19.43,0
+HAO 58-3,HAO 58,bert,1,1,4,Low,Sterile,3,164,2,,15.35,15.35,15.35,15.5,6.39
+HAO 58-4,HAO 58,bert,1,1,4,Low,Sterile,4,8,1,,,0,0,15.06,0
+HAO 58-5,HAO 58,bert,1,1,4,High,Sterile,1,4,1,,,0,0,9.9,0
+HAO 58-6,HAO 58,bert,1,1,4,High,Sterile,2,320,4,,54.8,54.8,54.8,20.22,16.22721804
+HAO 58-8,HAO 58,bert,1,1,4,High,Sterile,4,392,5,,,0,0,24.96,0
+HAO 58-9,HAO 58,bert,1,1,4,Low,Hancock,1,18,1,,,0,0,9.95,0
+HAO 76-1,HAO 76,bert,1,1,4,Low,Sterile,1,322,4,,68.72,68.72,68.72,3.43,17.85732286
+HAO 76-11,HAO 76,bert,1,1,4,Low,Hancock,3,45,1,,20.33,20.33,20.33,0.52,12.47
+HAO 76-12,HAO 76,bert,1,1,4,Low,Hancock,4,363,5,,89.5,89.5,89.5,2.17,14.63
+HAO 76-13,HAO 76,bert,1,1,4,High,Hancock,1,17,1,,0.76,0.76,0.76,7.12,0.197490765
+HAO 76-14,HAO 76,bert,1,1,4,High,Hancock,2,341,5,,87.4,87.4,87.4,15.32,22.71143798
+HAO 76-17,HAO 76,bert,1,1,4,Low,Virgin,1,372,5,,95.35,95.35,95.35,4.53,18.03
+HAO 76-18,HAO 76,bert,1,1,4,Low,Virgin,2,75,1,,8.2,8.2,8.2,1.33,2.130821413
+HAO 76-19,HAO 76,bert,1,1,4,Low,Virgin,3,24,1,,24.12,24.12,24.12,1.91,6.267733229
+HAO 76-2,HAO 76,bert,1,1,4,Low,Sterile,2,383,5,,86.89,86.89,86.89,5,18.56
+HAO 76-21,HAO 76,bert,1,1,4,High,Virgin,1,288,4,,88.76,88.76,88.76,18.68,23.06484251
+HAO 76-22,HAO 76,bert,1,1,4,High,Virgin,2,205,3,,58.77,58.77,58.77,13.04,17.74
+HAO 76-3,HAO 76,bert,1,1,4,Low,Sterile,3,31,1,,13.23,13.23,13.22,6.96,3.435299887
+HAO 76-4,HAO 76,bert,1,1,4,Low,Sterile,4,71,1,,29.06,29.06,29.06,1.82,7.551423202
+HAO 76-5,HAO 76,bert,1,1,4,High,Sterile,1,129,2,,,0,0,14.06,0
+HAO 76-6,HAO 76,bert,1,1,4,High,Sterile,2,408,5,,105.27,105.27,105.27,6.7,21.33
+HAO 76-7,HAO 76,bert,1,1,4,High,Sterile,3,207,3,,66.58,66.58,66.58,12.92,12.85
+HAO 76-8,HAO 76,bert,1,1,4,High,Sterile,4,192,3,,71.99,71.99,71.99,12.43,14.53
+HAO 76-9,HAO 76,bert,1,1,4,Low,Hancock,1,385,5,,69.6,69.6,69.6,3.41,18.08599638
+HHA 6451-1,HHA 6451,bert,1,1,4,Low,Sterile,1,40,1,,,0,0,2.79,0
+HHA 6451-10,HHA 6451,bert,1,1,4,Low,Hancock,2,22,1,Flowering,,0,0,15.87,0
+HHA 6451-15,HHA 6451,bert,1,1,4,High,Hancock,3,376,5,,,0,0,22.62,0
+HHA 6451-17,HHA 6451,bert,1,1,4,Low,Virgin,1,242,3,,,0,0,9.04,27.18
+HHA 6451-18,HHA 6451,bert,1,1,4,Low,Virgin,2,202,3,,6.75,6.75,6.75,17.11,2.65947881
+HHA 6451-19,HHA 6451,bert,1,1,4,Low,Virgin,3,286,4,,23.03,23.03,23.03,5.21,7.07
+HHA 6451-2,HHA 6451,bert,1,1,4,Low,Sterile,2,351,5,,,0,25.13,7.49,10.21
+HHA 6451-20,HHA 6451,bert,1,1,4,Low,Virgin,4,233,3,,16.62,16.62,16.62,15.46,7.79
+HHA 6451-21,HHA 6451,bert,1,1,4,High,Virgin,1,184,3,,,0,0,26.06,0
+HHA 6451-23,HHA 6451,bert,1,1,4,High,Virgin,3,204,3,,,0,0,26.15,0
+HHA 6451-24,HHA 6451,bert,1,1,4,High,Virgin,4,368,5,,2.01,2.01,2.01,18.66,0.79193369
+HHA 6451-3,HHA 6451,bert,1,1,4,Low,Sterile,3,280,4,,40.54,40.54,40.54,11.38,15.97263273
+HHA 6451-4,HHA 6451,bert,1,1,4,Low,Sterile,4,2,1,Flowering,,0,0,13.06,0
+HHA 6451-5,HHA 6451,bert,1,1,4,High,Sterile,1,190,3,,,0,0,37.53,0
+HHA 6451-6,HHA 6451,bert,1,1,4,High,Sterile,2,55,1,Flowering,,0,0,13.27,0
+HHA 6451-7,HHA 6451,bert,1,1,4,High,Sterile,3,220,3,,,0,0,23.1,0
+HHA 6451-8,HHA 6451,bert,1,1,4,High,Sterile,4,139,2,Flowering,1.55,1.55,1.55,14.04,0.610695134
+HHA 6451-9,HHA 6451,bert,1,1,4,Low,Hancock,1,27,1,Flowering,,0,0,11.06,0
+EBS 1797,EBS 1797,and,2,2,3,Low,Sterile,1,44,1,,11.66,11.66,11.66,6.56,3.803327429
+EBS 1797,EBS 1797,and,2,2,3,Low,Virgin,3,49,1,,11.63,11.63,11.63,3.03,3.793541853
+EBS 1797,EBS 1797,and,2,2,3,Low,Hancock,1,53,1,Flowering,12.3,12.3,12.3,1.4,4.012086396
+EBS 1797,EBS 1797,and,2,2,3,High,Virgin,1,189,3,,17.48,17.48,17.48,13.95,5.701729285
+EBS 1797,EBS 1797,and,2,2,3,High,Sterile,1,193,3,,1.21,1.21,1.21,9.14,0.394684922
+EBS 1797,EBS 1797,and,2,2,3,Low,Sterile,4,227,3,Flowering,38.33,38.33,38.33,9.75,12.50270501
+EBS 1797,EBS 1797,and,2,2,3,High,Hancock,3,274,4,,18.3,18.3,18.3,10.1,5.969201712
+EBS 1797,EBS 1797,and,2,2,3,Low,Virgin,2,290,4,,39.45,39.45,39.45,3.3,12.8680332
+EBS 1797,EBS 1797,and,2,2,3,High,Virgin,4,306,4,,1.77,1.77,1.77,18.85,0.577349018
+EBS 1797,EBS 1797,and,2,2,3,High,Virgin,3,269,4,,123.55,123.55,123.55,19.14,25.45
+EBS 1797,EBS 1797,and,2,2,3,High,Hancock,4,335,4,,46.52,46.52,46.52,6.69,12.23
+EBS 1797,EBS 1797,and,2,2,3,Low,Virgin,4,285,4,,32.9,32.9,32.9,2.77,8.93
+EBS 1797,EBS 1797,and,2,2,3,Low,Hancock,4,391,5,,35.87,35.87,35.87,2.72,11.17
+EBS 1797,EBS 1797,and,2,2,3,Low,Sterile,3,304,4,,36.78,36.78,36.78,18.26,11.88
+EBS 1797,EBS 1797,and,2,2,3,Low,Hancock,3,206,3,,42.81,42.81,42.81,3.95,14.34
+EBS 1797,EBS 1797,and,2,2,3,Low,Hancock,2,361,5,,31.78,31.78,31.78,2.35,10.72
+EBS 1797,EBS 1797,and,2,2,3,Low,Virgin,1,218,3,,25.91,25.91,25.91,4.1,9.88
+EBS 1797,EBS 1797,and,2,2,3,High,Hancock,2,232,3,,40.21,40.21,40.21,23.52,15.91
+EBS 1797,EBS 1797,and,2,2,3,Low,Sterile,2,337,5,,38.3,38.3,38.3,2.89,16.77
+EBS 1797,EBS 1797,and,2,2,3,High,Hancock,1,43,1,,,0,0,10.33,0
+EBS 1797,EBS 1797,and,2,2,3,High,Virgin,2,92,1,,,0,0,10.39,0
+EBS 1797,EBS 1797,and,2,2,3,High,Sterile,4,117,2,,,0,0,8.06,0
+Huagalina,Huagalina,and,2,2,3,Low,Hancock,1,65,1,,35.4,35.4,35.4,4.78,10.24574069
+Huagalina,Huagalina,and,2,2,3,Low,Hancock,2,109,2,,41.43,41.43,41.43,5.73,11.99098974
+Huagalina,Huagalina,and,2,2,3,Low,Virgin,1,156,2,,17.11,17.11,17.11,9.56,4.952107999
+Huagalina,Huagalina,and,2,2,3,Low,Virgin,3,166,2,,38.39,38.39,38.39,10.27,11.11112952
+Huagalina,Huagalina,and,2,2,3,Low,Hancock,4,257,3,,44.87,44.87,44.87,17.79,12.98662104
+Huagalina,Huagalina,and,2,2,3,High,Virgin,4,268,4,,4.12,4.12,4.12,18.33,1.192442137
+Huagalina,Huagalina,and,2,2,3,Low,Sterile,4,338,5,,31.48,31.48,31.48,8.26,9.111184092
+Huagalina,Huagalina,and,2,2,3,Low,Sterile,1,397,5,,57.67,57.67,57.67,6.57,14
+Huagalina,Huagalina,and,2,2,3,High,Virgin,3,398,5,,36.63,36.63,36.63,5.87,8.97
+Huagalina,Huagalina,and,2,2,3,High,Sterile,3,396,5,,16.84,16.84,16.84,9.25,6.41
+Huagalina,Huagalina,and,2,2,3,Low,Virgin,4,135,2,,0.93,0.93,0.93,11.09,0.269167764
+Huagalina,Huagalina,and,2,2,3,High,Virgin,1,19,1,,,0,0,13.11,0
+Huagalina,Huagalina,and,2,2,3,Low,Virgin,2,77,1,,,0,0,6.5,0
+Huagalina,Huagalina,and,2,2,3,High,Virgin,2,134,2,,,0,0,9.37,0
+Huagalina,Huagalina,and,2,2,3,Low,Sterile,2,174,3,,,0,0,12.68,0
+Huagalina,Huagalina,and,2,2,3,High,Sterile,1,181,3,,,0,0,17.68,0
+Huagalina,Huagalina,and,2,2,3,High,Hancock,1,222,3,,,0,0,12.82,0
+Huagalina,Huagalina,and,2,2,3,High,Hancock,2,273,4,,,0,0,15.53,0
+Huagalina,Huagalina,and,2,2,3,High,Hancock,4,307,4,,,0,0,60.26,0
+Huagalina,Huagalina,and,2,2,3,High,Sterile,4,355,5,,,0,0,9.76,0
+WAC 5,WAC 5,and,2,2,3,Low,Virgin,1,6,1,,10.71,10.71,10.71,1.27,4.297354376
+WAC 5,WAC 5,and,2,2,3,Low,Hancock,4,50,1,,15.53,15.53,15.53,4.55,6.231364469
+WAC 5,WAC 5,and,2,2,3,Low,Virgin,3,281,4,,63.57,63.57,63.57,4.91,25.50726589
+WAC 5,WAC 5,and,2,2,3,High,Virgin,4,293,4,,3.26,3.26,3.26,6,1.308064917
+WAC 5,WAC 5,and,2,2,3,High,Hancock,4,342,5,,1.72,1.72,1.72,2.91,0.69014468
+WAC 5,WAC 5,and,2,2,3,Low,Hancock,2,382,5,,30.44,30.44,30.44,4.97,12.21395585
+WAC 5,WAC 5,and,2,2,3,Low,Virgin,4,215,3,,60.42,60.42,60.42,7.4,14.96
+WAC 5,WAC 5,and,2,2,3,Low,Virgin,2,324,4,,21.83,21.83,21.83,3.55,7.47
+WAC 5,WAC 5,and,2,2,3,Low,Sterile,2,210,3,,23.05,23.05,23.05,9.11,11.4
+WAC 5,WAC 5,and,2,2,3,Low,Sterile,4,161,2,,22.55,22.55,22.55,1.25,11.74
+WAC 5,WAC 5,and,2,2,3,Low,Hancock,3,89,1,,8.62,8.62,8.62,8.61,3.454735871
+WAC 5,WAC 5,and,2,2,3,High,Virgin,3,64,1,,,0,0,9.4,0
+WAC 5,WAC 5,and,2,2,3,High,Virgin,1,78,1,,,0,0,8.61,0
+WAC 5,WAC 5,and,2,2,3,High,Sterile,3,283,4,,,0,0,51.85,0
+WAC 5,WAC 5,and,2,2,3,High,Sterile,4,289,4,,,0,0,11.56,0
+WAC 5,WAC 5,and,2,2,3,High,Sterile,2,305,4,,,0,0,18.26,0
+WAC 5,WAC 5,and,2,2,3,High,Hancock,3,353,5,,,0,0,4.41,0
+WAC 663,WAC 663,and,2,2,3,Low,Sterile,1,9,1,,8.83,8.83,8.83,0.62,4.071759338
+WAC 663,WAC 663,and,2,2,3,Low,Sterile,4,99,2,,25.13,25.13,25.13,1.2,11.58814407
+WAC 663,WAC 663,and,2,2,3,Low,Virgin,3,176,3,Yellow,21.52,21.52,21.52,1.5,9.923472363
+WAC 663,WAC 663,and,2,2,3,High,Hancock,4,194,3,,7.26,7.26,7.26,11.8,3.347788539
+WAC 663,WAC 663,and,2,2,3,Low,Virgin,1,295,4,,21.09,21.09,21.09,2.1,9.725187366
+WAC 663,WAC 663,and,2,2,3,Low,Hancock,3,231,3,,36.15,36.15,36.15,1.8,9.41
+WAC 663,WAC 663,and,2,2,3,Low,Virgin,2,260,3,,48.04,48.04,48.04,1.96,13.08
+WAC 663,WAC 663,and,2,2,3,Low,Hancock,1,357,5,,26.47,26.47,26.47,1.12,9.78
+WAC 663,WAC 663,and,2,2,3,Low,Virgin,4,178,3,,10.44,10.44,10.44,0.34,7.13
+WAC 663,WAC 663,and,2,2,3,Low,Sterile,2,70,1,Yellow,15.07,15.07,15.07,1.12,10.86
+WAC 663,WAC 663,and,2,2,3,Low,Sterile,3,374,5,,,0,1.62,0.67,0.747027195
+WAC 663,WAC 663,and,2,2,3,High,Virgin,4,13,1,,,0,0,6.37,0
+WAC 663,WAC 663,and,2,2,3,High,Sterile,4,83,1,,,0,0,9.4,0
+WAC 663,WAC 663,and,2,2,3,High,Virgin,1,93,1,,,0,0,5.22,0
+WAC 663,WAC 663,and,2,2,3,High,Hancock,1,169,3,,,0,0,10.97,0
+WAC 663,WAC 663,and,2,2,3,High,Sterile,2,240,3,,,0,0,14.87,0
+WAC 663,WAC 663,and,2,2,3,High,Hancock,3,400,5,,,0,0,5.71,0
+Wac 735,Wac 735,and,2,2,3,Low,Hancock,4,25,1,,6.61,6.61,6.61,2.88,2.019983187
+Wac 735,Wac 735,and,2,2,3,Low,Virgin,3,67,1,,11,11,11,1.7,3.361545394
+Wac 735,Wac 735,and,2,2,3,Low,Sterile,4,98,2,,18.45,18.45,18.45,4.46,5.63822841
+Wac 735,Wac 735,and,2,2,3,Low,Virgin,2,172,3,,47.92,47.92,47.92,3.42,14.64411412
+Wac 735,Wac 735,and,2,2,3,High,Virgin,4,276,4,,0.22,0.22,0.22,6.46,0.067230908
+Wac 735,Wac 735,and,2,2,3,Low,Virgin,4,312,4,,47.45,47.45,47.45,8.83,14.50048445
+Wac 735,Wac 735,and,2,2,3,High,Sterile,3,334,4,,23.22,23.22,23.22,4.39,7.095916731
+Wac 735,Wac 735,and,2,2,3,Low,Hancock,1,349,5,,,0,46.42,1.85,14.18572156
+Wac 735,Wac 735,and,2,2,3,Low,Hancock,2,352,5,,,0,88.63,1.73,8.21
+Wac 735,Wac 735,and,2,2,3,Low,Hancock,3,332,4,,72.66,72.66,72.66,5.48,11.98
+Wac 735,Wac 735,and,2,2,3,Low,Sterile,2,262,3,,41.84,41.84,41.84,6.21,8.19
+Wac 735,Wac 735,and,2,2,3,High,Hancock,2,362,5,,46.15,46.15,46.15,1.77,10.37
+Wac 735,Wac 735,and,2,2,3,Low,Sterile,1,148,2,,30.88,30.88,30.88,4.95,11.25
+Wac 735,Wac 735,and,2,2,3,Low,Sterile,3,48,1,,25.43,25.43,25.43,5.68,12.28
+Wac 735,Wac 735,and,2,2,3,High,Virgin,3,7,1,,,0,10,7.02,6.14
+Wac 735,Wac 735,and,2,2,3,Low,Virgin,1,3,1,,2.71,2.71,2.71,0.48,0.828162547
+Wac 735,Wac 735,and,2,2,3,High,Sterile,1,62,1,,,0,0,13.95,0
+Wac 735,Wac 735,and,2,2,3,High,Hancock,3,104,2,,,0,0,19.85,0
+Wac 735,Wac 735,and,2,2,3,High,Hancock,1,121,2,,,0,0,25.52,0
+Wac 735,Wac 735,and,2,2,3,High,Virgin,1,155,2,,,0,0,15.56,0
+Wac 735,Wac 735,and,2,2,3,High,Virgin,2,171,3,,,0,0,13.25,0
+Wac 735,Wac 735,and,2,2,3,High,Sterile,4,180,3,,,0,0,22.72,0
+Wac 735,Wac 735,and,2,2,3,High,Sterile,2,265,4,,,0,0,8.28,0
+Wac 735,Wac 735,and,2,2,3,High,Hancock,4,381,5,,,0,0,8.94,0
+Cor C. 135-11,Cor C 135,chil,3,3,2,Low,Hancock,3,23,1,,,0,0,2.05,0
+Cor C. 135-12,Cor C 135,chil,3,3,2,Low,Hancock,4,128,2,,15.77,15.77,15.77,0.35,4.94208145
+Cor C. 135-15,Cor C 135,chil,3,3,2,High,Hancock,3,80,1,,13.22,13.22,13.22,2.95,4.1429497
+Cor C. 135-16,Cor C 135,chil,3,3,2,High,Hancock,4,182,3,,29.44,29.44,29.44,3.31,9.2260544
+Cor C. 135-17,Cor C 135,chil,3,3,2,Low,Virgin,1,58,1,,9.76,9.76,9.76,0.85,3.0586376
+Cor C. 135-18,Cor C 135,chil,3,3,2,Low,Virgin,2,146,2,,16.23,16.23,16.23,0.85,5.08623855
+Cor C. 135-19,Cor C 135,chil,3,3,2,Low,Virgin,3,287,4,,96.69,96.69,96.69,1.45,7.38
+Cor C. 135-2,Cor C 135,chil,3,3,2,Low,Sterile,2,318,4,,29.05,29.05,29.05,0.5,12.03
+Cor C. 135-20,Cor C 135,chil,3,3,2,Low,Virgin,4,371,5,,36.38,36.38,36.38,0.58,12.46
+Cor C. 135-21,Cor C 135,chil,3,3,2,High,Virgin,1,203,3,,53.95,53.95,53.95,5.41,16.90712075
+Cor C. 135-22,Cor C 135,chil,3,3,2,High,Virgin,2,402,5,,,0,101.84,0.73,31.9151284
+Cor C. 135-24,Cor C 135,chil,3,3,2,High,Virgin,4,386,5,,90.56,90.56,90.56,2.79,28.3801456
+Cor C. 135-3,Cor C 135,chil,3,3,2,Low,Sterile,3,212,3,,39.38,39.38,39.38,2.1,9.5
+Cor C. 135-4,Cor C 135,chil,3,3,2,Low,Sterile,4,127,2,,11.96,11.96,11.96,0.32,3.7480846
+Cor C. 135-5,Cor C 135,chil,3,3,2,High,Sterile,1,330,4,,23.44,23.44,23.44,3.2,11.55
+Cor C. 135-7,Cor C 135,chil,3,3,2,High,Sterile,3,255,3,,71.99,71.99,71.99,2.06,22.56058615
+Cor C. 135-8,Cor C 135,chil,3,3,2,High,Sterile,4,241,3,,11.12,11.12,11.12,8.48,3.4848412
+Cor C. 135-9,Cor C 135,chil,3,3,2,Low,Hancock,1,66,1,,34.45,34.45,34.45,2.25,10.79611325
+Cor C.56-1,Cor C56,chil,3,3,2,Low,Sterile,1,294,4,,95.06,95.06,95.06,1.56,32.83688285
+Cor C.56-10,Cor C56,chil,3,3,2,Low,Hancock,2,191,3,,59.84,59.84,59.84,1.53,17.38
+Cor C.56-11,Cor C56,chil,3,3,2,Low,Hancock,3,225,3,,81.3,81.3,81.3,2.73,28.0837216
+Cor C.56-13,Cor C56,chil,3,3,2,High,Hancock,1,11,1,,,0,0,2.91,0
+Cor C.56-15,Cor C56,chil,3,3,2,High,Hancock,3,224,3,,51.25,51.25,51.25,20.56,16.2
+Cor C.56-16,Cor C56,chil,3,3,2,High,Hancock,4,143,2,,82.8,82.8,82.8,11.04,28.60187145
+Cor C.56-17,Cor C56,chil,3,3,2,Low,Virgin,1,130,2,,47.77,47.77,47.77,2.75,16.5013454
+Cor C.56-18,Cor C56,chil,3,3,2,Low,Virgin,2,81,1,,30.2,30.2,30.2,1.92,14.85
+Cor C.56-19,Cor C56,chil,3,3,2,Low,Virgin,3,315,4,,72.15,72.15,72.15,4.31,24.92300755
+Cor C.56-2,Cor C56,chil,3,3,2,Low,Sterile,2,378,5,,68.78,68.78,68.78,2.96,23.78
+Cor C.56-20,Cor C56,chil,3,3,2,Low,Virgin,4,187,3,,84.02,84.02,84.02,3.81,19.06
+Cor C.56-21,Cor C56,chil,3,3,2,High,Virgin,1,328,4,,40.42,40.42,40.42,5.48,13.85
+Cor C.56-23,Cor C56,chil,3,3,2,High,Virgin,3,278,4,,76.96,76.96,76.96,5.94,22.83
+Cor C.56-24,Cor C56,chil,3,3,2,High,Virgin,4,68,1,,4.19,4.19,4.19,4.59,1.585538526
+Cor C.56-4,Cor C56,chil,3,3,2,Low,Sterile,4,138,2,,30.5,30.5,30.5,2.6,15.66
+Cor C.56-5,Cor C56,chil,3,3,2,High,Sterile,1,196,3,,74.15,74.15,74.15,7.91,16.36
+Cor C.56-6,Cor C56,chil,3,3,2,High,Sterile,2,313,4,,136.07,136.07,136.07,10.1,30.46
+Cor C.56-7,Cor C56,chil,3,3,2,High,Sterile,3,154,2,,29.54,29.54,29.54,7.78,9.03
+Cor C.56-8,Cor C56,chil,3,3,2,High,Sterile,4,42,1,,20.16,20.16,20.16,7.6,11.52
+Cor C.56-9,Cor C56,chil,3,3,2,Low,Hancock,1,406,5,,94.05,94.05,94.05,2.14,25.55
+Cor C.95-1,Cor C95,chil,3,3,2,Low,Sterile,1,279,4,,83.4,83.4,83.4,2.84,29.98076739
+Cor C.95-10,Cor C95,chil,3,3,2,Low,Hancock,2,175,3,,96.12,96.12,96.12,2.11,19.91
+Cor C.95-11,Cor C95,chil,3,3,2,Low,Hancock,3,36,1,Flowering,30.26,30.26,30.26,6.92,10.87791392
+Cor C.95-12,Cor C95,chil,3,3,2,Low,Hancock,4,41,1,,,0,0,2.42,0
+Cor C.95-13,Cor C95,chil,3,3,2,High,Hancock,1,244,3,,,0,0,16.63,0
+Cor C.95-14,Cor C95,chil,3,3,2,High,Hancock,2,266,4,,,0,0,44.26,0
+Cor C.95-15,Cor C95,chil,3,3,2,High,Hancock,3,344,5,,,0,32.45,17.06,11.66517868
+Cor C.95-16,Cor C95,chil,3,3,2,High,Hancock,4,150,2,,,0,0,28.04,0
+Cor C.95-17,Cor C95,chil,3,3,2,Low,Virgin,1,264,3,,59.35,59.35,59.35,1.89,21.33523435
+Cor C.95-18,Cor C95,chil,3,3,2,Low,Virgin,2,346,5,,49.96,49.96,49.96,4.2,16.28
+Cor C.95-19,Cor C95,chil,3,3,2,Low,Virgin,3,124,2,,59.62,59.62,59.62,2.35,21.43229438
+Cor C.95-2,Cor C95,chil,3,3,2,Low,Sterile,2,10,1,,18.35,18.35,18.35,1.12,11.65
+Cor C.95-20,Cor C95,chil,3,3,2,Low,Virgin,4,188,3,,116.25,116.25,116.25,6.63,41.78973871
+Cor C.95-21,Cor C95,chil,3,3,2,High,Virgin,1,177,3,,,0,0,22.78,0
+Cor C.95-22,Cor C95,chil,3,3,2,High,Virgin,2,160,2,Flowering,,0,0,26.14,0
+Cor C.95-23,Cor C95,chil,3,3,2,High,Virgin,3,60,1,,,0,0,20.92,0
+Cor C.95-24,Cor C95,chil,3,3,2,High,Virgin,4,329,4,,,0,0,9.99,0
+Cor C.95-3,Cor C95,chil,3,3,2,Low,Sterile,3,102,2,,45.34,45.34,45.34,3.54,16.2988968
+Cor C.95-4,Cor C95,chil,3,3,2,Low,Sterile,4,393,5,,81.54,81.54,81.54,7.73,22.02
+Cor C.95-5,Cor C95,chil,3,3,2,High,Sterile,1,59,1,,,0,0,33.02,0
+Cor C.95-6,Cor C95,chil,3,3,2,High,Sterile,2,271,4,,,0,0,20.01,0
+Cor C.95-7,Cor C95,chil,3,3,2,High,Sterile,3,333,4,,,0,0,13.96,0
+Cor C.95-8,Cor C95,chil,3,3,2,High,Sterile,4,251,3,,,0,0,58.72,0
+Cor C.95-9,Cor C95,chil,3,3,2,Low,Hancock,1,76,1,,19.64,19.64,19.64,5.19,7.060219083
+Garnet-1,Garnet,chil,4,3,1,Low,Sterile,1,38,1,,47.93,47.93,47.93,0.48,17.33
+Garnet-10,Garnet,chil,4,3,1,Low,Hancock,2,32,1,,92.08,92.08,92.08,1.08,17.47837443
+Garnet-12,Garnet,chil,4,3,1,Low,Hancock,4,201,3,,81.04,81.04,81.04,0.75,15.38279174
+Garnet-13,Garnet,chil,4,3,1,High,Hancock,1,157,2,,118.89,118.89,118.89,4.34,22.56737549
+Garnet-14,Garnet,chil,4,3,1,High,Hancock,2,311,4,,166.3,166.3,166.3,4.95,24.18
+Garnet-15,Garnet,chil,4,3,1,High,Hancock,3,399,5,,,0,136.16,5.06,25.84551978
+Garnet-17,Garnet,chil,4,3,1,Low,Virgin,1,20,1,,75.02,75.02,75.02,1.2,13.87
+Garnet-18,Garnet,chil,4,3,1,Low,Virgin,2,105,2,,73.13,73.13,73.13,1.3,13.88133712
+Garnet-19,Garnet,chil,4,3,1,Low,Virgin,3,115,2,,70.45,70.45,70.45,1.16,16.97
+Garnet-2,Garnet,chil,4,3,1,Low,Sterile,2,118,2,,90.73,90.73,90.73,1.22,17.22212111
+Garnet-20,Garnet,chil,4,3,1,Low,Virgin,4,336,4,,125.37,125.37,125.37,2,13.72
+Garnet-21,Garnet,chil,4,3,1,High,Virgin,1,221,3,,148.48,148.48,148.48,4.08,28.18406858
+Garnet-22,Garnet,chil,4,3,1,High,Virgin,2,37,1,,81.77,81.77,81.77,5.41,15.52135835
+Garnet-23,Garnet,chil,4,3,1,High,Virgin,3,296,4,,135.28,135.28,135.28,4.96,14.98
+Garnet-24,Garnet,chil,4,3,1,High,Virgin,4,163,2,,80.57,80.57,80.57,4.34,15.29357762
+Garnet-3,Garnet,chil,4,3,1,Low,Sterile,3,69,1,,45.37,45.37,45.37,0.76,10.08
+Garnet-4,Garnet,chil,4,3,1,Low,Sterile,4,394,5,,150.91,150.91,150.91,1.73,28.64532455
+Garnet-5,Garnet,chil,4,3,1,High,Sterile,1,348,5,,,0,0,6.27,15.63
+Garnet-6,Garnet,chil,4,3,1,High,Sterile,2,360,5,,100.8,100.8,100.8,3.29,10.56
+Garnet-7,Garnet,chil,4,3,1,High,Sterile,3,145,2,,99.51,99.51,99.51,1.35,24.12
+Garnet-8,Garnet,chil,4,3,1,High,Sterile,4,223,3,,,0,0,10.62,0
+Garnet-9,Garnet,chil,4,3,1,Low,Hancock,1,74,1,,85.48,85.48,85.48,0.94,15.04
+P. Cacho-1,P. Cacho,chil,3,3,1,Low,Sterile,1,325,4,,90.75,90.75,90.75,2.59,19.17
+P. Cacho-10,P. Cacho,chil,3,3,1,Low,Hancock,2,141,2,,100.78,100.78,100.78,0.95,23.28643635
+P. Cacho-11,P. Cacho,chil,3,3,1,Low,Hancock,3,359,5,,100.8,100.8,100.8,1.16,24.26
+P. Cacho-14,P. Cacho,chil,3,3,1,High,Hancock,2,47,1,,36.78,36.78,36.78,5.4,12.47
+P. Cacho-15,P. Cacho,chil,3,3,1,High,Hancock,3,54,1,,50.43,50.43,50.43,8.23,11.65246066
+P. Cacho-16,P. Cacho,chil,3,3,1,High,Hancock,4,317,4,,116.85,116.85,116.85,4.18,26.99960397
+P. Cacho-19,P. Cacho,chil,3,3,1,Low,Virgin,3,339,5,,118.65,118.65,118.65,1.51,23.81
+P. Cacho-2,P. Cacho,chil,3,3,1,Low,Sterile,2,369,5,,102.25,102.25,102.25,1.25,20.86
+P. Cacho-20,P. Cacho,chil,3,3,1,Low,Virgin,4,95,1,,86.24,86.24,86.24,2.06,17.52
+P. Cacho-21,P. Cacho,chil,3,3,1,High,Virgin,1,56,1,,18.94,18.94,18.94,8.12,4.376315782
+P. Cacho-22,P. Cacho,chil,3,3,1,High,Virgin,2,350,5,,157.52,157.52,157.52,2.49,28.29
+P. Cacho-24,P. Cacho,chil,3,3,1,High,Virgin,4,123,2,,49.96,49.96,49.96,12.97,11.54386148
+P. Cacho-3,P. Cacho,chil,3,3,1,Low,Sterile,3,404,5,,,0,89.81,1.17,23.98
+P. Cacho-4,P. Cacho,chil,3,3,1,Low,Sterile,4,327,4,,88.36,88.36,88.36,1.56,20.41664533
+P. Cacho-5,P. Cacho,chil,3,3,1,High,Sterile,1,52,1,,30.65,30.65,30.65,8.66,7.92
+P. Cacho-6,P. Cacho,chil,3,3,1,High,Sterile,2,26,1,,,0,0,9.96,0
+P. Cacho-7,P. Cacho,chil,3,3,1,High,Sterile,3,277,4,,67.45,67.45,67.45,11.12,13.95
+P. Cacho-8,P. Cacho,chil,3,3,1,High,Sterile,4,100,2,,22.34,22.34,22.34,21.16,5.161926852
+P. Cacho-9,P. Cacho,chil,3,3,1,Low,Hancock,1,82,1,,66.62,66.62,66.62,1.25,15.39335572
+Burbank,Burbank,elite,5,4,1,High,Virgin,3,30,1,,45.98,45.98,45.98,9.67,11.27426538
+Burbank,Burbank,elite,5,4,1,Low,Hancock,4,91,1,,84.11,84.11,84.11,0.86,20.62368789
+Burbank,Burbank,elite,5,4,1,High,Hancock,4,113,2,,113.55,113.55,113.55,5.85,27.84234645
+Burbank,Burbank,elite,5,4,1,High,Virgin,4,114,2,,161.11,161.11,161.11,4.78,39.50401089
+Burbank,Burbank,elite,5,4,1,High,Hancock,1,131,2,,124.32,124.32,124.32,7.37,30.48313968
+Burbank,Burbank,elite,5,4,1,High,Virgin,1,132,2,,142.23,142.23,142.23,11.09,34.87465377
+Burbank,Burbank,elite,5,4,1,High,Sterile,4,243,3,,191.05,191.05,191.05,7.32,46.84526895
+Burbank,Burbank,elite,5,4,1,Low,Sterile,3,248,3,,97.09,97.09,97.09,1.31,23.80637091
+Burbank,Burbank,elite,5,4,1,Low,Sterile,2,261,3,,66.5,66.5,66.5,0.49,16.3057335
+Burbank,Burbank,elite,5,4,1,Low,Hancock,2,331,4,,84.91,84.91,84.91,0.71,20.81984709
+Burbank,Burbank,elite,5,4,1,High,Virgin,2,343,5,,156.24,156.24,156.24,7.6,38.30989176
+Burbank,Burbank,elite,5,4,1,High,Sterile,2,407,5,,162.18,162.18,162.18,5.72,39.76637382
+Burbank,Burbank,elite,5,4,1,High,Hancock,2,309,4,,174.46,174.46,174.46,8.62,30.72
+Burbank,Burbank,elite,5,4,1,High,Sterile,3,142,2,,137.02,137.02,137.02,7.81,27.22
+Burbank,Burbank,elite,5,4,1,High,Sterile,1,347,5,,,0,100.95,4.11,20.45
+Burbank,Burbank,elite,5,4,1,Low,Hancock,1,219,3,,103.03,103.03,103.03,0.81,23.11
+Burbank,Burbank,elite,5,4,1,High,Hancock,3,323,4,,102.34,102.34,102.34,4.47,25.53
+Burbank,Burbank,elite,5,4,1,Low,Sterile,1,198,3,,83.16,83.16,83.16,0.72,21.43
+Burbank,Burbank,elite,5,4,1,Low,Virgin,4,272,4,,80.51,80.51,80.51,0.76,20.81
+Burbank,Burbank,elite,5,4,1,Low,Virgin,3,246,3,,94.82,94.82,94.82,1.44,25.44
+Burbank,Burbank,elite,5,4,1,Low,Sterile,4,403,5,,,0,60.64,0.27,17.32
+Burbank,Burbank,elite,5,4,1,Low,Virgin,1,140,2,,60.94,60.94,60.94,1.6,20.16
+Burbank,Burbank,elite,5,4,1,Low,Virgin,2,380,5,,,0,0,1.27,0
+Norkodah,Norkodah,elite,6,4,1,High,Hancock,2,39,1,,119,119,119,1.06,25.99029716
+Norkodah,Norkodah,elite,6,4,1,High,Virgin,2,57,1,,128.8,128.8,128.8,0.89,28.13067457
+Norkodah,Norkodah,elite,6,4,1,Low,Sterile,2,108,2,,56.59,56.59,56.59,0.23,12.35958753
+Norkodah,Norkodah,elite,6,4,1,Low,Virgin,2,173,3,Yellow,82.55,82.55,82.55,0.5,18.02940362
+Norkodah,Norkodah,elite,6,4,1,High,Virgin,4,197,3,,167,167,167,0.72,36.47377837
+Norkodah,Norkodah,elite,6,4,1,High,Sterile,2,200,3,,99.19,99.19,99.19,1.07,21.6636771
+Norkodah,Norkodah,elite,6,4,1,Low,Virgin,3,354,5,,81.36,81.36,81.36,0.31,17.76950065
+Norkodah,Norkodah,elite,6,4,1,High,Sterile,4,365,5,,115.09,115.09,115.09,0.62,25.13633025
+Norkodah,Norkodah,elite,6,4,1,High,Virgin,1,364,5,,202.1,202.1,202.1,0.84,32.35
+Norkodah,Norkodah,elite,6,4,1,Low,Hancock,4,345,5,,63.84,63.84,63.84,0.35,10.29
+Norkodah,Norkodah,elite,6,4,1,High,Sterile,3,86,1,,112.25,112.25,112.25,1.28,18.64
+Norkodah,Norkodah,elite,6,4,1,Low,Hancock,3,213,3,,94.5,94.5,94.5,1.23,20.07
+Norkodah,Norkodah,elite,6,4,1,Low,Virgin,4,170,3,,81.82,81.82,81.82,0.29,18.41
+Norkodah,Norkodah,elite,6,4,1,Low,Hancock,2,358,5,,70.77,70.77,70.77,0.24,16.56
+Norkodah,Norkodah,elite,6,4,1,Low,Sterile,1,79,1,,51.87,51.87,51.87,0.56,12.54
+Norkodah,Norkodah,elite,6,4,1,Low,Sterile,3,228,3,,55.9,55.9,55.9,0.47,13.74
+Norkodah,Norkodah,elite,6,4,1,Low,Virgin,1,254,3,,62.93,62.93,62.93,,20.1
+Norkodah,Norkodah,elite,6,4,1,High,Virgin,3,209,3,,,0,0,3.16,0
+Ranger,Ranger,elite,6,4,1,High,Virgin,1,12,1,,181.68,181.68,181.68,3.14,37.47185612
+Ranger,Ranger,elite,6,4,1,High,Hancock,2,35,1,,143.21,143.21,143.21,1.89,29.53734321
+Ranger,Ranger,elite,6,4,1,Low,Hancock,1,51,1,,44.27,44.27,44.27,0.37,9.130774275
+Ranger,Ranger,elite,6,4,1,High,Sterile,1,63,1,,137.78,137.78,137.78,4.13,28.41739507
+Ranger,Ranger,elite,6,4,1,Low,Hancock,3,90,1,,46.76,46.76,46.76,0.45,9.644341655
+Ranger,Ranger,elite,6,4,1,High,Virgin,2,136,2,,228.93,228.93,228.93,2.17,47.21726123
+Ranger,Ranger,elite,6,4,1,Low,Virgin,3,144,2,,39.2,39.2,39.2,0.32,8.085076837
+Ranger,Ranger,elite,6,4,1,Low,Sterile,1,152,2,,39.26,39.26,39.26,0.42,8.097451954
+Ranger,Ranger,elite,6,4,1,High,Sterile,2,162,2,,198.56,198.56,198.56,3.45,40.9533892
+Ranger,Ranger,elite,6,4,1,Low,Virgin,4,195,3,,68.95,68.95,68.95,0.66,14.22107265
+Ranger,Ranger,elite,6,4,1,Low,Hancock,2,282,4,,52.94,52.94,52.94,52.01,10.91897877
+Ranger,Ranger,elite,6,4,1,High,Hancock,4,298,4,,83.2,83.2,83.2,0.43,17.16016308
+Ranger,Ranger,elite,6,4,1,High,Sterile,3,299,4,,118.12,118.12,118.12,1.55,24.36248153
+Ranger,Ranger,elite,6,4,1,Low,Sterile,2,302,4,,,0,60.85,0.76,12.55043177
+Ranger,Ranger,elite,6,4,1,Low,Sterile,4,291,4,,80.36,80.36,80.36,0.83,5.1
+Ranger,Ranger,elite,6,4,1,High,Virgin,3,247,3,,180.09,180.09,180.09,1.09,17.03
+Ranger,Ranger,elite,6,4,1,High,Virgin,4,120,2,,193.56,193.56,193.56,2.12,23.95
+Ranger,Ranger,elite,6,4,1,Low,Virgin,2,235,3,,40.89,40.89,40.89,0.4,12.32
+Ranger,Ranger,elite,6,4,1,Low,Hancock,4,96,1,,62.21,62.21,62.21,0.55,20.08
+Ranger,Ranger,elite,6,4,1,Low,Sterile,3,133,2,,70.37,70.37,70.37,2.11,23.34
+Snowden,Snowden,elite,6,4,1,High,Virgin,1,73,1,,67.48,67.48,67.48,8.08,18.38934909
+Snowden,Snowden,elite,6,4,1,Low,Virgin,1,107,2,,,0,50.61,1.53,0
+Snowden,Snowden,elite,6,4,1,High,Virgin,4,186,3,,149.13,149.13,149.13,6.24,40.64024348
+Snowden,Snowden,elite,6,4,1,Low,Hancock,3,199,3,,86.77,86.77,86.77,1.01,23.64617399
+Snowden,Snowden,elite,6,4,1,Low,Virgin,3,208,3,,,0,56.67,0.35,15.44345603
+Snowden,Snowden,elite,6,4,1,High,Sterile,1,321,4,,140.02,140.02,140.02,9,38.15762685
+Snowden,Snowden,elite,6,4,1,High,Sterile,4,395,5,,85.04,85.04,85.04,5.68,23.17472209
+Snowden,Snowden,elite,6,4,1,Low,Sterile,2,237,3,,76.16,76.16,76.16,1.37,4.79
+Snowden,Snowden,elite,6,4,1,High,Hancock,1,168,2,,123.83,123.83,123.83,8.84,19.71
+Snowden,Snowden,elite,6,4,1,High,Hancock,3,258,3,,177,177,177,5.31,35.6
+Snowden,Snowden,elite,6,4,1,High,Sterile,3,275,4,,77.9,77.9,77.9,4.79,18.32
+Snowden,Snowden,elite,6,4,1,High,Virgin,2,366,5,,100.3,100.3,100.3,9.91,24.49
+Snowden,Snowden,elite,6,4,1,Low,Hancock,2,236,3,,67.47,67.47,67.47,0.66,16.48
+Snowden,Snowden,elite,6,4,1,Low,Sterile,1,226,3,,,0,60.15,0.51,14.85
+Snowden,Snowden,elite,6,4,1,Low,Sterile,3,137,2,,,0,64.75,1.91,16.72
+Snowden,Snowden,elite,6,4,1,Low,Virgin,4,94,1,,,0,83.82,1.86,22.31
+Snowden,Snowden,elite,6,4,1,High,Hancock,2,384,5,,55.14,55.14,55.14,6.82,16.59
+Snowden,Snowden,elite,6,4,1,Low,Virgin,2,106,2,,,0,48.69,0.91,16.55
+Snowden,Snowden,elite,6,4,1,Low,Hancock,1,165,2,,,0,60.92,2.31,21.62
+Snowden,Snowden,elite,6,4,1,Low,Sterile,4,183,3,,,0,45.32,0.57,17.09
+Snowden,Snowden,elite,6,4,1,High,Sterile,2,1,1,,10.66,10.66,10.66,3.74,5.59
+Snowden,Snowden,elite,6,4,1,High,Virgin,3,387,5,,,0,0,9.52,0

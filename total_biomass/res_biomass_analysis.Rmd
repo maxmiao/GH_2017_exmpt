@@ -1,0 +1,375 @@
+---
+title: "res_biomass_analysis"
+author: "Max Miao"
+date: "November 13, 2019"
+output: html_document
+---
+#Using Residuals to determine Microbial response: 
+Note, the biomass calculated tubermass (wet) + root (dry) + shoot (dry). And so, this may not be the most best practice way of calculating "totalbiomass"
+
+
+```{r}
+library(lmerTest)
+library(lme4)
+library(tidyverse)
+
+max <- read.csv("rel_biomass_analysis.csv", header = T)
+max2 <- read.csv("drytuber_analysis.csv", header = T)
+
+#Just want to add dry tuber mass values into our table not the whole dataframe
+dry <- select(max2,"sample_ID","dry_tuber")
+max2_join <- left_join(max, dry, by = "sample_ID")
+
+#Okay now we want to add root, shoots and dry tubers to calculate a new total biomass value:
+
+total_biomass2 <- max2_join$shoot+max2_join$root+max2_join$dry_tuber
+maxb <- cbind(max2_join,total_biomass2)
+
+```
+
+
+
+**regress biomasser mass vs. "sunlight" for each clade and create detrended dataset**
+
+```{r}
+bertdata = subset(maxb, agerank3 == 4 & total_biomass2 >= 0)
+bert = lm(total_biomass2~sunlight, data=bertdata)
+fakesunlight = rep(3, length(bert$res))
+newdata = data.frame(sunlight=fakesunlight)
+predbiomass = predict(bert, newdata) + bert$res
+bertdata = cbind(bertdata, predbiomass)
+
+anddata = subset(maxb, agerank3 == 3 & total_biomass2 >= 0)
+and = lm(total_biomass2~sunlight, data=anddata)
+fakesunlight = rep(3, length(and$res))
+newdata = data.frame(sunlight=fakesunlight)
+predbiomass = predict(and, newdata) + and$res
+anddata = cbind(anddata, predbiomass)
+
+childata = subset(maxb, agerank3 == 2 & total_biomass2 >= 0)
+chil = lm(total_biomass2~sunlight, data=childata)
+fakesunlight = rep(3, length(chil$res))
+newdata = data.frame(sunlight=fakesunlight)
+predbiomass = predict(chil, newdata) + chil$res
+childata = cbind(childata, predbiomass)
+
+elitedata = subset(maxb, agerank3 == 1 & total_biomass2 >= 0)
+elite = lm(total_biomass2~sunlight, data=elitedata)
+fakesunlight = rep(3, length(elite$res))
+newdata = data.frame(sunlight=fakesunlight)
+predbiomass = predict(elite, newdata) + elite$res
+elitedata = cbind(elitedata, predbiomass)
+
+max3 = rbind(bertdata, anddata, childata, elitedata)
+```
+
+ok, so now we have a new variable "predbiomass", that is the biomasser mass data detrended for the effect of greenhouse position.
+
+we can use this in a straightforward mixed model of biomasser mass
+
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+max4 = cbind(max3, as.factor(max3$agerank3))
+colnames(max4)[22] <- 'agerankcat'
+
+
+#Supplementary table B for paper
+a = lmer(predbiomass~agerankcat*Nutrient*soil + (1|variety2), data=max4)
+anova(a)
+summary(a)
+
+ls_means(a)
+```
+
+to do the analysis suggest by Sawers et al. 2010, we need to calculate genotype means for each soil and nutrient combination
+
+```{r}
+genoavg = aggregate(cbind(predbiomass,agerank3) ~ Nutrient + soil + variety2, data=max4, FUN=mean)
+```
+
+now, lets reshape this a bit to have average biomasser mass in Hancock and Virgin soils as a column, and biomasser mass in sterile as a matched column
+
+```{r}
+genoavgH = subset(genoavg, soil == "Hancock")
+genoavgV = subset(genoavg, soil == "Virgin")
+genoavgS = subset(genoavg, soil == "Sterile")
+
+genoavgH = cbind(genoavgH, genoavgS$predbiomass)
+genoavgV = cbind(genoavgV, genoavgS$predbiomass)
+
+genoavg2 = rbind(genoavgH, genoavgV)
+colnames(genoavg2)[6]<-'predbiomassS'
+
+genoavg2 = genoavg2[order(genoavg2$Nutrient),]
+
+genoavg2 = cbind(genoavg2, as.factor(genoavg2$agerank3))
+colnames(genoavg2)[7] <- 'agerankcat'
+```
+
+now, we can regress each genotypes average performance in live (H or V) soil versus its performance in sterile soil. To me, it makes sense to do this separately for high and low nutrient conditions, since the sterile performance may change between those treatments
+
+_At Nutrients:soil_
+```{r}
+a = lm(predbiomass~predbiomassS, data = subset(genoavg2, Nutrient=="High" & soil == "Hancock"))
+
+b = lm(predbiomass~predbiomassS, data = subset(genoavg2, Nutrient=="High" & soil == "Virgin"))
+
+c = lm(predbiomass~predbiomassS, data = subset(genoavg2, Nutrient=="Low" & soil == "Hancock"))
+
+d = lm(predbiomass~predbiomassS, data = subset(genoavg2, Nutrient=="Low" & soil == "Virgin"))
+
+```
+
+
+_Across Nutrients_
+```{r}
+a = lm(predbiomass~predbiomassS, data = subset(genoavg2, Nutrient=="High"))
+
+b = lm(predbiomass~predbiomassS, data = subset(genoavg2, Nutrient=="Low"))
+```
+
+now extract the residuals from these regressions, and add them back as a new variable in the dataframe
+
+```{r}
+res = c(a$res, b$res)
+
+genoavg2 = cbind(genoavg2, res)
+
+#e = lm(predbiomass~predbiomassS, data = genoavg2)
+#res2 = e$res
+#genoavg2 = cbind(genoavg2, res2)
+
+#genoavg2_LV35 = subset(genoavg2, Nutrient=="Low" & soil=="Virgin"&(agerank3 == 3|agerank3 == 5))
+
+#genoavg3 = subset(genoavg2, agerank3 != 4)
+```
+
+##Plot
+
+```{r}
+#library(tidyverse)
+library(ggplot2)
+library(plotrix)
+
+res_avg = genoavg2 %>%
+  filter(soil != "Sterile") %>%
+  group_by(agerank3,Nutrient) %>%
+  summarise(mean = mean(res), sd=sd(res), n = n(), se = std.error(res))
+
+res_avgL = subset(res_avg, Nutrient == "Low")
+res_avgH = subset(res_avg, Nutrient == "High")
+
+
+ggplot(res_avgL)+
+  aes(x = agerank3, y = mean, color = as.factor(agerank3))+
+  scale_x_discrete(name = "Age rank", limits = c("Modern", "Chiletanum", "Andigenum", "S. berthaulti"))+
+  scale_y_continuous(name = "Microbial Residual Biomass Response")+
+   geom_point(aes(shape=as.factor(agerank3)), size=3)+
+    geom_errorbar(aes(ymax=mean+se, ymin=mean-se), width=.1)+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+ggplot(res_avgH)+
+  aes(x = agerank3, y = mean, color = as.factor(agerank3))+
+  scale_x_discrete(name = "Age rank", limits = c( "Modern", "Chiletanum", "Andigenum", "S. berthaulti"))+
+  scale_y_continuous(name = "Microbial Residual Biomass Response")+
+   geom_point(aes(shape=as.factor(agerank3)), size=3)+
+    geom_errorbar(aes(ymax=mean+se, ymin=mean-se), width=.1)+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+```
+negative total biomass response in landraces. We do see a difference that is significant between modern (5) and Andigenum (2) in low nutrient conditions. Also see a trend in that less negative response to microbial inocula from Andigenum to modern. But this can also mean that Modern as just less sensitive to microbial community.In High nutrient conditions see some similar trends but aren't as statistically significant. 
+
+```{r}
+genoavg2L <- subset(genoavg2,Nutrient == "Low")
+
+ggplot(genoavg2L)+
+  aes(x = predbiomassS, y = predbiomass)+
+  geom_point(aes(shape = soil, color = agerankcat), size = 3)+
+  scale_color_manual(values = c("Blue","Orange", "Red", "Purple"))+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+genoavg2H <- subset(genoavg2,Nutrient == "High")
+
+ggplot(genoavg2H)+
+  aes(x = predbiomassS, y = predbiomass)+
+  geom_point(aes(shape = soil, color = agerankcat), size = 3)+
+  scale_color_manual(values = c("Blue","Orange", "Red", "Purple"))+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+```
+
+
+Statistics:
+
+```{r}
+res_stat <- lmer(res~ Nutrient + soil + agerankcat+(1|variety2), data = genoavg2)
+summary(res_stat)
+
+```
+
+```{r}
+res_stat <- lmer(res~agerankcat+(1|variety2), data = subset(genoavg2, Nutrient == "Low"))
+summary(res_stat)
+```
+
+```{r}
+res_stat <- lmer(res~agerankcat+(1|variety2), data = subset(genoavg2, Nutrient == "High"))
+summary(res_stat)
+```
+ Sooo there looks like there's acutally no difference statistically...So yeah
+ 
+ 
+ ##Examining tuber/shoot/root allocation
+ 
+mainly want to make a stacked barchart with averages for shoot, root, and tubers. Now we need to coerce the data into a format that is compatible for a stacked bar chart:
+
+*Low Nutrients*
+```{r}
+
+maxb_avg = maxb %>%
+  group_by(Nutrient, agerank2) %>%
+  filter(shoot != "n/a", root != "n/a") %>%
+  summarise(tuber_mean = mean(dry_tuber), shoot_mean = mean(shoot), root_mean = mean(root))
+  
+
+maxb_avgL = subset(maxb_avg, Nutrient == "Low")
+
+maxb_avgT <- maxb_avgL %>%
+  select(Nutrient, agerank2, mean = tuber_mean) %>%
+  mutate(type = "tuber")
+
+maxb_avgS <- maxb_avgL %>%
+  select(Nutrient, agerank2, mean = shoot_mean) %>%
+  mutate(type = "shoot")
+
+maxb_avgR <- maxb_avgL %>%
+  select(Nutrient, agerank2, mean = root_mean) %>%
+  mutate(type = "root")
+
+maxb_avg2 <- rbind(maxb_avgT, maxb_avgS, maxb_avgR)
+maxb_avg2$agerank2 <- as.factor(maxb_avg2$agerank2)
+
+#Plotting For Supplmentary Figure S3:
+
+maxb_al <- ggplot(maxb_avg2) +
+  aes(x = agerank2, y = mean, fill = type) + 
+  geom_bar(position="stack", stat="identity") +
+  scale_x_discrete("Clade", labels = c("S. bertaulti","Andigenum" ,"Chiletanum","Elite")) +
+  ylim(0,70)+
+  theme_classic()
+maxb_al
+
+```
+
+*High Nutrients*
+```{r}
+maxb_avgH = subset(maxb_avg, Nutrient == "High")
+
+maxb_avgT <- maxb_avgH %>%
+  select(Nutrient, agerank2, mean = tuber_mean) %>%
+  mutate(type = "tuber")
+
+maxb_avgS <- maxb_avgH %>%
+  select(Nutrient, agerank2, mean = shoot_mean) %>%
+  mutate(type = "shoot")
+
+maxb_avgR <- maxb_avgH %>%
+  select(Nutrient, agerank2, mean = root_mean) %>%
+  mutate(type = "root")
+
+maxb_avg3 <- rbind(maxb_avgT, maxb_avgS, maxb_avgR)
+maxb_avg3$agerank2 <- as.factor(maxb_avg3$agerank2)
+
+
+#Plot
+maxb_al <- ggplot(maxb_avg3) +
+  aes(x = agerank2, y = mean, fill = type) + 
+  geom_bar(position="stack", stat="identity") +
+  scale_x_discrete("Clade", labels = c("S. bertaulti","Andigenum" ,"Chiletanum","Elite"))+
+  ylim(0,70)+
+  theme_classic()
+maxb_al
+
+```
+
+```{r}
+#Sidenote: Rick wants these previous two graphs to merge into one. 
+
+
+```
+
+
+
+Wait but how about we present these as percentages??
+
+```{r}
+
+maxb_avg = maxb %>%
+  group_by(Nutrient, agerank2) %>%
+  filter(shoot != "n/a", root != "n/a") %>%
+  summarise(tuber_mean = mean(dry_tuber)/mean(total_biomass2), shoot_mean = mean(shoot)/mean(total_biomass2), root_mean = mean(root)/mean(total_biomass2))
+  
+
+maxb_avgL = subset(maxb_avg, Nutrient == "Low")
+
+maxb_avgT <- maxb_avgL %>%
+  select(Nutrient, agerank2, mean = tuber_mean) %>%
+  mutate(type = "tuber")
+
+maxb_avgS <- maxb_avgL %>%
+  select(Nutrient, agerank2, mean = shoot_mean) %>%
+  mutate(type = "shoot")
+
+maxb_avgR <- maxb_avgL %>%
+  select(Nutrient, agerank2, mean = root_mean) %>%
+  mutate(type = "root")
+
+maxb_avg2 <- rbind(maxb_avgT, maxb_avgS, maxb_avgR)
+
+#Plotting:
+
+maxb_al <- ggplot(maxb_avg2) +
+  aes(x = agerank2, y = mean, fill = type) + 
+  geom_bar(position="stack", stat="identity") +
+  theme_classic()
+maxb_al
+
+```
+
+```{r}
+
+maxb_avgH = subset(maxb_avg, Nutrient == "High")
+
+maxb_avgT <- maxb_avgH %>%
+  select(Nutrient, agerank2, mean = tuber_mean) %>%
+  mutate(type = "tuber")
+
+maxb_avgS <- maxb_avgH %>%
+  select(Nutrient, agerank2, mean = shoot_mean) %>%
+  mutate(type = "shoot")
+
+maxb_avgR <- maxb_avgH %>%
+  select(Nutrient, agerank2, mean = root_mean) %>%
+  mutate(type = "root")
+
+maxb_avg2 <- rbind(maxb_avgT, maxb_avgS, maxb_avgR)
+
+#Plotting:
+
+maxb_al <- ggplot(maxb_avg2) +
+  aes(x = agerank2, y = mean, fill = type) + 
+  geom_bar(position="stack", stat="identity") +
+  theme_classic()
+maxb_al
+```
+
