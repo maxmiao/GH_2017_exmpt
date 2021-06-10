@@ -75,7 +75,7 @@ hmmm... Idk...factors do indeed have 2 or more factors tho. This is odd.
 
 #Taxa Analysis @ Phyla level: 
 
-We will now make the plot!!
+We will now make the plot!! (FIGURE 3)
 
 ```{r}
 library(gplots)
@@ -194,11 +194,4 @@ par(mfrow=c(2,2))
 
 ```
 
-THings to do next:
-
-1. Ordination and *adonis* phyla data 
-2. Ordination and *adonis* class data
-3. taxa analysis heatmap @ class level 
-4. taxa analysis heatmap --> tubermass gradient
-5. taxa analysis broadscale vs fine scale diversity?
 
