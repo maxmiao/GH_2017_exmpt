@@ -1,0 +1,270 @@
+---
+title: "Diversity_analysis"
+output: html_notebook
+---
+
+
+#Diversity analysis
+
+Make table that includes shannon index column 
+```{r}
+library(tidyverse)
+library(vegan)
+
+write.csv(metadata, file = "metadata.csv")
+metadata <- read.csv(file = "metadata.csv")
+
+diversity <- diversity(ghsoil16S[28:1504],index="shannon")
+div_col <- as.data.frame(diversity)
+div_table <- ghsoil16S[1:26]
+metadata <- bind_cols(div_table,div_col)
+metadata <- subset(metadata, Soil_type != "Sterile")
+
+#relevel data so that the reference is elite potatoes:
+
+
+
+
+#Problem! we need to have our Elite/modern potato varities as our reference and so we need to relevel our data!!!
+
+#We do this manually in excel, where S. berthauti is factor "4", Andigenum is factor "3", Chiletanum is factor "2", and elite is factor "1" then we will read this new "metadata.csv" file
+
+metadata <- read.csv("metadata.csv")
+
+#New releveled factor is now called Species.cat, but we now need to tell R that it is a factor not a integer/continuous variable!
+
+metadata$Species.cat <- as.factor(metadata$Species.cat)
+```
+
+Now we do some statistics with diversity:
+
+
+Global Analysis of diveristy with full model: 
+```{r}
+library(lmerTest)
+library(lme4)
+library(MASS)
+library(car)
+library(lsmeans)
+library(emmeans)
+
+metadata$timepoint = as.factor(metadata$timepoint)
+
+
+div_test <- lmer(diversity ~ timepoint * Nutrient * (Soil_type + Species2)  + (1|Variety), data = metadata)
+
+summary(div_test)
+anova(div_test)
+
+```
+Don't see any sort of trends that stick out as interesting that may determine diveristy...
+
+
+
+*Use for Paper Table 4*
+```{r}
+div_test2 <- lmer(diversity ~ (Soil_type+Nutrient)*Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S"))
+
+summary(div_test2)
+anova(div_test2)
+
+div_emms <- emmeans(div_test2, "Species.cat")
+contrast_div <- contrast(div_emms, list(AvE=c(-1,0,1,0), CvE = c(-1,1,0,0), SBvE = c(-1,0,0,1)))
+contrast_div 
+
+```
+
+
+
+
+*Use for Paper Table 4*
+```{r}
+div_test3 <- lmer(diversity ~ Soil_type+Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S2" & Nutrient == "Low"))
+
+summary(div_test3)
+anova(div_test3)
+
+div_emms <- emmeans(div_test3, "Species.cat")
+contrast_div <- contrast(div_emms, list(AvE=c(-1,0,1,0), CvE = c(-1,1,0,0), SBvE = c(-1,0,0,1)))
+contrast_div 
+
+
+div_emms2 <- emmeans(div_test3, "Species.cat")
+contrast_div <- contrast(div_emms, list(C_EvsA_SB=c(-1,-1,1,1)))
+contrast_div 
+```
+
+
+
+
+```{r}
+div_test3 <- lmer(diversity ~ Soil_type+Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S2" & Nutrient == "High"))
+
+summary(div_test3)
+anova(div_test3)
+
+div_emms <- emmeans(div_test3, "Species.cat")
+contrast_div <- contrast(div_emms, list(AvE=c(-1,0,1,0), CvE = c(-1,1,0,0), SBvE = c(-1,0,0,1)))
+contrast_div 
+```
+
+
+
+*Use for Paper Table 4*
+```{r}
+
+metadata$Species.cat <- as.factor(metadata$Species.cat)
+
+div_test <- lmer(diversity ~ Soil_type + Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S" & Nutrient == "Low"))
+summary(div_test)
+anova(div_test)
+
+
+#Custom contrasts (Low Nutrients @ timepoint 1)
+library(emmeans)
+div_emms <- emmeans(div_test, "Species.cat")
+contrast_div <- contrast(div_emms, list(AvE=c(-1,0,1,0), CvE = c(-1,1,0,0), SBvE = c(-1,0,0,1)))
+contrast_div 
+
+```
+
+
+```{r}
+div_test3 <- lmer(diversity ~ Soil_type+Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S" & Nutrient == "High"))
+
+summary(div_test3)
+anova(div_test3)
+
+div_emms <- emmeans(div_test3, "Species.cat")
+contrast_div <- contrast(div_emms, list(AvE=c(-1,0,1,0), CvE = c(-1,1,0,0), SBvE = c(-1,0,0,1)))
+contrast_div 
+```
+
+
+```{r}
+#Low Nutrient Conditions (data carving):
+
+div_test2 <- lmer(diversity ~ Soil_type + Species.cat + (1|Variety), data = subset(metadata, Nutrient =="Low" & timepoint == "16S2"))
+div_test1 <- lmer(diversity ~ Soil_type + Species.cat + (1|Variety), data = subset(metadata, Nutrient =="Low" & timepoint == "16S"))
+div_emm1 <- emmeans(div_test1,"Species.cat")
+div_emm2 <- emmeans(div_test2,"Species.cat")
+
+div_emm1 <- as.data.frame(div_emm1)
+div_emm1 <- div_emm1 %>%
+  mutate(timepoint = "4 weeks")
+div_emm2 <- as.data.frame(div_emm2)
+div_emm2 <- div_emm2 %>%
+  mutate(timepoint = "12 weeks")
+div_emmL <- rbind(div_emm1,div_emm2)
+div_emmL <- rename(div_emmL, Shannon = 'emmean')
+
+Clade = c("Modern","Chiletanum","Andigenum","S.berthaulti","Modern","Chiletanum","Andigenum","S.berthaulti")
+Clade = as.data.frame(Clade)
+
+div_emmL <- cbind(div_emmL ,Clade)
+```
+
+
+*Use for Paper Table 4*
+```{r}
+div_testH <- lmer(diversity ~ Soil_type+Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S" & Nutrient == "High"))
+summary(div_testH)
+anova(div_testH)
+
+
+#Custom contrasts (High Nutrients @ timepoint 2)
+
+div_emms <- emmeans(div_testH, "Species.cat")
+contrast_div <- contrast(div_emms, list(AvE=c(-1,0,1,0), CvE = c(-1,1,0,0), SBvE = c(-1,0,-0,1)))
+contrast_div 
+```
+According to our Post Hoc Tukey test we don't see anything using Multiple comparisions. If we are just doing contrast see some trends that AvE and CvE have a difference in bacterial diversity compared to Elites. 
+
+
+
+```{r}
+#High Nutrient Conditions:
+
+div_test4 <- lmer(diversity ~ Species.cat+Soil_type + (1|Variety), data = subset(metadata, Nutrient =="High" & timepoint == "16S2"))
+div_test3 <- lmer(diversity ~ Species.cat+Soil_type + (1|Variety), data = subset(metadata, Nutrient =="High" & timepoint == "16S"))
+div_emm3 <- emmeans(div_test3,"Species.cat")
+div_emm4 <- emmeans(div_test4,"Species.cat")
+
+Clade = c("Modern","Chiletanum","Andigenum","S.berthaulti")
+
+div_emm3 <- as.data.frame(div_emm3)
+div_emm3 <- div_emm3 %>%
+  mutate(timepoint = "4 weeks")
+div_emm4 <- as.data.frame(div_emm4)
+div_emm4 <- div_emm4 %>%
+  mutate(timepoint = "12 weeks")
+div_emmH <- rbind(div_emm3,div_emm4)
+div_emmH <- rename(div_emmH, Shannon = 'emmean')
+
+Clade = c("Modern","Chiletanum","Andigenum","S.berthaulti","Modern","Chiletanum","Andigenum","S.berthaulti")
+Clade = as.data.frame(Clade)
+
+div_emmH <- cbind(div_emmH ,Clade)
+
+```
+
+
+*Plot for Diveristy (Figure 4)*
+```{r}
+library(ggplot2)
+
+ggplot(div_emmL)+
+  aes(x = timepoint, y = Shannon, color = Clade, fill = Clade)+
+  scale_color_manual(values = c("Black","#117733","Orange", "#0072B2"))+
+  geom_point(aes(x = timepoint, y = Shannon), size = 4)+
+  labs(x = "timepoint", y = "shannon diveristy")+
+  geom_errorbar(aes(ymax = upper.CL, ymin = lower.CL), width = 0.1)+
+  theme_classic()
+
+ggplot(div_emmH)+
+  aes(x = timepoint, y = Shannon, color = Clade, fill = Clade)+
+  scale_color_manual(values = c("Black","#117733","Orange", "#0072B2"))+
+  geom_point(aes(x = timepoint, y = Shannon), size = 4)+
+  labs(x = "timepoint", y = "shannon diveristy")+
+  geom_errorbar(aes(ymax = upper.CL, ymin = lower.CL), width = 0.1)+
+  theme_classic()
+```
+
+
+
+**Other Miscellanous analysis**
+
+```{r}
+
+#Multiple comparison for determinates of diveristy :
+
+div_test <- lmer(diversity ~ timepoint * Nutrient * (Soil_type + Species.cat)  + (1|Variety), data = metadata)
+
+summary(div_test)
+anova(div_test)
+
+
+#In low Nutrient conditions:
+
+div_testL <- lmer(diversity ~ timepoint * Nutrient * (Soil_type + Species.cat)  + (1|Variety), data = subset(metadata, Nutrient == "Low"))
+summary(div_testL)
+anova(div_testL)
+
+library("multcomp")
+div_comp <- glht(div_testL, linfct = mcp(Species2 = "Tukey"))
+div_comp
+summary(div_comp)
+```
+
+
+```{r}
+
+#In high Nutrient conditions:
+div_testH <- lmer(diversity ~ timepoint*Species2*Soil_type + (1|Variety), data = subset(metadata, Nutrient =="High"))
+summary(div_testH)
+anova(div_testH)
+
+div_comp <- glht(div_test, linfct = mcp(Species2 = "Tukey"))
+div_comp
+summary(div_comp)
+```
