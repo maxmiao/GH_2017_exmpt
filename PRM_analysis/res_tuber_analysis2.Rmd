@@ -94,9 +94,6 @@ genoavg = aggregate(cbind(predtub,agerank3) ~ Nutrient + soil + variety2, data=m
 
 ```
 
-*hmmmm so, it seems that by not including Garnett Chili as part of Chiletanum has a effect on the predtub*
-
-
 now, lets reshape this a bit to have average tuber mass in Hancock and Virgin soils as a column, and tuber mass in sterile as a matched column.
 ```{r}
 genoavgH = subset(genoavg, soil == "Hancock")
@@ -169,7 +166,7 @@ summary(Soil_model)
 ```
 We see a trend that shows that agerank suggests there is indeed for a differential response to microbial treatments. $p=0.00156$, using elites as our reference (agerank3, elites = 1).
 
-*use for table 1C* 
+*Use for table 1B* 
 ```{r}
 Soil_modelL = lmer(res ~  soil + agerankcat + (1|variety2), data = subset(genoavg2, Nutrient == "Low"))
 anova(Soil_modelL)
@@ -179,7 +176,7 @@ For Chiletanum we see that it did statistically significantly better in low nutr
 
 For Andigenum we see a positive statistical trend that is responded positively to microbial communities. /$p=.163$/
 
-*use for table 1D*
+*Use for table 1C*
 ```{r}
 Soil_modelH = lmer(res ~  soil + agerankcat + (1|variety2), data = subset(genoavg2, Nutrient == "High"))
 anova(Soil_modelH)
@@ -228,7 +225,7 @@ So according to our contrast, there's a significant difference between Chiletanu
 
 
 
-*Plot*
+*Plot Figure 1B*
 ```{r}
 library(tidyverse)
 library(plotrix)
@@ -258,7 +255,8 @@ Low Nutrient Conditions, we see that Chiletanum has a absolute positive residual
 
 Note: Garnet Chili is considered a Major Contributing ancestor; it is a immediate desecendent of Rough Purple Chili a Chilean landrace. Hence for our analysis we decided to clump GC with Chiletanum instead of "modern".  
 
-Plotting abline + residuals of S vs residuals of live soil..
+*Plotting abline + residuals (Figure 1A and 1B)*
+
 ```{r}
 genoavg2L <- subset(genoavg2,Nutrient == "Low")
 agerankcat <- c("1","2","3","4")
@@ -283,6 +281,7 @@ ggplot(genoage2L)+
 Interesting tho our chart shoes that residuals of 2 and 1 are overlapping more in low nutrient conditions. since in High nutrient conditions they are more seperate...
 
 *High Nutrient Conditions*
+*Plotting Figure 1C and 1D*
 
 ```{r}
 res_avgH = subset(res_avg, Nutrient == "High")
@@ -325,115 +324,4 @@ ggplot(genoavg2H)+
 Across all potatoe plants we see a positive proportional response in terms of tuber yield in live soil vs sterile soil. What this means in biological terms is that across all potato genotypes (except one) we see that tuber yield (when accounting for greenhouse effect) does better than the expected (which is the control = no soil inoculation).
 
 
-
-
 ############################################################################
-Let's do the above method again but this time by Variety(In progress)
-
-```{r}
-library(tidyverse)
-library(broom)
-
-max = read.csv("tuber_analysis_2.csv")
-
-#regress tuber mass vs. "sunlight" for each clade and create detrended dataset
-bertdata = subset(max, agerank2 == 1)
-bert = lm(tuber3~sunlight, data=bertdata) 
-#Makes a linear regression between tuber yield and sunlight 
-fakesunlight = rep(3, length(bert$res))
-#Make a new vector for "fake" sunlight where the value is 3 that is the same lenght as the # of residuals for bert. 
-newdata = data.frame(sunlight=fakesunlight)
-#make a new dataframe where sunlight is replaced by fakesunlight value of three
-predtub = predict(bert, newdata) + bert$res
-#now we want to get y_hat that is normalized for sunlight 
-bertdata = cbind(bertdata, predtub)
-#make a new dataframe with these new values. 
-
-#So to scale this up and not do it 17(x) times we will use dyplyr: 
-
-tuber_avg = max %>%
-  group_by(variety2,Nutrient) %>%
-  do(fitted_tuber = lm(tuber3 ~ sunlight, data = .))
-
-fakesunlight = rep(3, length(1))
-newdata = data.frame(sunlight=fakesunlight)
- 
-predtub = predict(tuber_avg$fitted_tuber[[1]], newdata) + tuber_avg$fitted_tuber[[1]]$res
-
-#why does this make a vector of 12 predicted values, it looks like the residual objective contains 12 residuals...should we average them? Is it okay to do that?
-```
-
-
-
-
-```{r}
-genoavg1 = aggregate(cbind(predtub,variety2) ~ Nutrient + soil + variety2, data=max2, FUN=mean)
-
-
-genoavgH_1 = subset(genoavg, soil == "Hancock")
-genoavgV_1 = subset(genoavg, soil == "Virgin")
-genoavgS = subset(genoavg, soil == "Sterile")
-
-genoavgH_1 = cbind(genoavgH, genoavgS$predtub)
-genoavgV_1 = cbind(genoavgV, genoavgS$predtub)
-
-genoavg2_1 = rbind(genoavgH, genoavgV)
-colnames(genoavg2_1)[6]<-'predtubS'
-
-genoavg2_1 = genoavg2_1[order(genoavg2_1$Nutrient),]
-
-genoavg2_1 = cbind(genoavg2_1, as.factor(genoavg2_1$agerank2))
-colnames(genoavg2_1)[7] <- 'agerankcat'
-
-#high nutrients:
-
-a = lm(predtub~predtubS, data = subset(genoavg2_1, Nutrient=="High" & soil == "Hancock"))
-
-b = lm(predtub~predtubS, data = subset(genoavg2_1, Nutrient=="High" & soil == "Virgin"))
-
-c = lm(predtub~predtubS, data = subset(genoavg2_1, Nutrient=="Low" & soil == "Hancock"))
-
-d = lm(predtub~predtubS, data = subset(genoavg2_1, Nutrient=="Low" & soil == "Virgin"))
-
-
-```
-
-
-```{r}
-a = lm(predtub~predtubS, data = subset(genoavg2_1, Nutrient=="High"))
-
-b = lm(predtub~predtubS, data = subset(genoavg2_1, Nutrient=="Low"))
-```
-
-
-```{r}
-res = c(a$res, b$res)
-
-genoavg2_1 = cbind(genoavg2_1, res)
-
-e = lm(predtub~predtubS, data = genoavg2_1)
-res2_1 = e$res
-genoavg2 = cbind(genoavg2_1, res2_1)
-
-genoavg2_LV35 = subset(genoavg2_1, Nutrient=="Low" & soil=="Virgin"&(agerank2 == 3|agerank2 == 5))
-
-genoavg4 = subset(genoavg2_1, agerank2 != 4)
-```
-
-
-```{r}
-#high nutrients
-a = lm(predtub~predtubS, data = subset(genoavg3, Nutrient=="High"))
-
-#low nutrients
-b = lm(predtub~predtubS, data = subset(genoavg3, Nutrient=="Low"))
-```
-
-now extract the residuals from these regressions, and add them back as a new variable in the dataframe
-
-```{r}
-res = c(a$res, b$res)
-
-genoavg3 = cbind(genoavg3, res)
-```
-
