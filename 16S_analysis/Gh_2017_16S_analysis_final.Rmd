@@ -1,0 +1,819 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(vegan)
+library(ggplot2)
+
+gh_soil_16S_rdp = read.csv("GHexp17max-Rick1.csv",header = T)
+labels(gh_soil_16S_rdp)
+str(gh_soil_16S_rdp)
+rarecurve(gh_soil_16S_rdp[28:1505], col = "blue")
+
+table2 <- gh_soil_16S_rdp[29:1505]
+
+```
+
+
+We see that alot of our samples start to plataeu around ~300 reads. And so we will now proceed to do some our quality control step. 
+
+Note:In excel we added the row "Total" which counts the number of ASVs per sample. Doing so we can do the following quality control step: 
+
+
+```{r}
+ghsoilspecies_16S_edited <- subset(gh_soil_16S_rdp,total > 300 & Soil_type != "Sterile")
+ghsoilspecies_16S_edited <- subset(ghsoilspecies_16S_edited, Soil_type != "Sterile")
+write.csv(ghsoilspecies_16S_edited, file = "ghsoil16S.csv")
+
+```
+
+
+
+Now we need to normalize our counts:
+
+```{r, echo=FALSE}
+
+#Normalize asv data with decostand function:
+library(vegan)
+ghsoilspecies_16S_std = decostand(ghsoilspecies_16S_edited[,28:1505], method = "total")
+ghsoil16S = cbind(ghsoilspecies_16S_edited[,1:26],ghsoilspecies_16S_std)
+write.csv(ghsoil16S, file = "ghsoil16S_2.csv")
+
+#Now we will ordinate using NMDS method: 
+set.seed(1)
+ghsoilmds <- metaMDS(ghsoil16S[27:1504], distance = "bray", k = 2)
+save(ghsoilmds, file = "ghsoilmds.rda")
+
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Species2), bg = ghsoil16S$Species2, pch = as.numeric(ghsoil16S$timepoint)+ 14)
+ordiellipse(ghsoilmds, ghsoil16S$Species2, label = F, draw = "polygon", col = c("Black","Blue","Red", "Purple", alpha = 70))
+legend("topright", legend = levels(ghsoilspecies_low$Species2), bty = "n", col = c("Black","Blue","Red", "Purple"), pch = as.numeric(ghsoil16S$Species_timepoint)+ 14)
+#ghsoil16S <- read.csv("ghsoil16S_1.csv",header = T)
+```
+**no convergence** why is this happening all of the sudden....
+
+
+Stress value is 0.23 which is okay. Its not ideal. 
+Now we proceed to plot our NMDS plot: 
+
+```{r, echo=FALSE}
+summary(ghsoilmds)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Species2))
+ordiellipse(ghsoilmds, ghsoil16S$Species, label = TRUE)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Nutrient))
+ordiellipse(ghsoilmds, ghsoil16S$Nutrient, label = TRUE)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$Soil_type))
+ordiellipse(ghsoilmds, ghsoil16S$Soil_type, label = TRUE)
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoil16S$timepoint))
+ordiellipse(ghsoilmds, ghsoil16S$timepoint, label = TRUE)
+```
+This plot is of everything! Made a new data set! called meta_coords which contains both NMDS coordinates and the associated metadata. 
+
+#Community Structure Using NMDS:
+
+
+High vs Low Nutrient Conditions:
+
+*Figure 2*
+```{r}
+ghsoilspecies_16S_High <- subset(ghsoil16S, Nutrient == "High")
+ghsoilmds = metaMDS(ghsoilspecies_16S_High[,27:1504])
+plot(ghsoilmds, display = "sites", type= "n")
+  points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_High$Species2), bg = ghsoilspecies_16S_High$Species2, pch = as.numeric(ghsoilspecies_16S_High$timepoint)+ 14)
+  ordiellipse(ghsoilmds, ghsoilspecies_16S_High$Species2, label = T, draw = "polygon", col = c("Black","Blue","Red", "Purple", alpha = 70))
+  legend("topright", legend = levels(ghsoilspecies_16S_High$Species2), bty = "n", col = c("Black","Blue","Red", "Purple"), pch = as.numeric(ghsoilspecies_16S_High$Species2)+ 14)
+```
+
+
+*Figure 2*
+```{r}
+ghsoilspecies_16S_Low <- subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S2")
+
+#labels(ghsoilspecies_16S_Low)
+#will tell us what columns to run metaMDS function with
+
+ghsoilmds = metaMDS(ghsoilspecies_16S_Low[27:1504])
+plot(ghsoilmds, display = "sites", type= "n")
+  points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_Low$Species2), pch = as.numeric(ghsoilspecies_16S_Low$timepoint)+14)
+  ordiellipse(ghsoilmds, ghsoilspecies_16S_Low$Species2, col = 1:4, border = 1:4, alpha = 63, label = F)
+  legend(x = "bottomleft", legend = c(levels(ghsoilspecies_16S_Low$Species)), col = 1:4, pch=20)
+
+```
+
+Species effect as changed, Nutient effect kicks in! You see that everything else is statistically significantly indifferent than Modern in timepoint 2 in low nutrient conditions. We see a slight species effect at 4 weeks in Hancock soil ($p = 0.050$) but not so much Virgin Soil ($p = 0.79$).
+
+
+```{r}
+ghsoilspecies_16S_Low <- subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S")
+
+#labels(ghsoilspecies_16S_Low)
+#will tell us what columns to run metaMDS function with
+
+ghsoilmds = metaMDS(ghsoilspecies_16S_Low[27:1504])
+plot(ghsoilmds, display = "sites", type= "n")
+  points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_16S_Low$Species2), pch = as.numeric(ghsoilspecies_16S_Low$timepoint)+14)
+  ordiellipse(ghsoilmds, ghsoilspecies_16S_Low$Species2, col = 1:4, border = 1:4, alpha = 63, label = F)
+  legend(x = "bottomleft", legend = c(levels(ghsoilspecies_16S_Low$Species)), col = 1:4, pch=20)
+
+```
+
+
+##Want to see nutrient at low levels at both timepoints
+
+*Figure 2A and Figure 2B for paper*
+```{r}
+ghsoilspecies_16S <- subset(ghsoil16S, Nutrient == "Low")
+ghsoilmds = metaMDS(ghsoilspecies_16S[,27:1504])
+
+colors = c("Black","#117733","Orange", "#0072B2")
+colors1 = as.numeric(ghsoilspecies_16S$Species2)
+colors1 = replace(colors1, colors1 == 1, "Black")
+colors1 = replace(colors1, colors1 == 2,"#117733")
+colors1 = replace(colors1,colors1 == 3,"Orange")
+colors1 = replace(colors1,colors1 == 4, "#0072B2")
+
+
+plot(ghsoilmds, display = "sites", type= "n")
+points(ghsoilmds,display = "sites", col = colors1, pch = as.numeric(ghsoilspecies_16S$timepoint)+ 14)
+ordiellipse(ghsoilmds, ghsoilspecies_16S$Species_timepoint, label = F, draw = "polygon", col = colors, alpha = 70, kind = "se", conf = 0.95)
+legend("topright", legend = c("Andigenum", "Chiletanum", "Modern", "S. berthaulti"), bty = "n", col = colors, pch = 20)
+legend(x = "bottomright", legend = c("Week 4","Week 12"), pch=c(15,16),bty = "n")
+
+#Things done: 1) Fixed results so that they match the statistic tables! 2) Fixed legends to tell reader what is what. 3) Fixed the legends from Max Speak to normal 
+#Things to be done: 1) Need to fix the color scheme, so that it matches other figures. 2) Need to fix maxspeak on the tables
+
+```
+
+*Figure 2B for paper*
+```{r}
+
+colors = c("Black","#117733","Orange", "#0072B2")
+colors1 = as.numeric(gh_soil_16S_low$Species2)
+colors1 = replace(colors1, colors1 == 1, "Black")
+colors1 = replace(colors1, colors1 == 2,"#117733")
+colors1 = replace(colors1,colors1 == 3,"Orange")
+colors1 = replace(colors1,colors1 == 4, "#0072B2")
+
+
+ghsoilspecies_16S2 <- subset(ghsoil16S, Nutrient == "High")
+ghsoilmds = metaMDS(ghsoilspecies_16S2[,27:1504])
+plot(ghsoilmds, display = "sites", type= "n")
+points(ghsoilmds,display = "sites", col = colors, bg = colors, pch = as.numeric(ghsoilspecies_16S2$timepoint)+ 14)
+ordiellipse(ghsoilmds, ghsoilspecies_16S2$Species_timepoint, label = F, draw = "polygon", col = colors, alpha = 70)
+legend("topright", legend = c("Andigenum", "Chiletanum", "Modern", "S. berthaulti"), bty = "n", col = colors , pch = 20)
+legend(x = "bottomright", legend = c("Week 4","Week 12"), bty = "n", pch=c(15,16))
+```
+
+
+
+##Full Model of Community structure (Use, Table 2A): 
+```{r}
+library(vegan)
+fit_gh16S <- adonis(ghsoil16S[27:1504] ~ timepoint * Nutrient * Soil_type * Species2, data = ghsoil16S, permutations = 999)
+fit_gh16S$aov.tab
+```
+
+We see that Species has a not a strong effect $p=0.121$
+We also see that timepoint, Nutrient, and soil type has a very strong effect $p < 0.05$
+
+
+##timepoint1
+*Table 1 (Use in paper)*
+```{r}
+library(vegan)
+ghsoil16S_tp1 = subset(ghsoil16S, timepoint == "16S")
+fit_gh16S <- adonis(ghsoil16S_tp1[27:1504] ~ Nutrient * Soil_type * Species2, data = ghsoil16S_tp1, permutations = 999)
+fit_gh16S$aov.tab
+```
+
+
+##Timepoint 2
+*Table 1 (Use in paper)*
+```{r}
+library(vegan)
+ghsoil16S_tp2 = subset(ghsoil16S, timepoint == "16S2")
+fit_gh16S <- adonis(ghsoil16S_tp2[27:1504] ~  Nutrient * Soil_type * Species2, data = ghsoil16S_tp2, permutations = 999)
+fit_gh16S$aov.tab
+```
+
+
+##Model High and Low nutrient conditions (Table 1B)
+
+```{r}
+ghsoilspecies_high = subset(ghsoil16S, Nutrient == "High")
+fit_gh16_H <- adonis(ghsoilspecies_high[27:1504] ~ timepoint * (Soil_type + Species2), data = ghsoilspecies_high, permutations = 999)
+fit_gh16_H
+```
+Species has no affect in high nutrient conditions ($p = 0.569$) but We see that timepoint is still by the driving factor.
+
+
+```{r}
+ghsoilspecies_low = subset(ghsoil16S, Nutrient == "Low")
+fit_gh16_L <- adonis(ghsoilspecies_low[27:1504] ~ timepoint * (Soil_type + Species2), data = ghsoilspecies_low, permutations = 999)
+fit_gh16_L
+```
+We see a Species effect the microbial community in low nutrient conditions ($p = 0.097$). This is not present in high nutrient conditions. 
+
+
+##At timepoint and low nutrient conditions:
+
+low nutrient conditions:
+*Table 1 (Use in paper)*
+```{r}
+ghsoilspecies_16S2 = subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S2")
+fit_gh16S <- adonis(ghsoilspecies_16S2[27:1504] ~ Soil_type + Species2, data = ghsoilspecies_16S2, permutations = 999)
+fit_gh16S
+
+ghsoilspecies_16S2 = subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S")
+fit_gh16S <- adonis(ghsoilspecies_16S2[27:1504] ~ Soil_type + Species2, data = ghsoilspecies_16S2, permutations = 999)
+fit_gh16S
+```
+Species effect ($p = 0.110$) in low nutrient conditions may exist. But we see that soil inocula effect is present at timepoint 1 but no longer at timepoint 2. 
+
+*Table 1 for figure 1 (Use in paper)*
+```{r}
+ghsoilspecies_16S2 = subset(ghsoil16S, Nutrient == "High" & timepoint == "16S2")
+fit_gh16S <- adonis(ghsoilspecies_16S2[27:1504] ~ Soil_type + Species2, data = ghsoilspecies_16S2, permutations = 999)
+fit_gh16S
+
+ghsoilspecies_16S = subset(ghsoil16S, Nutrient == "High" & timepoint == "16S")
+fit_gh16S <- adonis(ghsoilspecies_16S[27:1504] ~ Soil_type + Species2, data = ghsoilspecies_16S, permutations = 999)
+fit_gh16S
+
+```
+Species effect is ($p = 0.552$) and doesn't exist at timepoint 1. However, it does exist at timepoint 2 tho which is interesting ($p = 0.038$). 
+
+
+##Comparison within timepoints: 
+
+```{r}
+ghsoilspecies_16S1 = subset(ghsoil16S, timepoint == "16S")
+fit_gh16S <- adonis(ghsoilspecies_16S1[27:1504] ~ (Nutrient + Soil_type) * Species2, data = ghsoilspecies_16S1, permutations = 999)
+fit_gh16S
+```
+See that in timepoint 1 (Week4) one we see soil_type and species affecting community composition. 
+
+
+```{r}
+ghsoilspecies_16S1 = subset(ghsoil16S, timepoint == "16S2")
+fit_gh16S <- adonis(ghsoilspecies_16S1[27:1504] ~ (Nutrient + Soil_type) * Species2, data = ghsoilspecies_16S1, permutations = 999)
+fit_gh16S
+```
+See no differences after timepoint 2 in the experimental variables that are leading to changes in community structure. Initially start out different and then start to converge. 
+
+
+##Pairwise statistics for microbial communities 
+
+
+```{r}
+#Global pairwise analysis of 16S data:
+
+#ghsoilspecies_16S_edited is not standardized! 
+
+ghsoilspecies_16S <- subset(ghsoil16S, Nutrient == "Low")
+
+
+library(pairwiseAdonis)
+gh_soil_16S = subset(ghsoil16S, timepoint == "16S")
+distance_matrix = vegdist(gh_soil_16S[27:1504], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_low = merged_col <- c(gh_soil_16S[,0:23],distance)
+bray_low <- as.data.frame(bray_low)
+low = pairwise.adonis(bray_low[,24:88],bray_low$Species2)
+low
+
+gh_soil_16S = subset(ghsoil16S, timepoint == "16S2")
+distance_matrix = vegdist(gh_soil_16S[27:1504], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_low = merged_col <- c(gh_soil_16S[,0:23],distance)
+bray_low <- as.data.frame(bray_low)
+low = pairwise.adonis(bray_low[,24:86],bray_low$Species2)
+low
+```
+
+
+
+```{r}
+#pairwise statistic for timepoint 2 and low nutrient:
+
+library(pairwiseAdonis)
+gh_soil_16S_low = subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S2")
+distance_matrix = vegdist(gh_soil_16S_low[27:1504], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_low = merged_col <- c(gh_soil_16S_low[,0:23],distance)
+bray_low <- as.data.frame(bray_low)
+low = pairwise.adonis(bray_low[,24:58],bray_low$Species2)
+low
+```
+Only see differences in microbial communities between E and SB after 12 weeks...
+
+
+```{r}
+gh_soil_16S_low = subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S")
+distance_matrix = vegdist(gh_soil_16S_low[27:1504], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_low = merged_col <- c(gh_soil_16S_low[,0:23],distance)
+bray_low <- as.data.frame(bray_low)
+low = pairwise.adonis(bray_low[,24:57],bray_low$Species2)
+low
+```
+We do see differences in microbial communities in timepoint 1
+
+
+```{r}
+#pairwise statistic for timepoint 2 and high nutrient
+
+library(pairwiseAdonis)
+gh_soil_16S_high = subset(ghsoil16S, Nutrient == "High" & timepoint == "16S2")
+distance_matrix = vegdist(gh_soil_16S_high[27:1504], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_high = merged_col <- c(gh_soil_16S_high[,0:23],distance)
+bray_high <- as.data.frame(bray_high)
+high = pairwise.adonis(bray_high[,24:51],bray_high$Species2)
+high
+```
+
+
+
+```{r}
+gh_soil_16S_high = subset(ghsoil16S, Nutrient == "High" & timepoint == "16S")
+distance_matrix = vegdist(gh_soil_16S_high[27:1504], method = "bray")
+distance_matrix = as.matrix(distance_matrix)
+distance = as.data.frame(distance_matrix)
+bray_high = merged_col <- c(gh_soil_16S_high[,0:23],distance)
+bray_high <- as.data.frame(bray_high)
+high = pairwise.adonis(bray_high[,24:54],bray_high$Species2)
+high
+```
+There's no difference in microbial communities found in High nutrient conditions
+
+
+***
+
+
+*Figure 2A,2B,2C,2D*
+
+```{r}
+
+gh_soil_16S_low = subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S2")
+gh_soil_16S_low_std = decostand(gh_soil_16S_low[27:1504], method = "total")
+pairwise_mds <- metaMDS(gh_soil_16S_low_std)
+
+
+colors = c("Black","#117733","Orange", "#0072B2")
+colors1 = as.numeric(gh_soil_16S_low$Species2)
+colors1 = replace(colors1, colors1 == 1, "Black")
+colors1 = replace(colors1, colors1 == 2,"#117733")
+colors1 = replace(colors1,colors1 == 3,"Orange")
+colors1 = replace(colors1,colors1 == 4, "#0072B2")
+
+
+
+plot(pairwise_mds, display = "sites", type = "n")
+points(pairwise_mds,display = "sites", col = colors1, pch = 16)
+ordiellipse(pairwise_mds, gh_soil_16S_low$Species2, draw = "polygon", col = colors, border = colors, alpha = 70, label = F, kind = "se", conf = 0.95)
+legend("bottomleft", legend = c("Andigenum", "Chiletanum", "Modern", "S. berthaulti"), bty = "n", col = colors , pch = 20)
+
+```
+
+
+
+```{r}
+
+gh_soil_16S_low = subset(ghsoil16S, Nutrient == "Low" & timepoint == "16S")
+pairwise_mds <- metaMDS(gh_soil_16S_low[27:1504])
+
+plot(pairwise_mds, display = "sites", type = "n")
+points(pairwise_mds,display = "sites", col = colors1, pch = 16)
+ordiellipse(pairwise_mds, gh_soil_16S_low$Species2, draw = "polygon", col = colors, border = colors, alpha = 70, label = T, kind = "se", conf = 0.95)
+legend("topright", legend = levels(ghsoilspecies_low$Species2), bty = "n", col = colors)
+```
+
+```{r}
+gh_soil_16S_high = subset(ghsoil16S, Nutrient == "High" & timepoint == "16S")
+pairwise_mds <- metaMDS(gh_soil_16S_high[27:1504])
+
+plot(pairwise_mds, display = "sites", type = "n")
+points(pairwise_mds,display = "sites", col = colors1, pch = as.numeric(gh_soil_16S_high$timepoint)+14)
+ordiellipse(pairwise_mds, gh_soil_16S_high$Species2, col = colors, border = colors, draw = "polygon", alpha = 70, label = F)
+```
+
+
+```{r}
+gh_soil_16S_high = subset(ghsoilspecies_16S_edited, Nutrient == "High" & timepoint == "16S2")
+pairwise_mds <- metaMDS(gh_soil_16S_high[27:1504])
+plot(pairwise_mds, display = "sites", type = "n")
+points(pairwise_mds,display = "sites", col = as.numeric(gh_soil_16S_high$Species2), pch = as.numeric(gh_soil_16S_high$timepoint)+14)
+ordiellipse(pairwise_mds, gh_soil_16S_high$Species2, draw = "polygon" , col = colors, border = 1:4, alpha = 70, label = F)
+```
+
+
+***
+
+##Plot for microbial communities shifts between timepoint 1 and 2 ("Global graphic", Figure 1) 
+```{r}
+library(tidyverse)
+
+ghsoilspecies_low <- subset(ghsoil16S, Nutrient == "Low")
+ghsoilmds = metaMDS(ghsoilspecies_low[,27:1504])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_low$Species2), bg = ghsoilspecies_low$Species2, pch = as.numeric(ghsoilspecies_low$timepoint)+ 14)
+ordiellipse(ghsoilmds, ghsoilspecies_low$timepoint, label = TRUE)
+legend("topright", legend = levels(ghsoilspecies_low$Species2), bty = "n", col = ghsoilspecies_low$Species2)
+
+
+```
+
+```{r}
+library(tidyverse)
+
+ghsoilspecies_high <- subset(ghsoil16S, Nutrient == "High")
+ghsoilmds = metaMDS(ghsoilspecies_low[,27:1504])
+plot(ghsoilmds, display = "species", type= "n")
+points(ghsoilmds,display = "sites", col = as.numeric(ghsoilspecies_low$Species2), bg = ghsoilspecies_low$Species, pch = as.numeric(ghsoilspecies_low$timepoint)+ 14)
+ordiellipse(ghsoilmds, ghsoilspecies_low$timepoint, label = TRUE)
+```
+
+***
+
+
+#Let's try to correlate diversity and tuber yield**
+
+*Use for Table 4*
+```{r}
+library(lme4)
+library(lmerTest)
+
+div_test = lmer(Tubermass2 ~ (Soil_type+diversity)*Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S2" & Nutrient == "Low"))
+summary(div_test)
+anova(div_test)
+
+
+```
+
+
+
+*Use for Paper Table 4*
+```{r}
+
+metadata$timepoint = as.factor(metadata$timepoint)
+
+div_test <- lmer(Tubermass2 ~ (Soil_type+diversity)*Species.cat + (1|Variety), data = subset(metadata, timepoint == "16S2" & Nutrient == "Low"))
+
+summary(div_test)
+anova(div_test)
+
+```
+At both timepoints we see a effect of diversity on tuber yield variation ($0.0515562$). In terms of the mean tubermass produced. In Low Nutrient conditions diveristy does play some role in determining tuber yield as well. 
+
+
+
+Pull S.E from Lme object!(Use emmeans)
+*https://cran.r-project.org/web/packages/emmeans/vignettes/comparisons.html
+
+
+
+```{r}
+metadata$timepoint = as.factor(metadata$timepoint)
+
+div_testA <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "A"))
+
+summary(div_testA)
+anova(div_testA)
+```
+Low Nutrient conditions has a effect on the average tubermass for Andigenum. But diveristy of microbes still has not much of a effect. 
+
+
+```{r}
+metadata$timepoint = as.factor(metadata$timepoint)
+
+div_testC <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity*timepoint + (1|Variety), data = subset(metadata, Species == "C"))
+
+summary(div_testC)
+anova(div_testC)
+```
+For Chiletnaum we see that diveristy affects tuber yield production ($p=0.0148$, t-test). We see that the with increasing diversity we see a decrease in tuber yield. In addition, we see variation in tubermass is partially explained by a Nutrient:Diversity interaction effect (ANOVA table, $p=0.059412$). This could be obseved in that diversity has a positive effect on tubermass production in low nutrient conditions (Summary table). 
+
+
+```{r}
+metadata$timepoint = as.factor(metadata$timepoint)
+
+div_testSB <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "SB"))
+
+summary(div_testSB)
+anova(div_testSB)
+```
+Weird result. Everything effects S. berthauti. 
+
+```{r}
+metadata$timepoint = as.factor(metadata$timepoint)
+
+div_testE1 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "E"))
+
+summary(div_testE1)
+anova(div_testE1)
+```
+Elite varieties Tuber yield seems to affected nothing. Insensitive to microbial diveristy. 
+
+
+
+
+
+
+
+##Do post-hoc contrast
+
+**Rick wants to split between Timepoints and Plot**
+
+```{r}
+div_testE1 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "E" & timepoint == "16S"))
+div_testE2 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "E" & timepoint == "16S2"))
+div_testA1 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "A" & timepoint == "16S"))
+div_testA2 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "A" & timepoint == "16S2"))
+div_testC1 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "C" & timepoint == "16S"))
+div_testC2 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "C" & timepoint == "16S2"))
+div_testSB1 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "SB" & timepoint == "16S"))
+div_testSB2 <- lmer(Tubermass2 ~ Nutrient*Soil_type*diversity + (1|Variety), data = subset(metadata, Species == "SB" & timepoint == "16S2"))
+```
+
+
+***
+
+
+
+#PCoA Analysis: 
+```{r}
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited)
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA) #Remove mitochondrial columns
+plot(ghsoilpco, display = "sites", type= "n", xlab = "MDS1 (5.52%)", ylab = "MDS2 (5.2%)")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species2), pch = 19)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species_timepoint, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = levels(ghsoilspecies_16S_PCA$Species2), col = 1:4, pch=20)
+
+```
+According to the PCA plot we see similarly a trend that reflects our NMDS plots. The method used was "bray". 
+
+
+```{r}
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, timepoint == "16S")
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+plot(ghsoilpco, display = "sites", type= "n", xlab = "MDS1(5.97%)", ylab = "MDS2(5.06%)")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species), pch = 19)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = levels(ghsoilspecies_16S_PCA$Species), col = 1:4, pch=20)
+```
+
+
+```{r}
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, timepoint == "16S2")
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+plot(ghsoilpco, display = "sites", type= "n", xlab = "MDS1(9.71%)", ylab = "MDS2(7.15%)")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species), pch = 19)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = levels(ghsoilspecies_16S_PCA$Species), col = 1:4, pch=20)
+```
+
+
+```{r}
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, Nutrient == "Low")
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+plot(ghsoilpco, display = "sites", type= "n", xlab = "MDS1 (6.85%)", ylab = "MDS2 (5.98%)")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species), pch = as.numeric(ghsoilspecies_16S_PCA$timepoint)+14)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species_timepoint, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = c("Andigenum", "Chiletanum", "Modern", "S. berthaulti"), bty = "n", col = 1:4, pch=20)
+legend(x = "bottomright", legend = c("Week 4", "Week 12"), bty = "n", pch=c(15,16))
+
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, Nutrient == "High")
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+plot(ghsoilpco, display = "sites", type= "n", xlab = "MDS1 (6.85%)", ylab = "MDS2 (5.98%)")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species), pch = as.numeric(ghsoilspecies_16S_PCA$timepoint)+14)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species_timepoint, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = c("Andigenum", "Chiletanum", "Modern", "S. berthaulti"), bty = "n", col = 1:4, pch=20)
+legend(x = "bottomright", legend = c("Week 4", "Week 12"), bty = "n", pch=c(15,16))
+
+```
+
+
+```{r}
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, Nutrient == "Low" & timepoint == "16S2")
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+plot(ghsoilpco, display = "sites", type= "n")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species), pch = 19)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = levels(ghsoilspecies_16S_PCA$Species), col = 1:4, pch=20)
+
+ghsoilspecies_16S_PCA = subset(ghsoilspecies_16S_edited, Nutrient == "High" & timepoint == "16S2")
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[27:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+plot(ghsoilpco, display = "sites", type= "n")
+points(ghsoilpco,display = "sites", col = as.numeric(ghsoilspecies_16S_PCA$Species), pch = 19)
+ordiellipse(ghsoilpco, draw = "polygon",  ghsoilspecies_16S_PCA$Species, col = 1:4, border = 1:4, alpha = 63, label = F)
+legend(x = "bottomleft", legend = levels(ghsoilspecies_16S_PCA$Species), col = 1:4, pch=20)
+```
+
+***
+
+####_Note_: Rick wants to correlate tubermass to PCoA scores (Work in progress)
+
+*Full Model*
+
+*Hypothesis: PCoA explains the variation in tubermass due to different microbial communities*
+```{r}
+ghsoilspecies_16S_PCA = ghsoilspecies_16S_edited
+ghsoilpco = capscale(ghsoilspecies_16S_PCA[26:1504]~1, distance = "bray", data = ghsoilspecies_16S_PCA)
+
+ghsoilpco_ex <- scores(ghsoilpco, choices = c(1,2), display = "sites")
+ghsoilspecies_16S_PCA1 <- cbind(ghsoilspecies_16S_PCA[,1:23],ghsoilpco_ex)
+
+PCoAvsTuber <- lmer(Tubermass2 ~ MDS1 + MDS2 + Species + (1|Variety), data = ghsoilspecies_16S_PCA1)
+summary(PCoAvsTuber)
+anova(PCoAvsTuber)
+
+```
+
+
+Conclusion: Is that we see no interaction effect between MDS1 and species. But we do that MDS1 does matter in determining tuber yield. If we took out the species effect we see that MDS1 effect actually increases. It looks like MDS1 matters more in timepoint 1 than in 2. We see that MDS1 has no effect on tubermass differences or variation if we took at species treatment. So interestingly, something that more ancestral potatoes collectively have in terms of microbial community helps explains differences and variation in tubermass...
+
+
+```{r}
+PCoAvsTuber_E <- lmer(Tubermass2 ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "E" & timepoint == "16S"))
+PCoAvsTuber_E2 <- lmer(Tubermass2 ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "E" & timepoint == "16S2"))
+summary(PCoAvsTuber_E)
+anova(PCoAvsTuber_E)
+```
+
+
+
+*Plotting beta coefficients of MDS1 vs Tubermass*
+
+Make a new dataframe that has avg tubermass, beta of MDS1 (timepoint 1), beta of MDS1 (timepoint 2)
+```{r}
+list_TP1 <- c(PCoAvsTuber_A@beta[2],PCoAvsTuber_C@beta[2],PCoAvsTuber_E@beta[2],PCoAvsTuber_A2@beta[2],PCoAvsTuber_C2@beta[2],PCoAvsTuber_E2@beta[2])
+list_TP2 <- c("TP1","TP1","TP1","TP2","TP2","TP2")
+list_geno <- c("Andigenum", "Chiletanum", "Modern","Andigenum", "Chiletanum", "Modern")
+
+
+
+beta_MDS <- data.frame("Genotype" = list_geno, "timepoint" = list_TP2, "beta" = list_TP1 )
+
+#Plot of beta MDs and genotype(s)
+library(ggplot2)
+ggplot(beta_MDS)+
+  aes(x = Genotype, y = beta, fill = timepoint, shape = timepoint)+
+  scale_x_discrete(name = "Genotype")+
+  scale_y_continuous(name = "Beta Coefficient")+
+  geom_point(aes(shape=timepoint, color = timepoint), size=3)+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+```
+Beta coefficients at both timepoints (including high and low nutrient levels) for MDS1. MDS1 seems to have a positive effect for Andigenum and Chiletanum, but not so much for moderns at TP1. 
+
+
+*Tubermass vs MDS beta coefficient:* (???)
+```{r}
+data_tubermass <- ghsoilspecies_16S_PCA1 %>%
+  group_by(Species) %>%
+  summarise(mean = mean(Tubermass2))
+```
+
+
+***
+
+##PCoA Plotting: Yield vs timepoint @ Low nutrient levels:
+
+
+*Biomass shoots*
+```{r}
+PCoAvsShoots <- lmer(Biomass_shoots ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "C" & timepoint == "16S"))
+summary(PCoAvsTuber)
+anova(PCoAvsTuber)
+```
+MDS2 (y-axis) we see that shoots are on the upper half of the PCoA plot. This seems like shoot and roots trend in opposite direction. Communities associated with greater shoots are in the opposite direction of communities related to greater tubers. 
+
+
+```{r}
+CoAvsShoots <- lmer(Biomass_shoots ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "C" & timepoint == "16S2"))
+summary(PCoAvsTuber)
+anova(PCoAvsTuber)
+```
+
+
+```{r}
+CoAvsShoots <- lmer(Biomass_shoots ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "E" & timepoint == "16S"))
+summary(PCoAvsTuber)
+anova(PCoAvsTuber)
+```
+
+
+*Biomass roots*
+```{r}
+PCoAvsTuber <- lmer(Biomass_Roots ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "C"))
+summary(PCoAvsTuber)
+anova(PCoAvsTuber)
+```
+We see that with Chiletanum microbial communities are related to variation and diffferences in root biomass.
+
+```{r}
+PCoAvsTuber_C = subset(ghsoilspecies_16S_PCA1, Species == "C")
+plot(PCoAvsTuber_C$MDS2,PCoAvsTuber_C$Biomass_Roots)
+abline(lm(Biomass_Roots ~ MDS1, data = PCoAvsTuber_C ))
+```
+
+
+```{r}
+PCoAvsTuber <- lmer(Biomass_Roots ~ MDS1 + MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA1, Species == "A"))
+summary(PCoAvsTuber)
+anova(PCoAvsTuber)
+```
+We see that with Andigenum microbial communities are related to variation and diffferences in root biomass.
+
+
+```{r}
+PCoAvsRoot_A = subset(ghsoilspecies_16S_PCA1, Species == "A")
+plot(PCoAvsTuber_A$MDS2,PCoAvsTuber_A$Biomass_Roots)
+abline(lm(Biomass_Roots ~ MDS2, data = PCoAvsRoot_A ))
+```
+
+
+
+***
+
+
+
+##PCoA and Residuals 
+
+Based on the residual tubermass which represents plant response to microbial activity we will now see how much of that is explainable by the MDS1 and/or MDS2.
+
+Making datatable with PCoA and res_tuber data: 
+```{r}
+#Variety names of res_tubers aren't the same as ghsoilspecies_16S_PCA2 we need to rename them so that they can match (Do this in excel)
+res_tubers <- read.csv("residual_tubers.csv", header = T)
+
+ghsoilspecies_16S_PCA2 = ghsoilspecies_16S_PCA1 %>%
+  filter(Soil_type != "Sterile") %>%
+  group_by(Nutrient,Soil_type,Variety,Species) %>%
+  summarize(mean_MDS1 = mean(MDS1),mean_MDS2 = mean(MDS2))
+
+#Renaming columns so that we can properly merge data tables: 
+res_tubers2 <- rename(res_tubers,Nutrient=Nutrient, Soil_type = soil, Variety = variety2)
+
+
+#now we will merge both datasets based on Nutrient, Soil_Type, Variety
+
+ghsoilspecies_16S_PCA3 <- left_join(res_tubers2,ghsoilspecies_16S_PCA2, by = c("Nutrient", "Soil_type","Variety"))
+
+ghsoilspecies_16S_PCA3 <- subset(ghsoilspecies_16S_PCA3,mean_MDS1 != "NA")
+
+#So the data here is the average MDS1 and MDS2 across Nutrient Soil_type, and Variety. We can now begin analysis @timepoint 1
+
+```
+
+we will now proceed with analysis:
+
+```{r}
+library(lme4)
+library(lmerTest)
+PCoAvsRes <- lmer(res ~ (mean_MDS1 + mean_MDS2) * Species + (1|Variety), data = subset(ghsoilspecies_16S_PCA3, Nutrient == "Low") )
+summary(PCoAvsRes)
+anova(PCoAvsRes)
+```
+We don't see at timepoint 1, PCoA axis 1 or 2 explain microbial yield. This include all genotypes. 
+
+```{r}
+PCoAvsRes <- lmer(res ~ (mean_MDS1 + mean_MDS2) * Species + (1|Variety), data = subset(ghsoilspecies_16S_PCA3, Species != "E" & Nutrient == "Low") )
+summary(PCoAvsRes)
+anova(PCoAvsRes)
+```
+Nothing changed after excluding Elite/Modern genotypes.
+
+```{r}
+PCoAvsRes <- lmer(res ~ mean_MDS1 + mean_MDS2 + (1|Variety), data = subset(ghsoilspecies_16S_PCA3, Species == "A") )
+summary(PCoAvsRes)
+anova(PCoAvsRes)
+```
+
+```{r}
+PCoAvsRes <- lmer(res ~ (mean_MDS1 + mean_MDS2) + (1|Variety), data = subset(ghsoilspecies_16S_PCA3, Species == "C" & Nutrient == "Low") )
+summary(PCoAvsRes)
+anova(PCoAvsRes)
+
+```
+

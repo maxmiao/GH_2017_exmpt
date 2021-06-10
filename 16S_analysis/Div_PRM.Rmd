@@ -1,0 +1,183 @@
+---
+title: "Diversity and Plant response to microbes (PRM)"
+output:
+  html_notebook: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+***
+
+To make figures and statistics for cross examining PRM and diversity we obtained data generated from our "Diversity Analysis.Rmd" script (Providing us diverersity values for each sample)  and "res_tuber_analysis2.Rmd" (Providing us PRM values)
+
+#Step 1: import relevant datasets:
+
+```{r}
+library(tidyverse)
+res_data = read.csv("residual_tubers.csv", header = T)
+div_data = read.csv("metadata.csv", header = T)
+
+#Now we need to make sure header labels match for each dataset:
+labels(res_data)
+labels(div_data)
+
+#need to rename "Variety2" to "Variety" in res_data dataframe:
+res_data = res_data %>%
+  rename(Variety = variety2) %>%
+  rename(Soil_type = soil)
+labels(res_data)
+
+```
+
+
+##Timepoint 2:
+```{r}
+#metadata2 <- read.csv(file = "metadata2.csv", header = T)
+
+ghsoilspecies_16S_div = div_data %>%
+  filter(timepoint != "16S") %>%
+  filter(Soil_type != "Sterile") %>%
+  group_by(Nutrient,Soil_type,Variety,Species2) %>%
+  summarize(shannon = mean(diversity))
+
+labels(ghsoilspecies_16S_div)
+labels(res_data)
+
+ghsoilspecies_16S_div2 <- left_join(res_tubers2,ghsoilspecies_16S_div, by = c("Nutrient", "Soil_type","Variety"))
+
+ghsoilspecies_16S_div2 <- subset(ghsoilspecies_16S_div2, shannon != "NA")
+
+```
+
+**When calculating shannon index make sure to use 
+
+Testing plant microbial response determined by shannon diveristy index and Plant Clade @ low nutrient condition:
+
+##Timepoint 2
+
+@Low nutrient conditions at timepoint2: *Use for Table 4*
+```{r}
+ghsoilspecies_16S_div2$agerankcat <- as.factor(ghsoilspecies_16S_div2$agerankcat)
+
+DivvsRes <- lmer(res ~ shannon * agerankcat + (1|Variety), data = subset(ghsoilspecies_16S_div2, Nutrient == "Low") )
+summary(DivvsRes)
+anova(DivvsRes)
+
+```
+
+
+Testing plant microbial response determined by shannon diveristy index and Plant Clade @ high nutrient condition:
+```{r}
+
+DivvsRes <- lmer(res ~ shannon * agerankcat + (1|Variety), data = subset(ghsoilspecies_16S_div2, Nutrient == "High") )
+summary(DivvsRes)
+anova(DivvsRes)
+
+```
+
+
+```{r}
+#Low and timepoint 2 Nutrient Conditions:
+
+div_resL <- subset(ghsoilspecies_16S_div2, Nutrient == "Low")
+div_resL <- rename(div_resL, Clade = Species2) 
+
+
+ggplot(div_resL)+
+  aes(x = shannon, y = res, color = Clade)+
+  geom_point(aes(shape = Clade), size = 3)+
+  scale_color_manual(values = c("Black","#117733","Orange", "#0072B2"))+
+  labs(x = "Bacterial Diversity", y = "Plant Response to Microbes")+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+
+#High Nutrient and timepoint 2 Conditions
+div_resH <- subset(ghsoilspecies_16S_div2, Nutrient == "High")
+div_resH <- rename(div_resH, Clade = Species2) 
+
+
+ggplot(div_resH)+
+  aes(x = shannon, y = res, color = Clade)+
+  geom_point(aes(shape = Clade), size = 3)+
+  scale_color_manual(values = c("Black","#117733","Orange", "#0072B2"))+
+  labs(x = "Bacterial Diversity", y = "Plant Response to Microbes")+
+  theme_classic()+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+```
+
+
+
+##Timepoint 1:
+
+We want to now look at timepoint 1 (Week 4) and how it may explain tuber yield
+```{r}
+library(tidyverse)
+ghsoilspecies_16S_div = metadata %>%
+  filter(timepoint != "16S2") %>%
+  filter(Soil_type != "Sterile") %>%
+  group_by(Nutrient,Soil_type,Variety,Species2) %>%
+  summarize(shannon = mean(diversity))
+
+ghsoilspecies_16S_div3 <- left_join(ghsoilspecies_16S_div,res_tubers2, by = c("Nutrient", "Soil_type","Variety"))
+
+ghsoilspecies_16S_div3 <- subset(ghsoilspecies_16S_div3, shannon != "NA")
+ghsoilspecies_16S_div3$agerankcat <- as.factor(ghsoilspecies_16S_div3$agerankcat)
+```
+
+
+```{r}
+
+DivvsResL <- lmer(res ~ shannon * agerankcat + (1|Variety), data = subset(ghsoilspecies_16S_div3, Nutrient == "Low") )
+summary(DivvsResL)
+anova(DivvsResL)
+
+
+DivvsResH <- lmer(res ~ shannon * agerankcat + (1|Variety), data = subset(ghsoilspecies_16S_div3, Nutrient == "High") )
+summary(DivvsResH)
+anova(DivvsResH)
+
+```
+
+*Plot Plant microbial response vs Shannon Diveristy (Figure 5A-B)*
+
+```{r}
+#Low and timepoint 2 Nutrient Conditions:
+
+div_resL <- subset(ghsoilspecies_16S_div3, Nutrient == "Low")
+div_resL <- rename(div_resL, Clade = Species2) 
+
+ggplot(div_resL)+
+  aes(x = shannon, y = res, color = Clade)+
+  geom_point(aes(shape = Clade), size = 3)+
+  scale_color_manual(values = c("Black","#117733","Orange", "#0072B2"))+
+  theme_classic()+
+  labs(x = "Bacterial Diversity", y = "Plant Response to Microbes")+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+
+#High Nutrient and timepoint 2 Conditions
+
+div_resH <- subset(ghsoilspecies_16S_div3, Nutrient == "High")
+div_resH <- rename(div_resH, Clade = Species2) 
+
+ggplot(div_resH)+
+  aes(x = shannon, y = res, color = Clade)+
+  geom_point(aes(shape = Clade), size = 3)+
+  scale_color_manual(values = c("Black","#117733","Orange", "#0072B2"))+
+  theme_classic()+
+  labs(x = "Bacterial Diversity", y = "Plant Response to Microbes")+
+  theme(axis.title.x = element_text(face="bold", size=15))+
+  theme(axis.title.y = element_text(face="bold", size=15))
+
+
+```
+
+
+
+
+
